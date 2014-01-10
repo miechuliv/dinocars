@@ -1,0 +1,6 @@
+DATETIME,ERRORLEVEL,TAG,VALUE,LINE,FILE
+"2013-11-29 11:20:00",ERROR,sms,"wyslano sms, numer:  tresc: undefined blad:ERROR: Lista odbiorc",76,/home/demostrona/domains/demo.stronazen.pl/public_html/nowy/system/library/extra/opencartsms.php
+"2013-12-30 14:40:56",ERROR,sms,"wyslano sms, numer:  tresc: undefined blad:ERROR: Lista odbiorc",76,/home/demostrona/domains/demo.stronazen.pl/public_html/nowy/system/library/extra/opencartsms.php
+"2013-12-30 14:41:05",ERROR,sms,"wyslano sms, numer:  tresc: undefined blad:ERROR: Lista odbiorc",76,/home/demostrona/domains/demo.stronazen.pl/public_html/nowy/system/library/extra/opencartsms.php
+"2013-12-30 14:43:17",ERROR,sms,"wyslano sms, numer:  tresc: undefined blad:ERROR: Lista odbiorc",76,/home/demostrona/domains/demo.stronazen.pl/public_html/nowy/system/library/extra/opencartsms.php
+"2013-12-30 14:49:25",ERROR,sms,"wyslano sms, numer:  tresc: undefined blad:ERROR: Lista odbiorc",76,/home/demostrona/domains/demo.stronazen.pl/public_html/nowy/system/library/extra/opencartsms.php
