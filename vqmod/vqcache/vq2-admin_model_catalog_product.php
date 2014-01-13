@@ -702,6 +702,12 @@ class ModelCatalogProduct extends Model {
 
         }
 
+        // miechu cars join
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
+        }
+
+
         if (isset($data['filter_retailer']) AND $data['filter_retailer']) {
             $sql .= " AND p2r.product_id = '" . (int)$data['filter_retailer'] . "'";
         }
@@ -709,6 +715,22 @@ class ModelCatalogProduct extends Model {
         if(isset($data['filter_attribute']) AND isset($data['filter_attribute_value']))
         {
             $sql .= " AND pa.text = '" . $data['filter_attribute_value'] . "'";
+
+        }
+
+
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " AND ptcr.make_id='".(int)$filtry['cars']['make']."' ";
+            if(isset($filtry['cars']['model']) AND is_numeric($filtry['cars']['model'])){
+
+                $sql .= " AND ptcr.model_id='".(int)$filtry['cars']['model']."' ";
+
+                if(isset($filtry['cars']['type']) AND is_numeric($filtry['cars']['type'])){
+                    $sql .= " AND ptcr.type_id='".(int)$filtry['cars']['type']."' ";
+                }
+            }
+
+
 
         }
 
@@ -1003,6 +1025,11 @@ class ModelCatalogProduct extends Model {
             $sql .= "LEFT JOIN `" . DB_PREFIX . "product_option_value` pov ON (p.product_id=pov.product_id) LEFT JOIN `" . DB_PREFIX . "product_option` po ON (pov.product_option_id=po.product_option_id) LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.option_value_id=ov.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.option_value_id=ovd.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (ovd.option_id=od.option_id) ";
         }
 
+        // miechu cars join
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
+        }
+
 
         $sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -1025,6 +1052,22 @@ class ModelCatalogProduct extends Model {
         if(isset($data['filter_attribute']) AND isset($data['filter_attribute_value']))
         {
             $sql .= " AND pa.text = '" . $data['filter_attribute_value'] . "'";
+
+        }
+
+
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " AND ptcr.make_id='".(int)$filtry['cars']['make']."' ";
+            if(isset($filtry['cars']['model']) AND is_numeric($filtry['cars']['model'])){
+
+                $sql .= " AND ptcr.model_id='".(int)$filtry['cars']['model']."' ";
+
+                if(isset($filtry['cars']['type']) AND is_numeric($filtry['cars']['type'])){
+                    $sql .= " AND ptcr.type_id='".(int)$filtry['cars']['type']."' ";
+                }
+            }
+
+
 
         }
 

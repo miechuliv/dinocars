@@ -12,6 +12,8 @@ class ControllerCommonHeader extends Controller {
         //miechu
         $this->document->addStyle('view/stylesheet/project_specyfic/miechu.css');
 
+        $this->document->addScript('view/stylesheet/project_specyfic/marki.js');
+
 
         $this->data['description'] = $this->document->getDescription();
 		$this->data['keywords'] = $this->document->getKeywords();

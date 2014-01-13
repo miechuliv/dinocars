@@ -26,7 +26,37 @@ class ControllerCatalogProduct extends Controller {
 
             $this->load->model('tool/generator');
 
-	  		
+
+
+            if(isset($this->request->post['cars']))
+            {
+
+               $this->model_tool_cars->deleteAllCarsById($product_id);
+
+                $cars = $this->request->post['cars'];
+
+
+
+                foreach($cars as $car)
+                {
+                    $ids = explode('_',$car);
+
+                    $data=array(
+                        'product_id' => $product_id,
+                        'make_id' => (int)$ids[0],
+                        'model_id' => (int)$ids[1],
+                        'type_id' => (int)$ids[2],
+                    );
+
+
+
+                    $this->model_tool_cars->productToCarInsert($data);
+
+                    /// generate special url alias
+                 //   $this->model_tool_generator->singleGenerate($data,$this->request->post,$product_id);
+                }
+            }
+
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
@@ -81,8 +111,33 @@ class ControllerCatalogProduct extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$product_id = $this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
+            if(isset($this->request->post['cars']))
+            {
 
-			
+                $this->load->model('tool/cars');
+
+                $this->model_tool_cars->deleteAllCarsById($product_id);
+
+                $cars = $this->request->post['cars'];
+
+
+                foreach($cars as $car)
+                {
+                    $ids = explode('_',$car);
+
+                    $data=array(
+                        'product_id' => $product_id,
+                        'make_id' => (int)$ids[0],
+                        'model_id' => (int)$ids[1],
+                        'type_id' => (int)$ids[2],
+                    );
+
+
+
+                    $this->model_tool_cars->productToCarInsert($data);
+                }
+            }
+
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$url = '';
@@ -219,7 +274,31 @@ class ControllerCatalogProduct extends Controller {
             }
 
 
-		
+            // samochody
+            if (isset($this->request->get['filter_cars'])) {
+                $filter_cars = $this->request->get['filter_cars'];
+
+                if(isset($this->request->get['filter_cars']['make']))
+                {
+                    $this->data['models'] = $this->model_tool_cars->getModelbyMake($this->request->get['filter_cars']['make'],true);
+                }
+
+                if(isset($this->request->get['filter_cars']['model']))
+                {
+                    $this->data['types'] = $this->model_tool_cars->getTypebyModel($this->request->get['filter_cars']['model']);
+                }
+
+            } else {
+                $filter_cars = null;
+            }
+
+            // kody
+            if (isset($this->request->get['filter_code'])) {
+                $filter_code = trim($this->request->get['filter_code']);
+            } else {
+                $filter_code = null;
+            }
+
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -408,7 +487,9 @@ class ControllerCatalogProduct extends Controller {
 			$filter_status = null;
 		}
 
+        $this->load->model('tool/cars');
 
+        $this->data['makes'] = $this->model_tool_cars->getMake();
 
         // Categories
         $this->load->model('catalog/category');
@@ -428,6 +509,24 @@ class ControllerCatalogProduct extends Controller {
         $this->data['retailers'] = $this->model_catalog_retailer->getretailers();
 
 
+
+
+        // samochody
+        if (isset($this->request->get['filter_cars'])) {
+            $filter_cars = $this->request->get['filter_cars'];
+
+            if(isset($this->request->get['filter_cars']['make']))
+            {
+                $this->data['models'] = $this->model_tool_cars->getModelbyMake($this->request->get['filter_cars']['make'],true);
+            }
+
+            if(isset($this->request->get['filter_cars']['model']))
+            {
+                $this->data['types'] = $this->model_tool_cars->getTypebyModel($this->request->get['filter_cars']['model']);
+            }
+
+        }
+
         if (isset($this->request->get['filter_retailer'])) {
             $filter_retailer = $this->request->get['filter_retailer'];
         } else {
@@ -446,6 +545,7 @@ class ControllerCatalogProduct extends Controller {
         } else {
             $filter_option = null;
         }
+
 
         $this->data['filter_option'] = $filter_option;
 
@@ -470,7 +570,7 @@ class ControllerCatalogProduct extends Controller {
         if (isset($this->request->get['filter_attribute'])) {
             $filter_attribute = $this->request->get['filter_attribute'];
         } else {
-            $filter_attribute = null;
+            $filter_cars = null;
         }
 
         $this->data['filter_attribute'] = $filter_attribute;
@@ -531,9 +631,30 @@ class ControllerCatalogProduct extends Controller {
         if (isset($this->request->get['filter_category_id'])) {
             $url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
         }
+        if (isset($this->request->get['filter_state'])) {
+            $url .= '&filter_state=' . $this->request->get['filter_state'];
+        }
+        if (isset($this->request->get['filter_cars'])) {
 
-        if (isset($this->request->get['filter_retailer'])) {
-            $url .= '&filter_retailer=' . $this->request->get['filter_retailer'];
+            if (isset($this->request->get['filter_cars']['make'])) {
+
+                $url .= '&filter_cars[make]=' . $this->request->get['filter_cars']['make'];
+            }
+
+            if (isset($this->request->get['filter_cars']['model'])) {
+
+                $url .= '&filter_cars[model]=' . $this->request->get['filter_cars']['model'];
+            }
+
+            if (isset($this->request->get['filter_cars']['type'])) {
+
+                $url .= '&filter_cars[type]=' . $this->request->get['filter_cars']['type'];
+            }
+
+        }
+
+        if (isset($this->request->get['filter_code'])) {
+            $url .= '&filter_code=' . $this->request->get['filter_code'];
         }
 
         // koniec miechu
@@ -585,6 +706,8 @@ class ControllerCatalogProduct extends Controller {
 			'start'           => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit'           => $this->config->get('config_admin_limit'),
 
+
+            'filter_cars' => $filter_cars,
 
             'filter_category_id' => $filter_category_id,
             'filter_retailer' => $filter_retailer,
@@ -712,7 +835,7 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['success'] = '';
 		}
 
-		$url = '';
+		//$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
@@ -751,7 +874,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['sort_status'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
 		$this->data['sort_order'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
 		
-		$url = '';
+		//$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
@@ -796,6 +919,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['filter_quantity'] = $filter_quantity;
 		$this->data['filter_status'] = $filter_status;
 
+
+        $this->data['filter_cars'] = $filter_cars;
 
         $this->data['filter_category_id'] = $filter_category_id;
 
@@ -970,7 +1095,31 @@ class ControllerCatalogProduct extends Controller {
         }
 
 
-		
+        // samochody
+        if (isset($this->request->get['filter_cars'])) {
+            $filter_cars = $this->request->get['filter_cars'];
+
+            if(isset($this->request->get['filter_cars']['make']))
+            {
+                $this->data['models'] = $this->model_tool_cars->getModelbyMake($this->request->get['filter_cars']['make'],true);
+            }
+
+            if(isset($this->request->get['filter_cars']['model']))
+            {
+                $this->data['types'] = $this->model_tool_cars->getTypebyModel($this->request->get['filter_cars']['model']);
+            }
+
+        } else {
+            $filter_cars = null;
+        }
+
+        // kody
+        if (isset($this->request->get['filter_code'])) {
+            $filter_code = $this->request->get['filter_code'];
+        } else {
+            $filter_code = null;
+        }
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -1046,11 +1195,134 @@ class ControllerCatalogProduct extends Controller {
             'width',
             'points',
             'height',
-            'google_merchant'
-
+            'google_merchant',
         );
 
+		if (isset($this->request->post['model'])) {
+      		$this->data['model'] = $this->request->post['model'];
+    	} elseif (!empty($product_info)) {
+			$this->data['model'] = $product_info['model'];
+		} else {
+      		$this->data['model'] = '';
+    	}
+
         $this->setFields($fields,$product_info);
+
+        if (isset($this->request->post['type'])) {
+            $this->data['type'] = $this->request->post['type'];
+        } elseif (!empty($product_info)) {
+            $this->data['type'] = $product_info['type'];
+        } else {
+            $this->data['type'] = '';
+        }
+
+        // miechu kaucje
+        if (isset($this->request->post['kaucja_zw'])) {
+            $this->data['kaucja_zw'] = $this->request->post['kaucja_zw'];
+        } elseif (!empty($product_info)) {
+            $this->data['kaucja_zw'] = $product_info['kaucja_zw'];
+        } else {
+            $this->data['kaucja_zw'] = '';
+        }
+
+        if (isset($this->request->post['kaucja_bzw'])) {
+            $this->data['kaucja_bzw'] = $this->request->post['kaucja_bzw'];
+        } elseif (!empty($product_info)) {
+            $this->data['kaucja_bzw'] = $product_info['kaucja_bzw'];
+        } else {
+            $this->data['kaucja_bzw'] = '';
+        }
+
+        if (isset($this->request->post['delivery_time'])) {
+            $this->data['delivery_time'] = $this->request->post['delivery_time'];
+        } elseif (!empty($product_info)) {
+            $this->data['delivery_time'] = $product_info['delivery_time'];
+        } else {
+            $this->data['delivery_time'] = '';
+        }
+
+        //pl
+        if (isset($this->request->post['kaucja_zw_pl'])) {
+            $this->data['kaucja_zw_pl'] = $this->request->post['kaucja_zw_pl'];
+        } elseif (!empty($product_info)) {
+            $this->data['kaucja_zw_pl'] = $product_info['kaucja_zw_pl'];
+        } else {
+            $this->data['kaucja_zw_pl'] = '';
+        }
+
+        if (isset($this->request->post['kaucja_bzw_pl'])) {
+            $this->data['kaucja_bzw_pl'] = $this->request->post['kaucja_bzw_pl'];
+        } elseif (!empty($product_info)) {
+            $this->data['kaucja_bzw_pl'] = $product_info['kaucja_bzw_pl'];
+        } else {
+            $this->data['kaucja_bzw_pl'] = '';
+        }
+
+        if (isset($this->request->post['delivery_time_pl'])) {
+            $this->data['delivery_time_pl'] = $this->request->post['delivery_time_pl'];
+        } elseif (!empty($product_info)) {
+            $this->data['delivery_time_pl'] = $product_info['delivery_time_pl'];
+        } else {
+            $this->data['delivery_time_pl'] = '';
+        }
+
+        //
+
+		if (isset($this->request->post['sku'])) {
+      		$this->data['sku'] = $this->request->post['sku'];
+    	} elseif (!empty($product_info)) {
+			$this->data['sku'] = $product_info['sku'];
+		} else {
+      		$this->data['sku'] = '';
+    	}
+
+		if (isset($this->request->post['upc'])) {
+      		$this->data['upc'] = $this->request->post['upc'];
+    	} elseif (!empty($product_info)) {
+			$this->data['upc'] = $product_info['upc'];
+		} else {
+      		$this->data['upc'] = '';
+    	}
+
+		if (isset($this->request->post['ean'])) {
+      		$this->data['ean'] = $this->request->post['ean'];
+    	} elseif (!empty($product_info)) {
+			$this->data['ean'] = $product_info['ean'];
+		} else {
+      		$this->data['ean'] = '';
+    	}
+
+		if (isset($this->request->post['jan'])) {
+      		$this->data['jan'] = $this->request->post['jan'];
+    	} elseif (!empty($product_info)) {
+			$this->data['jan'] = $product_info['jan'];
+		} else {
+      		$this->data['jan'] = '';
+    	}
+
+		if (isset($this->request->post['isbn'])) {
+      		$this->data['isbn'] = $this->request->post['isbn'];
+    	} elseif (!empty($product_info)) {
+			$this->data['isbn'] = $product_info['isbn'];
+		} else {
+      		$this->data['isbn'] = '';
+    	}
+
+		if (isset($this->request->post['mpn'])) {
+      		$this->data['mpn'] = $this->request->post['mpn'];
+    	} elseif (!empty($product_info)) {
+			$this->data['mpn'] = $product_info['mpn'];
+		} else {
+      		$this->data['mpn'] = '';
+    	}
+
+		if (isset($this->request->post['location'])) {
+      		$this->data['location'] = $this->request->post['location'];
+    	} elseif (!empty($product_info)) {
+			$this->data['location'] = $product_info['location'];
+		} else {
+      		$this->data['location'] = '';
+    	}
 
 		$this->load->model('setting/store');
 		
@@ -1486,7 +1758,32 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_layout'] = array();
 		}
 
+        //miechu
+        if (isset($this->request->post['cars'])) {
+            $this->data['cars'] = array();
+            foreach($this->request->post['cars'] as $car)
+            {
+                $ids = explode('_',$car);
 
+                $make = $this->model_tool_cars->getOneMakeById($ids[0]);
+                $model = $this->model_tool_cars->getOneModelById($ids[1]);
+                $type = $this->model_tool_cars->getOneTypeById($ids[2]);
+
+                $this->data['cars'][]=array(
+                    'ids' => $car,
+                    'name' => 'Marka: '.$make.' Model: '.$model.' Typ: '.$type,
+                );
+            }
+
+        } elseif (isset($product_info)) {
+            $this->data['cars'] = $this->model_tool_cars->getAllCarsByProductId($this->request->get['product_id']);
+        } else {
+            $this->data['cars'] = array();
+        }
+
+
+
+        //miechu end
 
 		$this->load->model('design/layout');
 		

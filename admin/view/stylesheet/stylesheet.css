@@ -755,13 +755,13 @@ table tbody tr td #lista {width:99%;}
 #comment-list table tr td a {text-decoration:none;}
 
 .filter_name {width:120px;}
-
+/*
 #form > table > tbody > tr > td {padding:0; width:100%; text-align:center;}
 #form > table > tbody > tr > td:first-child > a {width:100%; border:0; text-align:center; padding:10px 0; font-weight:bold; color:red;}
 #form > table > tbody > tr > td > table {width:100%;}
 #form > table > tbody > tr > td > table > tbody > tr:first-child > td,
 #form > table > tbody > tr > td > table > thead > tr:first-child > td {background:#efefef;}
-
+*/
 .filter > td > input[type='text'],
 .filter > td > select,
 #special > tbody > tr > td > input[type='text'],

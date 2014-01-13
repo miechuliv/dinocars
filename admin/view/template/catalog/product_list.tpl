@@ -215,7 +215,54 @@
                                     <?php } ?>
                                 </select>
                             </td>
+
+                            <td align="right">
+
+                                <select style="width:100px" id="cars_make_filter" name="filter_cars[make]">
+                                    <option >Marka</option>
+                                    <?php foreach($makes as $make){ ?>
+                                    <?php if(isset($make['make_name'])){ ?>
+                                    <?php if($filter_cars['make']==$make['make_id']){ ?>
+                                    <option value="<?php echo $make['make_id']; ?>" selected="selected" ><?php echo $make['make_name']; ?></option>
+                                    <?php }else{ ?>
+
+                                    <option value="<?php echo $make['make_id']; ?>" ><?php echo $make['make_name']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td align="right">
+                                <select style="width:100px" id="cars_model_filter" name="filter_cars[model]">
+                                    <option >Model</option>
+                                    <?php if(isset($models)){ ?>
+                                    <?php foreach($models as $model){ ?>
+                                    <?php if($filter_cars['model']==$model['model_id']){ ?>
+                                    <option value="<?php echo $model['model_id']; ?>" selected="selected" ><?php echo $model['model_name']; ?></option>
+                                    <?php }else{ ?>
+                                    <option value="<?php echo $model['model_id']; ?>" ><?php echo $model['model_name']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td align="right">
+                                <select style="width:100px" id="cars_type_filter" name="filter_cars[type]">
+                                    <option >Typ</option>
+                                    <?php if(isset($types)){ ?>
+                                    <?php foreach($types as $type){ ?>
+                                    <?php if($filter_cars['type']==$type['type_id']){ ?>
+                                    <option value="<?php echo $type['type_id']; ?>" selected="selected" ><?php echo $type['type_name']; ?></option>
+                                    <?php }else{ ?>
+                                    <option value="<?php echo $type['type_id']; ?>" ><?php echo $type['type_name']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </td>
                         </tr>
+
+
                     </table>
                 </td>
 
