@@ -123,8 +123,7 @@ class ModelCatalogProduct extends Model {
         }
 
         // miechu cars join
-        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND $filtry['cars']['make']!='Marke' AND $filtry['cars']['make']!='Marka' AND $filtry['cars']['make']!='') {
-
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
         }
 
@@ -621,7 +620,7 @@ class ModelCatalogProduct extends Model {
         }
 
         // miechu cars join
-        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND $filtry['cars']['make']!='Marke' AND $filtry['cars']['make']!='Marka' AND $filtry['cars']['make']!='') {
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
         }
 
