@@ -12,6 +12,7 @@ class ControllerCommonHeader extends Controller {
         $this->document->addScript('catalog/view/javascript/cloud-zoom.1.0.2.min.js');
         $this->document->addScript('catalog/view/javascript/whcookies.js');
         $this->document->addScript('catalog/view/javascript/project_specyfic/jquery.validate.js');
+        $this->document->addScript('catalog/view/javascript/project_specyfic/marki.js');
 
         $this->data['is_ie'] = false;
 

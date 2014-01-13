@@ -4,8 +4,8 @@ define('VERSION', '1.5.5.1');
 $time = microtime(true);
 
 // Configuration
-if (file_exists('config.php')) {
-	require_once('config.php');
+if (file_exists('config_local.php')) {
+	require_once('config_local.php');
 }  
 
 // Install
@@ -15,7 +15,6 @@ if (!defined('DIR_APPLICATION')) {
 }
 
 
-require_once(DIR_SYSTEM . 'library/GShoppingContent.php');
 
 // miechu auto loader class
 spl_autoload_register(
@@ -34,7 +33,6 @@ spl_autoload_register(
     }
 
 );
-
 
 // vQmod
 require_once('../vqmod/vqmod.php');

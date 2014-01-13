@@ -7,12 +7,54 @@
  */
 $(document).ready(function(){
 
+
+    $.ajax({
+        type     : "POST",
+        url      : "index.php?route=tool/cars/getAllMakes",
+        dataType: 'json',
+
+        success : function(data) {
+
+            var html='';
+
+
+            // var obj = jQuery.parseJSON(data);
+            if(data['output']==null)
+            {
+                // alert("Wir konnten leider kein Auto zu Ihren Baujahr und Ihrer  angegebenen Marke finden. Bitte wahelen Sie ein anderes Baujahr oder waehlen Sie einfach alle Baujahre aus! Vielen Dank");
+
+                $('#model').html('<option>Model</option>');
+                $('#type').html('<option>Typ</option>');
+
+            }
+
+
+            html+='<option value="" >Marka</option>';
+
+            jQuery.each( data['output'] , function(index, value) {
+
+                html+='<option value="'+value['make_id']+'" >'+value['make_name']+'</option>';
+            });
+
+            $('#make').html(html);
+
+        },
+        complete : function(r) {
+
+
+        },
+        error:    function(error) {
+
+
+        }
+    });
+
     $('#year').change(function(){
 
 
 
 
-            if($('#make option:selected').val()=='Marke')
+            if($('#make option:selected').val()=='Marka')
             {
                    return false;
             }
@@ -35,10 +77,10 @@ $('#make').change(function(){
         var make_id = $('#make option:selected').val();
         var year = $('#year option:selected').val();
 
-        if($('#make option:selected').text()=='Marke' || $('#make option:selected').text()=='')
+        if($('#make option:selected').text()=='Marka' || $('#make option:selected').text()=='')
         {
             $('#model').empty();
-            $('#model').append('<option>Modell</option>');
+            $('#model').append('<option>Model</option>');
             return false;
         }
 
@@ -68,13 +110,13 @@ function getModel(make_id,year)
             {
                // alert("Wir konnten leider kein Auto zu Ihren Baujahr und Ihrer  angegebenen Marke finden. Bitte wahelen Sie ein anderes Baujahr oder waehlen Sie einfach alle Baujahre aus! Vielen Dank");
 
-                $('#model').html('<option>Modell</option>');
+                $('#model').html('<option>Model</option>');
                 $('#type').html('<option>Typ</option>');
 
             }
 
 
-            html+='<option value="" >Modell</option>';
+            html+='<option value="" >Model</option>';
 
             jQuery.each( data['output'] , function(index, value) {
 
@@ -99,7 +141,7 @@ $('#model').change(function(){
 
         var model_id = $('#model option:selected').val();
 
-        if($('#model option:selected').text()=='Modell' || $('#model option:selected').text()=='')
+        if($('#model option:selected').text()=='Model' || $('#model option:selected').text()=='')
         {
             $('#type').empty();
             $('#type').append('<option>Typ</option>');

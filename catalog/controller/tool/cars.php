@@ -9,6 +9,17 @@
 
 class ControllerToolCars extends Controller{
 
+     public function getAllMakes()
+     {
+         $this->load->model('tool/cars');
+
+         $data = $this->model_tool_cars->getMake();
+
+         $json['output']= $data;
+
+         $this->response->setOutput(json_encode($json));
+     }
+
       public function getModelsAjax(){
 
           $make_id = (int)$this->request->post['make_id'];
