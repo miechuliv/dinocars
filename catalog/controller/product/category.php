@@ -39,6 +39,15 @@ class ControllerProductCategory extends Controller {
 			$limit = $this->config->get('config_catalog_limit');
 		}
 
+        if(isset($this->request->get['typ']))
+        {
+            $this->request->get['filters']['product_type'] = $this->request->get['typ'];
+        }
+
+
+
+
+
         // additional search
         // get search data
 
@@ -91,17 +100,17 @@ class ControllerProductCategory extends Controller {
 
         $this->data['all_cats'] = false;
 
-        if(isset($this->request->post['clear']) AND $this->request->post['clear'])
+        if(isset($this->request->get['clear']) AND $this->request->get['clear'])
         {
-          /*  unset($this->request->post['year']);
-            unset($this->request->post['make']);
-            unset($this->request->post['model']);
-            unset($this->request->post['type']); */
-            unset($this->request->post['all-cats']);
-            unset($this->request->post['manufacturer_id']);
+            unset($this->request->get['year']);
+            unset($this->request->get['make']);
+            unset($this->request->get['model']);
+            unset($this->request->get['type']);
+            unset($this->request->get['all-cats']);
+            unset($this->request->get['manufacturer_id']);
         }
 
-        if(isset($this->request->post['all-cats']) AND $this->request->post['all-cats'])
+        if(isset($this->request->get['all-cats']) AND $this->request->get['all-cats'])
         {
             unset($this->request->get['path']);
 
@@ -114,6 +123,9 @@ class ControllerProductCategory extends Controller {
         $step = $this->currency->convert($step,$this->config->get('config_currency'),$this->currency->getCode());
        // $step = round($step);
 
+        $this->load->model('tool/cars');
+        // search default data
+        $makes = $this->model_tool_cars->getMake();
 
 
         $this->data['contact_link_text'] = $this->language->get('text_contact');
@@ -121,6 +133,66 @@ class ControllerProductCategory extends Controller {
 
 
 
+        $years=array(
+            '1970',
+            '1971',
+            '1972',
+            '1973',
+            '1974',
+            '1975',
+            '1976',
+            '1977',
+            '1978',
+            '1979',
+
+            '1980',
+            '1981',
+            '1982',
+            '1983',
+            '1984',
+            '1985',
+            '1986',
+            '1987',
+            '1988',
+            '1989',
+
+            '1990',
+            '1991',
+            '1992',
+            '1993',
+            '1994',
+            '1995',
+            '1996',
+            '1997',
+            '1998',
+            '1999',
+
+            '2000',
+            '2001',
+            '2002',
+            '2003',
+            '2004',
+            '2005',
+            '2006',
+            '2007',
+            '2008',
+            '2009',
+            '2010',
+            '2011',
+            '2012',
+            '2013',
+
+        );
+
+        // filtry pod breadcrumbsami
+        $this->data['filter_labels'] = array();
+
+
+
+        $years = array_reverse($years);
+
+        $this->updateGlobalData('years',$years);
+        $this->updateGlobalData('makes',$makes);
 
         if(isset($this->request->get['path']) AND $this->request->get['path']!='' )
         {
@@ -131,6 +203,7 @@ class ControllerProductCategory extends Controller {
             $car_action =  $this->url->link('product/category');
         }
 
+        $this->updateGlobalData('car_action',$car_action);
 
 
         $filtering = false;
@@ -154,7 +227,201 @@ class ControllerProductCategory extends Controller {
 
         $filters['number_price_sections'] = count($price_max_values)-1;
 
+        $filters['cars'] = array(
+            'year' => NULL,
+            'make' => NULL,
+            'model' => NULL,
+            'type' => NULL
+        );
+
+
+
         $this->updateGlobalData('filters',$filters);
+
+        $data['cars'] = array();
+
+
+
+        $this->load->model('tool/cars');
+
+
+
+            if(isset($this->request->get['make']) AND $this->request->get['make']!='Marka' AND $this->request->get['make']!='Marke' AND $this->request->get['make']!='')
+        {
+            $filtering = true;
+            $data['cars']['make'] = $this->request->get['make'];
+
+          //  $this->request->post['make'] = $this->request->get['make'];
+         //   $this->request->post['model'] = '';
+         //   $this->request->post['type'] = '';
+        //   $this->request->post['year'] = '';
+
+
+
+        }
+
+        if(isset($this->request->get['model']) AND $this->request->get['model']!='Model' AND $this->request->get['model']!='Modell' AND $this->request->get['model']!='')
+        {
+            $filtering = true;
+            $data['cars']['model'] = $this->request->get['model'];
+
+
+
+        }
+
+
+        if(isset($this->request->get['type']) AND $this->request->get['type']!='Typ'  AND $this->request->get['type']!='')
+        {
+            $filtering = true;
+            $data['cars']['type'] = $this->request->get['type'];
+
+
+
+        }
+
+
+        $this->updateGlobalData('filters',$data);
+
+
+
+            if(isset($this->request->get['make']) AND $this->request->get['make']!='Marka' AND $this->request->get['make']!='Marke' AND $this->request->get['make']!='')
+            {
+
+                $filtering = true;
+                $data['cars'] = array(
+                   // 'year' => $this->request->post['year'],
+                    'year' => false,
+                    'make' => $this->request->get['make'],
+                    'model' => $this->request->get['model'],
+                    'type' => $this->request->get['type']
+                );
+
+                $make = $this->model_tool_cars->getOneMakeById($this->request->get['make']);
+
+                $this->data['filter_labels'][] = array(
+                    'name' => 'Marke',
+                    'value' => $make,
+                    'input_name' => 'make',
+                );
+
+                if(!isset($this->request->get['year']))
+                {
+                    $this->request->get['year'] = false;
+                }
+
+                $data['models'] = $this->model_tool_cars->getModelbyMake($this->request->get['make'],$this->request->get['year']);
+
+
+
+
+                if(isset($this->request->get['model']) AND $this->request->get['model']!='Model' AND $this->request->get['model']!='Modell' AND $this->request->get['model']!='')
+                {
+
+                    $model = $this->model_tool_cars->getOneModelById($this->request->get['model'],true);
+
+                    $this->data['filter_labels'][] = array(
+                        'name' => 'Modell',
+                        'value' => $model,
+                        'input_name' => 'model',
+                    );
+
+
+
+                    $data['types'] = $this->model_tool_cars->getTypebyModel($this->request->get['model']);
+                }
+
+                if(isset($this->request->get['type']) AND $this->request->get['type']!='Typ' AND $this->request->get['type']!='')
+                {
+                    $type = $this->model_tool_cars->getOneTypeById($this->request->get['type'],true);
+
+                    $this->data['filter_labels'][] = array(
+                        'name' => 'Typ',
+                        'value' => $type,
+                        'input_name' => 'type',
+                    );
+                }
+
+
+
+
+                $this->updateGlobalData('filters',$data);
+            }
+            else
+            {
+                $data['models'] = array();
+                $data['types'] = array();
+                $this->updateGlobalData('filters',$data);
+            }
+
+        if(isset($this->request->get['filters']['manufacturer_id']))
+        {
+            $this->load->model('catalog/manufacturer');
+
+            $manufacturer = $this->model_catalog_manufacturer->getManufacturer($this->request->get['filters']['manufacturer_id']);
+
+            $this->data['filter_labels'][] = array(
+                'name' => 'Produzent',
+                'value' => $manufacturer['name'],
+                'input_name' => 'filters[manufacturer_id]',
+            );
+        }
+
+
+            if(isset($this->request->get['filters']))
+            {
+                $filtering = true;
+
+                if(isset($this->request->get['filters']['product_type']))
+                {
+                    $this->data['filter_labels'][] = array(
+                        'name' => 'Artikelzustand',
+                        'value' => $this->data['product_types'][$this->request->get['filters']['product_type']],
+                        'input_name' => 'filters[product_type]',
+                    );
+                }
+
+
+
+                if(isset($this->request->get['filters']['clear']) AND $this->request->get['filters']['clear']==='true')
+                {
+                    $this->request->get['filters']['cena_min'] = '';
+                    $this->request->get['filters']['cena_max'] = '';
+                    $this->request->get['filters']['manufacturer'] = '';
+                    $this->request->get['filters']['product_type'] = '';
+                    $this->request->get['filters']['options'] = array();
+
+                    $this->data['filter_labels'] = array();
+                }
+
+                foreach($this->request->get['filters'] as $key => $value)
+                {
+                    if($value==='')
+                    {
+                        $this->request->get['filters'][$key] = null;
+                    }
+                }
+
+
+
+
+                $data = $this->request->get['filters'];
+                if(isset($data['cena_min']) AND $data['cena_min']!=='')
+                {
+                    $data['current_price_min'] =array_search($data['cena_min'],$this->data['filters']['price_min_value']);
+                }
+
+                if(isset($data['cena_max']) AND $data['cena_max']!=='')
+                {
+                    $data['current_price_max'] =array_search($data['cena_max'],$this->data['filters']['price_max_value']);
+                }
+
+
+
+                $this->updateGlobalData('filters',$data);
+            }
+
+
+
 
         $all = false;
 
@@ -239,6 +506,13 @@ class ControllerProductCategory extends Controller {
                 $this->document->setKeywords($category_info['meta_keyword']);
                 $this->data['heading_title'] = $category_info['name'];
             }
+
+
+            $this->data['filter_labels'][] = array(
+                'name' => 'Kategoria',
+                'value' => $this->document->getTitle(),
+                'input_name' => '',
+            );
 
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 			
@@ -373,11 +647,11 @@ class ControllerProductCategory extends Controller {
 
 
                 if($filtering){
-                    $product_total = $this->model_catalog_product->getTotalProducts($data);
+                    $product_total = $this->model_catalog_product->getTotalProducts($data,$this->data['filters']);
                 }
                 else
                 {
-                    $product_total = $this->model_catalog_product->getTotalProducts($data);
+                    $product_total = $this->model_catalog_product->getTotalProducts($data,$this->data['filters']);
                 }
 
                     if(isset($filtering))
@@ -428,7 +702,7 @@ class ControllerProductCategory extends Controller {
 
 
                 if($filtering){
-                    $product_total = $this->model_catalog_product->getTotalProducts($data);
+                    $product_total = $this->model_catalog_product->getTotalProducts($data,$this->data['filters']);
                 }
                 else
                 {
@@ -437,7 +711,7 @@ class ControllerProductCategory extends Controller {
 
                 if($filtering)
                 {
-                    $results = $this->model_catalog_product->getProducts($data);
+                    $results = $this->model_catalog_product->getProducts($data,$this->data['filters']);
                 }
                 else
                 {
@@ -454,7 +728,10 @@ class ControllerProductCategory extends Controller {
                 $results = $product_results;
             }
 
-			
+            $this->load->model('catalog/manufacturer');
+            $this->load->model('catalog/category');
+
+
 			foreach ($results as $result) {
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
@@ -721,7 +998,22 @@ class ControllerProductCategory extends Controller {
 			}
 
 
-					
+            // samochody
+            if (isset($this->request->get['make'])) {
+                $url .= '&make=' . $this->request->get['make'];
+            }
+
+            if (isset($this->request->get['model'])) {
+                $url .= '&model=' . $this->request->get['model'];
+            }
+
+            if (isset($this->request->get['type'])) {
+                $url .= '&type=' . $this->request->get['type'];
+            }
+
+
+
+
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
@@ -738,7 +1030,7 @@ class ControllerProductCategory extends Controller {
             }
 
 		
-			$this->data['pagination'] = $pagination->render();
+			$this->data['pagination'] = $pagination->render(false);
 		
 			$this->data['sort'] = $sort;
 			$this->data['order'] = $order;

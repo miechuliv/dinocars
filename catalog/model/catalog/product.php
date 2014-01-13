@@ -3,7 +3,19 @@ class ModelCatalogProduct extends Model {
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
 	}
-	
+
+    public function getProductCategories($product_id) {
+        $product_category_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
+
+        foreach ($query->rows as $result) {
+            $product_category_data[] = $result['category_id'];
+        }
+
+        return $product_category_data;
+    }
+
 	public function getProduct($product_id,$car_filter = false) {
 		if ($this->customer->isLogged()) {
 			$customer_group_id = $this->customer->getCustomerGroupId();
@@ -110,6 +122,11 @@ class ModelCatalogProduct extends Model {
             $sql .= "LEFT JOIN `" . DB_PREFIX . "product_option_value` pov ON (p.product_id=pov.product_id) LEFT JOIN `" . DB_PREFIX . "product_option` po ON (pov.product_option_id=po.product_option_id) LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.option_value_id=ov.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.option_value_id=ovd.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (ovd.option_id=od.option_id) ";
         }
 
+        // miechu cars join
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND $filtry['cars']['make']!='Marke' AND $filtry['cars']['make']!='Marka' AND $filtry['cars']['make']!='') {
+
+            $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
+        }
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
@@ -176,6 +193,26 @@ class ModelCatalogProduct extends Model {
             $sql .= " AND p.manufacturer_id = '" . (int)$filtry['manufacturer_id'] . "'";
 
         }
+
+
+
+
+        //miechu car filter
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " AND ptcr.make_id='".(int)$filtry['cars']['make']."' ";
+            if(isset($filtry['cars']['model']) AND is_numeric($filtry['cars']['model'])){
+
+                $sql .= " AND ptcr.model_id='".(int)$filtry['cars']['model']."' ";
+
+                if(isset($filtry['cars']['type']) AND is_numeric($filtry['cars']['type'])){
+                    $sql .= " AND ptcr.type_id='".(int)$filtry['cars']['type']."' ";
+                }
+            }
+
+
+
+        }
+
 
 
 		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
@@ -583,6 +620,10 @@ class ModelCatalogProduct extends Model {
             $sql .= "LEFT JOIN `" . DB_PREFIX . "product_option_value` pov ON (p.product_id=pov.product_id) LEFT JOIN `" . DB_PREFIX . "product_option` po ON (pov.product_option_id=po.product_option_id) LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.option_value_id=ov.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.option_value_id=ovd.option_value_id) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (ovd.option_id=od.option_id) ";
         }
 
+        // miechu cars join
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND $filtry['cars']['make']!='Marke' AND $filtry['cars']['make']!='Marka' AND $filtry['cars']['make']!='') {
+            $sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_car` ptcr ON (p.product_id=ptcr.product_id) ";
+        }
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
@@ -623,7 +664,21 @@ class ModelCatalogProduct extends Model {
 
         }
 
+        //miechu car filter
+        if (isset($filtry['cars']) AND $this->checkArrayEmpty($filtry['cars']) AND is_numeric($filtry['cars']['make'])) {
+            $sql .= " AND ptcr.make_id='".(int)$filtry['cars']['make']."' ";
+            if(isset($filtry['cars']['model']) AND is_numeric($filtry['cars']['model'])){
 
+                $sql .= " AND ptcr.model_id='".(int)$filtry['cars']['model']."' ";
+
+                if(isset($filtry['cars']['type']) AND is_numeric($filtry['cars']['type'])){
+                    $sql .= " AND ptcr.type_id='".(int)$filtry['cars']['type']."' ";
+                }
+            }
+
+
+
+        }
 
 
 
