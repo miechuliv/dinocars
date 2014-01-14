@@ -13,7 +13,13 @@ class Debay {
      // test token
     // private static $_token = "AgAAAA**AQAAAA**aAAAAA**A1HlUQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCpWBpg2dj6x9nY+seQ**nUcCAA**AAMAAA**Pd7nwyCk/qVFAozflbzwpGo1OsYqb8m8EUFsxA0eaM5jCSnlSKkzlaMl06Eb7NdlvCmFCCfy2cQlu2bMAPTAA9n5Oksp98a1yF7uA4VUUuSYpi+ukima4a8GQMOdGzIn/UogtCZ4WMUveVqzKiSLj6qygjY96m2icxwmp70txF3xvec0u8SUuALox4bDR9Qcu7T1u+Dv5RG55pjsTt1BY+DJl94Tgfee+yb3KLJYyeCaRTcI71aQQbUmquyDjEWbhKuzsh9CFU1XT+mEoJMJRXHcv3E/7E7qPDt89q+7McincSnHsG4XNPTnt1a8rmDhTHU2uKXbA4+HoIVupMnOz+po+kO2x7Bia63YIexGbHuFMbhmBgL6Dq5ahMoTPNPaPGz3AKG4hS0NcLAqcD+xbhr51odu2E+BxjRE8HIqI/PKPYCcqbXszbHUAvqowrar5cum30FQKWTFjTnjCapLcnjE+u8iBBSOJA4U2NWQIW6tVAezlySScl6xjADaUF2w6WqskDmnKdvdARORlNrkY1fwDsHD5M9RPDkM6HXVJXgt8EoIjwar2OQKBRswVFzJv93T+eYAYGI3feFBwXd6cVZZ4LIVlsXuAfPWvI59gKjZ5kJ6tVqFE71/6cSxInJwNlSarTUh07CJc3kdLQS2Vfiq4D9eQAvaTD/mstRLUUoKqh+7mQeCVz9O3gOvz7cmUBKGJJjo64/Qbe6Ebf4pQYyRHHNfqKATZK3KAr87my9sTWxW0rWX/fBw8iFRa2IK";
     // production token
-    private static $_token = "AgAAAA**AQAAAA**aAAAAA**fkv2UQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFlIOlCpKLpQudj6x9nY+seQ**7OoBAA**AAMAAA**p8XgUDNyshlMzwxxo7oCg/rtaPQ5hpWqpOMgCiuvMDzEhO+epKbAa03w9xerFeoqirPyE3KMilto/men4Gu/arzcsE59QBJq20JX1PwrUsECJpNdVrOi9v7PRqJFlWEdGZrpp5H8xcPb0RQ0Z5sUweU7X6+8E4e0rI5tr5sttxbEuG1TsAgPzfY/AWAWrzGVKX4Da16u3e1LbGluvouMH37vsPk4XkP1JgFmBIkJIBfRtDKpO7oIjte5HTV/Rj0GSBa03KFxx1hbg2UHqyAfQmTOGZHMTIH3MuSzhqHeboPZ+5RQ3axc4zC1dIejd5brgM5IGPRJr/aN+lY0KDt5SbKneulTnBkfqqQfi70oT7DltBv6vRA8LlCHiO+EgZAmUmYPQ3xyAF/wmNg1m7AcuitDh0prSfTqrbTNme0PLiqE+OoXg+06X8cBmqDJgUrk/cRLqJe8sgAl6Y3/uZEbLSt6FWNKxhJrn4hdnKSgvRekxY7n/T3PWbgtUWJO8jxyniPk7CDeNebFSuRPuD9vpZTfNTPzM+bgzpHOx6krlhAvbdA2Q3qF8WjHEQd4n4VHUwBq+E6JAvMbWiJwh5hd+j9HbvyVSAa9A1kPR7nYTEDZYdZXWKa2YuLjyYjBR/IQtdf7PIQIOHPbkV8jsRWYsbWiJcloTK6keHbaeQrD1WrlbqWHVKiJ4GFJZlQ7lNXRluVcTAnhuMrQSt2l18f7nagBlwVSFzRaLniLNlwokS1/So5seKVTzD1zZtrL9nh5";
+    // @todo wygenerowac tokeny
+    private static $_token =
+        array(
+           'de' => "AgAAAA**AQAAAA**aAAAAA**fkv2UQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFlIOlCpKLpQudj6x9nY+seQ**7OoBAA**AAMAAA**p8XgUDNyshlMzwxxo7oCg/rtaPQ5hpWqpOMgCiuvMDzEhO+epKbAa03w9xerFeoqirPyE3KMilto/men4Gu/arzcsE59QBJq20JX1PwrUsECJpNdVrOi9v7PRqJFlWEdGZrpp5H8xcPb0RQ0Z5sUweU7X6+8E4e0rI5tr5sttxbEuG1TsAgPzfY/AWAWrzGVKX4Da16u3e1LbGluvouMH37vsPk4XkP1JgFmBIkJIBfRtDKpO7oIjte5HTV/Rj0GSBa03KFxx1hbg2UHqyAfQmTOGZHMTIH3MuSzhqHeboPZ+5RQ3axc4zC1dIejd5brgM5IGPRJr/aN+lY0KDt5SbKneulTnBkfqqQfi70oT7DltBv6vRA8LlCHiO+EgZAmUmYPQ3xyAF/wmNg1m7AcuitDh0prSfTqrbTNme0PLiqE+OoXg+06X8cBmqDJgUrk/cRLqJe8sgAl6Y3/uZEbLSt6FWNKxhJrn4hdnKSgvRekxY7n/T3PWbgtUWJO8jxyniPk7CDeNebFSuRPuD9vpZTfNTPzM+bgzpHOx6krlhAvbdA2Q3qF8WjHEQd4n4VHUwBq+E6JAvMbWiJwh5hd+j9HbvyVSAa9A1kPR7nYTEDZYdZXWKa2YuLjyYjBR/IQtdf7PIQIOHPbkV8jsRWYsbWiJcloTK6keHbaeQrD1WrlbqWHVKiJ4GFJZlQ7lNXRluVcTAnhuMrQSt2l18f7nagBlwVSFzRaLniLNlwokS1/So5seKVTzD1zZtrL9nh5",
+           'en' => "",
+        );
+
      // testowy
   //   private static $_appId = 'dawidrza-1bcd-4bb7-9792-7f7dfb979810';
      // produkcyjny
@@ -31,7 +37,18 @@ class Debay {
      );
 
 
-     public static function sendRequest($method,$params){
+     public static function sendRequest($method,$params,$lang = 'de'){
+
+         if($lang == 'de')
+         {
+             $site_id = 77;
+         }
+         elseif($lang == 'en')
+         {
+             // $todo kod angielski
+             $site_id = 77;
+         }
+
 
          // upewnia się ze jest wlasciwa wersja
          $param['Version'] = 805;
@@ -41,12 +58,12 @@ class Debay {
 
          // site codes 0 -US 77 - DE  212 - Polska
          // test
-         $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.sandbox.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid=0&version=821&routing=new'));
+        // $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.sandbox.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid=0&version=821&routing=new'));
 //
          // production
-         $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid=77&version=821&routing=new'));
+         $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid='.$site_id.'&version=821&routing=new'));
          $requesterCredentials = new stdClass();
-         $requesterCredentials->eBayAuthToken = self::$_token;
+         $requesterCredentials->eBayAuthToken = self::$_token[$lang];
 
          $header = new SoapHeader('urn:ebay:apis:eBLBaseComponents', 'RequesterCredentials', $requesterCredentials);
 
