@@ -8,6 +8,14 @@
 </script>
 */?>
 
+
+<div id="ultraheader">
+	<div class="poziom">
+		<div>Biuro obsługi Klienta <strong>+48 888 888 999</strong></div>
+		<div>Rejestracja | Moje konto | DE | PL | EN</div>
+	</div>
+</div>
+
 <div id="footer">
 <div class="poziom" style="width:950px;">
   <?php if ($informations) { ?>
@@ -52,7 +60,7 @@
 	
 
 </div>
-<Div class="column">
+<div class="column">
 <h3>Facebook</h3>
 <?/*
 <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FDiesel-Land%2F607667069295896&amp;width=200&amp;height=180&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=112173815552215" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:180px;" allowTransparency="true"></iframe>
@@ -61,10 +69,6 @@
 </div>
 
 </div>
-
-<? if(Utilities::isController('product/category')) { ?>
-<script type="text/javascript">$(document).ready(function() { display('grid'); });</script>
-<? } ?>
 
 <script type="text/javascript"><!--
     $('#button-cart').bind('click', function() {

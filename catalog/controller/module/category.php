@@ -36,7 +36,7 @@ class ControllerModuleCategory extends Controller {
 			$this->data['child_id'] = 0;
 		}
 
-
+        $this->data['car_action'] = $this->url->link('product/category');
 							
 		$this->load->model('catalog/category');
 

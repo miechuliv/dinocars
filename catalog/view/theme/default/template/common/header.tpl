@@ -2,7 +2,7 @@
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <head>
 <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="l9N6oDorNSlFCx2E8tWfMUJdjAN_yZ5aPOCz62X0COw" />
+<meta name="viewport" content="width=device-width" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
 <?php if ($description) { ?>
@@ -45,16 +45,28 @@ DD_belatedPNG.fix('#logo img');
 */?>
 
 <script type="text/javascript"><!--
+function mobiles() {
+	var menu = $('#homepage > #column-left');
+	var navi = $('#homepage > #column-left .box-category');
+
+}
+
+$(window).resize(function(){
+	mobiles();
+});
+
 $(document).ready(function() {
 
-// OBCIĘCIE NAZW PRODUKTÓW 
+	mobiles();
 
+/*
     $('.name a').each(function(index, element) {
 
         $(element).text($(element).text().substr(0,50));
         $(element).append('...');
     })
 
+*/
 
     <?php if ($stores) { ?>
 <?php foreach ($stores as $store) { ?>
@@ -197,12 +209,6 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 
 <div id="black"></div>
 
-<div id="ultraheader">
-	<div class="poziom">
-		<div>Biuro obsługi Klienta <strong>+48 888 888 999</strong></div>
-		<div>Rejestracja | Moje konto | DE | PL | EN</div>
-	</div>
-</div>
 
 <div id="header">
 <div class="poziom">
@@ -215,17 +221,16 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
  
 </div>
 <div>
-
-	   <div id="search">
-		<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
-		<div class="button-search"></div>
-	  </div>
- 
-	  
-	<?php echo $cart; ?>    
-
-	<div id="trusted"><img src="./catalog/view/theme/default/img/trustedshops.jpg" alt="trusted"/></div>
-
+	<div style="float:left; width:65%;">
+		<div id="search">
+			<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?> wg nr, lub nazwy części" value="<?php echo $search; ?>" />
+			<div class="button-search"><?php echo $text_search; ?></div>
+		</div>
+	</div>
+	<div style="float:left; width:35%;">	  
+		<?php echo $cart; ?>    
+		<div id="trusted"><img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/></div>	
+	</div>
 </div>
 </div>
 </div>

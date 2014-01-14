@@ -142,6 +142,7 @@
   </div>
   <?php } */ ?>
   <?php echo $content_bottom; ?></div>
+  <?/*
 <script type="text/javascript"><!--
 
 function display(view) {
@@ -240,6 +241,6 @@ if (view) {
 } else {
 	display('list');
 }
-//--></script> 
+//--></script> */?>
 </div>
 <?php echo $footer; ?>

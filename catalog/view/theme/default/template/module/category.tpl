@@ -2,8 +2,9 @@
 
 
 <div class="box">
- <?/* <div class="box-heading"><?php echo $heading_title; ?></div>*/?>
+<?/* <div class="box-heading"><?php echo $heading_title; ?></div>*/?>
   <div class="box-content">
+  <div id="mobile-but">MENU</div>
     <ul class="box-category <?php if(array_key_exists('route',$this->request->get)) { ?> normal <?php } ?>">
       <?php foreach ($categories as $category) { ?>
       <li>

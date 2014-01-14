@@ -7,7 +7,8 @@ class ControllerProductCategory extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$this->load->model('tool/image'); 
+		$this->load->model('tool/image');
+
 		
 		if (isset($this->request->get['filter'])) {
 			$filter = $this->request->get['filter'];
@@ -43,6 +44,7 @@ class ControllerProductCategory extends Controller {
         {
             $this->request->get['filters']['product_type'] = $this->request->get['typ'];
         }
+
 
 
 
@@ -130,6 +132,8 @@ class ControllerProductCategory extends Controller {
 
         $this->data['contact_link_text'] = $this->language->get('text_contact');
         $this->data['contact_link'] = $this->url->link('information/contact');
+
+
 
 
 

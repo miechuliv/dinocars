@@ -247,7 +247,7 @@ abstract class Controller {
 
     }
 
-    protected function setFields($fields,$data,$request_type = 'post')
+    public function setFields($fields,$data,$request_type = 'post')
     {
         foreach($fields as $field)
         {

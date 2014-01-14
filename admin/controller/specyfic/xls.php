@@ -56,7 +56,7 @@ class ControllerSpecyficXls extends Controller{
         // 7 - hsn / tsn
 
         // sprawdzamy czy to jest diesel ,jeśli nie ma d to nie diesel
-        if(stripos($row[3],'d')===false)
+      /*  if(stripos($row[3],'d')===false)
         {
              return false;
         }
@@ -65,7 +65,7 @@ class ControllerSpecyficXls extends Controller{
         if(stripos($row[3],'xdrive')!==false AND (substr_count($row[3],'d') + substr_count($row[3],'D')) < 2)
         {
             return false;
-        }
+        } */
 
         try{
             $make_id = $this->model_tool_cars->getMakeIdByName($row[1]);
