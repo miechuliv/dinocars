@@ -9,6 +9,24 @@
 
 class ControllerEbayDebayProduct extends Controller {
 
+    public function __construct($registry)
+    {
+
+        parent::__construct($registry);
+        if(isset($this->request->get['site']))
+        {
+            debay::setSite($this->request->get['site']);
+
+        }
+        if(isset($this->request->post['site']))
+        {
+            debay::setSite($this->request->post['site']);
+
+        }
+
+
+    }
+
    public function index(){
 
 
@@ -24,17 +42,34 @@ class ControllerEbayDebayProduct extends Controller {
 
     private function getForm()
     {
+
+        $site = $this->request->get['site'];
+
+        // id jezyka potrzebne do opisuw
+        $this->load->model('localisation/language');
+
+        $data = array(
+            'filter_code' => $site
+        );
+
+        $langs = $this->model_localisation_language->getLanguages($data);
+
+        $language = array_shift($langs);
+
+        $language_id = $language['language_id'];
+
+
         $this->getLang;
 
         $this->load->model('ebay/debay');
 
-        $this->data['main_categories'] = $this->model_ebay_debay->getFirstLevel();
+        $this->data['main_categories'] = $this->model_ebay_debay->getFirstLevel($site);
 
         $this->load->model('catalog/product');
 
         $this->load->model('allegro/product');
 
-        $product = $this->model_allegro_product->getProduct($this->request->get['product_id'],3);
+        $product = $this->model_allegro_product->getProduct($this->request->get['product_id'],$language_id);
 
         $categories = $this->model_allegro_product->getCategories( $this->request->get['product_id'] ) ;
 
@@ -44,15 +79,17 @@ class ControllerEbayDebayProduct extends Controller {
 
 
 
+
+
         // templatki
 
         $this->load->model('ebay/debaytemplates');
 
-        $templates = $this->model_ebay_debaytemplates->getSzablony();
+        $templates = $this->model_ebay_debaytemplates->getSzablony($site);
 
         $this->data['templates'] = array();
 
-        $url = '';
+        $url = '&site='.$this->request->get['site'];
 
         foreach($templates as $template)
         {
@@ -64,6 +101,8 @@ class ControllerEbayDebayProduct extends Controller {
         }
 
 
+
+
         // nazwa
         if(isset($this->session->data['debay_fields']['Title']))
         {
@@ -72,39 +111,16 @@ class ControllerEbayDebayProduct extends Controller {
         else
         {
 
-            // synteza tytułu
-            $category = array_shift($categories);
 
-            $prefix = array(
-                59 => array(
-                    'new' => "Neu",
-                    'regenerated' => "Regeneriert(e)"
-                ),
-                60 => array(
-                    'new' => "Neu",
-                    'regenerated' => "Regeneriert(e)"
-                )
-            );
-
-            $Title = '';
-
-            if($category == 59)
-            {
-                $Title .= $prefix[59][$product['type']]." Kraftstoffpumpen ".$product['make_name']." ".$product['model_name']." ".$product['model'];
-            }
-            elseif($category == 60)
-            {
-                $Title .= $prefix[60][$product['type']]." Diesel-Injektoren ".$product['make_name']." ".$product['model_name']." ".$product['model'];
-            }
-            else
-            {
                 // 50 znaków ograniczenie allegro
-                $Title = substr($product['name'],0,50);
-            }
+            $Title = substr($product['name'],0,50);
+
 
             // skrocenie tytułu
             $this->data['Title'] = trim($Title);
         }
+
+
 
 
 
@@ -278,6 +294,10 @@ class ControllerEbayDebayProduct extends Controller {
     {
         ob_start();
 
+
+
+        debay::setSite($this->request->post['site']);
+
         $json = array();
 
         if(!isset($this->request->post['category_id']))
@@ -299,7 +319,7 @@ class ControllerEbayDebayProduct extends Controller {
 
             }catch(Exception $e)
             {
-                $json['error'] = "Bład przy pobieraniu atrybutów";
+                $json['error'] = "Bład przy pobieraniu atrybutów ".$e->getMessage();
             }
 
 
@@ -327,7 +347,7 @@ class ControllerEbayDebayProduct extends Controller {
         {
             $this->load->model('ebay/debay');
 
-            $json['categories'] = $this->model_ebay_debay->getChildrenById($this->request->post['category_id']);
+            $json['categories'] = $this->model_ebay_debay->getChildrenById($this->request->post['category_id'],$this->request->post['site']);
 
             if(empty($json['categories']))
             {
@@ -348,6 +368,8 @@ class ControllerEbayDebayProduct extends Controller {
         $this->config->set('debay_debug',1);
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+
+            $site = $this->request->get['site'];
 
            // var_dump($this->request->post);
 
@@ -418,10 +440,10 @@ class ControllerEbayDebayProduct extends Controller {
 
 
             $returnPolicy = array(
-                'ReturnsAcceptedOption' => ($this->config->get('debay_ReturnsAccepted')) ? 'ReturnsAccepted' : 'ReturnsNotAccepted',
+                'ReturnsAcceptedOption' => ($this->config->get('debay_ReturnsAccepted_'.$site)) ? 'ReturnsAccepted_'.$site : 'ReturnsNotAccepted_'.$site,
                 'RefundOption' => 'MoneyBack',
-                'ReturnsWithinOption' => ($this->config->get('debay_ReturnsWithinOption')) ? $this->config->get('debay_ReturnsWithinOption') : NULL,
-                'Description ' =>($this->config->get('debay_Description')) ? $this->config->get('debay_Description') : NULL,
+                'ReturnsWithinOption' => ($this->config->get('debay_ReturnsWithinOption_'.$site)) ? $this->config->get('debay_ReturnsWithinOption_'.$site) : NULL,
+                'Description ' =>($this->config->get('debay_Description_'.$site)) ? $this->config->get('debay_Description_'.$site) : NULL,
                 'ShippingCostPaidByOption' => 'Buyer',
             );
 
@@ -477,9 +499,10 @@ class ControllerEbayDebayProduct extends Controller {
                 'Description' => utf8_encode($this->gettemplate($price,$this->request->post['template'],$this->request->post['product_id'])),
 
                 // na razie na sztywno
-                'Country' => 'DE',//
+                'Country' => strtoupper($site),//
 
                 // tak samoi
+                // @todo zmieniac walute wg kraju
                 'Currency' => 'EUR',//
 
                 'ListingDuration' =>  $this->request->post['ListingDuration'],//
@@ -493,7 +516,8 @@ class ControllerEbayDebayProduct extends Controller {
                 ),
                     //
                 // na razie na sztywno
-                'Site' => 'US',
+
+                'Site' => strtoupper($site),//
                 // @todo do wbicia gdzie najlepiej w config debaya
                 'Location' => 'Grambow',//
                 // @todo rozwiązać ten problem
@@ -661,9 +685,7 @@ class ControllerEbayDebayProduct extends Controller {
     public function showtemplate()
     {
 
-           echo $this->gettemplate($this->request->get['price'],$this->request->get['name'],$this->request->get['product_id']);
-
-
+           echo $this->gettemplate($this->request->get['price'],$this->request->get['name'],$this->request->get['product_id'],$this->request->get['site']);
 
     }
 
@@ -679,11 +701,24 @@ class ControllerEbayDebayProduct extends Controller {
         }
 
 
+        $site  = $this->request->get['site'];
 
+        // id jezyka potrzebne do opisuw
+        $this->load->model('localisation/language');
+
+        $data = array(
+            'filter_code' => $site
+        );
+
+        $langs = $this->model_localisation_language->getLanguages($data);
+
+        $language = array_shift($langs);
+
+        $language_id = $language['language_id'];
 
         $this->load->model( 'allegro/product' ) ;
         // wyciagamy opis po niemiecku
-        $Product = $this->model_allegro_product->getProduct( $product_id , 3 ) ;
+        $Product = $this->model_allegro_product->getProduct( $product_id , $language_id ) ;
         $ProductImages = $this->model_allegro_product->getProductImages( $product_id ) ;
         $Categories = $this->model_allegro_product->getCategories( $product_id ) ;
         $Options = $this->model_allegro_product->getProductOptions( $product_id ) ;
@@ -759,25 +794,12 @@ class ControllerEbayDebayProduct extends Controller {
 
         $ShowTemplate = $this->model_ebay_debaytemplates->showTemplate( $name ) ;
 
-        $Type = NULL;
 
-        if($Product['type']=='new')
-        {
-            $Type = "Neues produkt";
-        }
-        elseif($Product['type']=='regenerated')
-        {
-            $Type = "Generalüberholtes Produkt";
-        }
-        elseif($Product['type']=='for_regeneration')
-        {
-            $Type = "Produkt regenerieren lassen";
-        }
 
-        $kaucja_zw = $Product['kaucja_zw'];
-        $kaucja_bzw = $Product['kaucja_bzw'];
+
+
         //   var_dump($ShowTemplate);
-        $Template = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMAGES}', '{PRODUCT_MODEL}', '{PRODUCT_PRICE}', '{PRODUCT_CATEGORY}', '{PRODUCT_OPTIONS}', '{PRODUCT_DELIVERY}', '{PRODUCT_MANU}', '{IMG}','{MAKE_NAME}','{MODEL_NAME}','{TYPE}','{KAUCJA_ZW}','{KAUCJA_BZW}'), array( $Product['name'], $ProductDescription, $ExtImages, $Product['model'], $Price, $ExtCategories, $ExtOptions, $Delivery, $Manufacturer, $IMG,$Product['make_name'],$Product['model_name'],$Type,$kaucja_zw,$kaucja_bzw ), html_entity_decode($ShowTemplate['value']) ) ;
+        $Template = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMAGES}', '{PRODUCT_MODEL}', '{PRODUCT_PRICE}', '{PRODUCT_CATEGORY}', '{PRODUCT_OPTIONS}', '{PRODUCT_DELIVERY}', '{PRODUCT_MANU}', '{IMG}','{MAKE_NAME}','{MODEL_NAME}'), array( $Product['name'], $ProductDescription, $ExtImages, $Product['model'], $Price, $ExtCategories, $ExtOptions, $Delivery, $Manufacturer, $IMG,$Product['make_name'],$Product['model_name'] ), html_entity_decode($ShowTemplate['value']) ) ;
 
         return $Template ;
 

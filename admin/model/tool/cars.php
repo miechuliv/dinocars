@@ -11,7 +11,7 @@ class ModelToolCars extends Model{
 
     public function getAllMake()
     {
-        $results = $this->db->query("SELECT * FROM make");
+        $results = $this->db->query("SELECT * FROM make  ");
 
         return $results;
     }

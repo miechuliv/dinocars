@@ -9,6 +9,17 @@
 
 class ControllerEbayDebaySeller extends Controller{
 
+    public function __construct($registry)
+    {
+
+        parent::__construct($registry);
+        if(isset($this->request->get['site']))
+        {
+            debay::setSite($this->request->get['site']);
+
+        }
+
+    }
 
     public function index()
     {

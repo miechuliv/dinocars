@@ -8,6 +8,8 @@ define('HTTP_IMAGE', 'http://demo.stronazen.pl/dinocars/image/');
 define('HTTPS_SERVER', 'http://demo.stronazen.pl/dinocars/admin/');
 define('HTTPS_IMAGE', 'http://demo.stronazen.pl/dinocars/image/');
 
+define('HTTP_SUB', 'dinocars/');
+
 // DIR
 define('DIR_APPLICATION', '/home/demostrona/domains/demo.stronazen.pl/public_html/dinocars/admin/');
 define('DIR_SYSTEM', '/home/demostrona/domains/demo.stronazen.pl/public_html/dinocars/system/');
@@ -21,13 +23,13 @@ define('DIR_DOWNLOAD', '/home/demostrona/domains/demo.stronazen.pl/public_html/d
 define('DIR_LOGS', '/home/demostrona/domains/demo.stronazen.pl/public_html/dinocars/system/logs/');
 define('DIR_CATALOG', '/home/demostrona/domains/demo.stronazen.pl/public_html/dinocars/catalog/');
 
-define('ENV', 'DEVELOPMENT');
+define('ENV', 'TESTING');
 
 // DB
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'mysql2.zenbox.pl');
 define('DB_USERNAME', 'demostrona_dcars');
 define('DB_PASSWORD', 'tester');
-define('DB_DATABASE', 'demostrona_dcara');
+define('DB_DATABASE', 'demostrona_dcars');
 define('DB_PREFIX', '');
 ?>

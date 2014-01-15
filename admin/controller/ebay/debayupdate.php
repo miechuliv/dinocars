@@ -9,7 +9,24 @@
 
 class ControllerEbayDebayUpdate extends Controller{
 
+    public function __construct($registry)
+    {
+
+        parent::__construct($registry);
+
+        if(isset($this->request->get['site']))
+        {
+
+            debay::setSite($this->request->get['site']);
+
+        }
+
+
+    }
+
       public function index(){
+
+
 
           if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
 
@@ -19,7 +36,7 @@ class ControllerEbayDebayUpdate extends Controller{
 
           }
 
-          $url = '';
+          $url = '&site='.(isset($this->request->get['site'])?$this->request->get['site']:'en');
           $this->data['action'] = $this->url->link('ebay/debayupdate', 'token=' . $this->session->data['token'] .$url, 'SSL');
 
           $this->template = 'ebay/debay_update.tpl';

@@ -26,7 +26,49 @@ $(document).ready(function(){
 
     ) */
 
+    $.ajax({
+        type     : "POST",
+        url      : "index.php?route=tool/cars/getAllMakes",
+        dataType: 'json',
+        data: {
+            pass: 'ajax'
+        },
 
+        success : function(data) {
+
+            var html='';
+
+
+            // var obj = jQuery.parseJSON(data);
+            if(data['output']==null)
+            {
+                // alert("Wir konnten leider kein Auto zu Ihren Baujahr und Ihrer  angegebenen Marke finden. Bitte wahelen Sie ein anderes Baujahr oder waehlen Sie einfach alle Baujahre aus! Vielen Dank");
+
+                $('#model').html('<option>Model</option>');
+                $('#type').html('<option>Typ</option>');
+
+            }
+
+
+            html+='<option value="" >Marka</option>';
+
+            jQuery.each( data['output'] , function(index, value) {
+
+                html+='<option value="'+value['make_id']+'" >'+value['make_name']+'</option>';
+            });
+
+            $('#cars_make_filter').html(html);
+
+        },
+        complete : function(r) {
+
+
+        },
+        error:    function(error) {
+
+
+        }
+    });
 
 
 

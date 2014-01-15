@@ -15,6 +15,8 @@ class ControllerCatalogProduct extends Controller {
   	public function insert() {
     	$this->language->load('catalog/product');
 
+
+
     	$this->document->setTitle($this->language->get('heading_title')); 
 		
 		$this->load->model('catalog/product');
@@ -400,6 +402,9 @@ class ControllerCatalogProduct extends Controller {
             $mass_google_merchant = null;
         }
 
+        $this->load->model('sale/customer_group');
+
+        $this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
         // koniec
 
@@ -570,6 +575,7 @@ class ControllerCatalogProduct extends Controller {
         if (isset($this->request->get['filter_attribute'])) {
             $filter_attribute = $this->request->get['filter_attribute'];
         } else {
+            $filter_attribute = null;
             $filter_cars = null;
         }
 
@@ -1206,18 +1212,18 @@ class ControllerCatalogProduct extends Controller {
       		$this->data['model'] = '';
     	}
 
-        $this->setFields($fields,$product_info);
+        $this->setFields($fields,isset($product_info)?$product_info:array());
 
-        if (isset($this->request->post['type'])) {
+       /* if (isset($this->request->post['type'])) {
             $this->data['type'] = $this->request->post['type'];
         } elseif (!empty($product_info)) {
             $this->data['type'] = $product_info['type'];
         } else {
             $this->data['type'] = '';
-        }
+        } */
 
         // miechu kaucje
-        if (isset($this->request->post['kaucja_zw'])) {
+       /* if (isset($this->request->post['kaucja_zw'])) {
             $this->data['kaucja_zw'] = $this->request->post['kaucja_zw'];
         } elseif (!empty($product_info)) {
             $this->data['kaucja_zw'] = $product_info['kaucja_zw'];
@@ -1231,7 +1237,7 @@ class ControllerCatalogProduct extends Controller {
             $this->data['kaucja_bzw'] = $product_info['kaucja_bzw'];
         } else {
             $this->data['kaucja_bzw'] = '';
-        }
+        } */
 
         if (isset($this->request->post['delivery_time'])) {
             $this->data['delivery_time'] = $this->request->post['delivery_time'];
@@ -1242,7 +1248,7 @@ class ControllerCatalogProduct extends Controller {
         }
 
         //pl
-        if (isset($this->request->post['kaucja_zw_pl'])) {
+       /* if (isset($this->request->post['kaucja_zw_pl'])) {
             $this->data['kaucja_zw_pl'] = $this->request->post['kaucja_zw_pl'];
         } elseif (!empty($product_info)) {
             $this->data['kaucja_zw_pl'] = $product_info['kaucja_zw_pl'];
@@ -1256,15 +1262,15 @@ class ControllerCatalogProduct extends Controller {
             $this->data['kaucja_bzw_pl'] = $product_info['kaucja_bzw_pl'];
         } else {
             $this->data['kaucja_bzw_pl'] = '';
-        }
+        } */
 
-        if (isset($this->request->post['delivery_time_pl'])) {
+       /* if (isset($this->request->post['delivery_time_pl'])) {
             $this->data['delivery_time_pl'] = $this->request->post['delivery_time_pl'];
         } elseif (!empty($product_info)) {
             $this->data['delivery_time_pl'] = $product_info['delivery_time_pl'];
         } else {
             $this->data['delivery_time_pl'] = '';
-        }
+        } */
 
         //
 
@@ -1579,7 +1585,15 @@ class ControllerCatalogProduct extends Controller {
 
         $this->data['retailers'] = $this->model_catalog_retailer->getretailers();
 
-		$this->data['product_retailers'] = $this->model_catalog_product->getProductRetailers($this->request->get['product_id']);
+        if(isset($this->request->get['product_id']))
+        {
+            $this->data['product_retailers'] = $this->model_catalog_product->getProductRetailers($this->request->get['product_id']);
+        }
+        else
+        {
+            $this->data['product_retailers'] = array();
+        }
+
 
 
 		// Options
@@ -1757,6 +1771,8 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['product_layout'] = array();
 		}
+
+        $this->load->model('tool/cars');
 
         //miechu
         if (isset($this->request->post['cars'])) {

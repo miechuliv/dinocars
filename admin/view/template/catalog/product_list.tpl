@@ -219,7 +219,7 @@
                             <td align="right">
 
                                 <select style="width:100px" id="cars_make_filter" name="filter_cars[make]">
-                                    <option >Marka</option>
+                                  <?php /*   <option >Marka</option>
                                     <?php foreach($makes as $make){ ?>
                                     <?php if(isset($make['make_name'])){ ?>
                                     <?php if($filter_cars['make']==$make['make_id']){ ?>
@@ -229,7 +229,7 @@
                                     <option value="<?php echo $make['make_id']; ?>" ><?php echo $make['make_name']; ?></option>
                                     <?php } ?>
                                     <?php } ?>
-                                    <?php } ?>
+                                    <?php } ?> */ ?>
                                 </select>
                             </td>
                             <td align="right">
@@ -502,7 +502,8 @@
 
               <td id="action-td" class="right"><?php foreach ($product['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>">Wystaw na Ebay</a> ]
+                <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>&site=en">Wystaw na Ebay UK</a> ]
+                  <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>&site=de">Wystaw na Ebay DE</a> ]
                 <br>[ <a href="index.php?route=allegro/product&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>">Wystaw na Allegro</a> ]
                 <?php } ?></td>
             </tr>

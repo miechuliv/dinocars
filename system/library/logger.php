@@ -137,7 +137,7 @@ class Logger {
         $line = $debugBacktrace[1]['line'];
         $file = $debugBacktrace[1]['file'];
 
-        $entry = array($datetime,$errorlevel,$tag,iconv('UTF-8', 'Windows-1251', $value),$line,$file);
+        $entry = array($datetime,$errorlevel,$tag,$value,$line,$file);
 
         fputcsv($fd, $entry, $this->SEPARATOR);
 

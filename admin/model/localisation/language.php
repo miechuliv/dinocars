@@ -257,7 +257,12 @@ class ModelLocalisationLanguage extends Model {
 				'name',
 				'code',
 				'sort_order'
-			);	
+			);
+
+            if(isset($data['filter_code']))
+            {
+                $sql .= " WHERE code = '".$data['filter_code']."'  ";
+            }
 			
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];	

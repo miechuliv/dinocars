@@ -11,6 +11,18 @@ class ControllerEbayDebayTemplates extends Controller {
 
     private $error = array() ;
 
+    public function __construct($registry)
+    {
+
+        parent::__construct($registry);
+        if(isset($this->request->get['site']))
+        {
+            debay::setSite($this->request->get['site']);
+
+        }
+
+    }
+
     public function index() {
 
 
@@ -26,9 +38,12 @@ class ControllerEbayDebayTemplates extends Controller {
 
         if ( $this->request->server['REQUEST_METHOD'] == 'POST' ) {
 
-            $this->model_ebay_debaytemplates->addSzablon( $this->request->post ) ;
+
+
+
+            $this->model_ebay_debaytemplates->addSzablon( $this->request->post, $this->request->get['site']  ) ;
             $this->session->data['success'] = 'Szablon został dodany' ;
-            $url = '' ;
+            $url = '&site='.$this->request->get['site'] ;
             $this->redirect( HTTPS_SERVER . 'index.php?route=ebay/debaytemplates&token=' . $this->session->data['token'] . $url ) ;
         }
 
@@ -42,9 +57,9 @@ class ControllerEbayDebayTemplates extends Controller {
 
         if ( $this->request->server['REQUEST_METHOD'] == 'POST' ) {
 
-            $this->model_ebay_debaytemplates->editSzablon( $this->request->get['debay_template_id'], $this->request->post ) ;
+            $this->model_ebay_debaytemplates->editSzablon( $this->request->get['debay_template_id'], $this->request->post, $this->request->get['site'] ) ;
             $this->session->data['success'] = 'Szablon został zedytowany' ;
-            $url = '' ;
+            $url = '&site='.$this->request->get['site'] ;
             $this->redirect( HTTPS_SERVER . 'index.php?route=ebay/debaytemplates&token=' . $this->session->data['token'] . $url ) ;
         }
 
@@ -59,11 +74,11 @@ class ControllerEbayDebayTemplates extends Controller {
 
             foreach ( $this->request->post['selected'] as $szablon_id ) {
 
-                $this->model_ebay_debaytemplates->deleteSzablon( $szablon_id ) ;
+                $this->model_ebay_debaytemplates->deleteSzablon( $szablon_id, $this->request->get['site'] ) ;
             }
 
             $this->session->data['success'] = 'Szablon został usunięty' ;
-            $url = '' ;
+            $url = '&site='.$this->request->get['site'] ;
             $this->redirect( HTTPS_SERVER . 'index.php?route=ebay/debaytemplates&token=' . $this->session->data['token'] . $url ) ;
         }
 
@@ -72,13 +87,15 @@ class ControllerEbayDebayTemplates extends Controller {
 
     private function getList() {
 
-        $url = '' ;
+        $url = '&site='.$this->request->get['site'] ;
 
 
         $this->data['insert'] = HTTPS_SERVER . 'index.php?route=ebay/debaytemplates/insert&token=' . $this->session->data['token'] . $url ;
         $this->data['delete'] = HTTPS_SERVER . 'index.php?route=ebay/debaytemplates/delete&token=' . $this->session->data['token'] . $url ;
 
-        $results = $this->model_ebay_debaytemplates->getSzablony() ;
+        $results = $this->model_ebay_debaytemplates->getSzablony($this->request->get['site']) ;
+
+        $this->data['szablony'] = array();
 
         foreach ( $results as $result ) {
 
@@ -111,14 +128,14 @@ class ControllerEbayDebayTemplates extends Controller {
             $this->data['success'] = '' ;
         }
 
-        $url = '' ;
+        $url = '&site='.$this->request->get['site'] ;
 
         if ( isset( $this->request->get['page'] ) ) {
 
             $url .= '&page=' . $this->request->get['page'] ;
         }
 
-        $url = '' ;
+
         $this->template = 'ebay/debay_templates_list.tpl' ;
         $this->children = array( 'common/header', 'common/footer' ) ;
         $this->response->setOutput( $this->render( true ), $this->config->get( 'config_compression' ) ) ;
@@ -142,7 +159,7 @@ class ControllerEbayDebayTemplates extends Controller {
             $this->data['error_warning'] = '' ;
         }
 
-        $url = '' ;
+        $url = '&site='.$this->request->get['site'] ;
 
         if ( isset( $this->request->get['page'] ) ) {
 
@@ -162,11 +179,13 @@ class ControllerEbayDebayTemplates extends Controller {
             $this->data['action'] = HTTPS_SERVER . 'index.php?route=ebay/debaytemplates/update&token=' . $this->session->data['token'] . '&debay_template_id=' . $this->request->get['debay_template_id'] . $url ;
         }
 
+        $this->data['token'] = $this->session->data['token'];
+
         $this->data['cancel'] = HTTPS_SERVER . 'index.php?route=ebay/debaytemplates&token=' . $this->session->data['token'] . $url ;
 
         if ( isset( $this->request->get['debay_template_id'] ) && ( $this->request->server['REQUEST_METHOD'] != 'POST' ) ) {
 
-            $this->data['szablon'] = $this->model_ebay_debaytemplates->getSzablon( $this->request->get['debay_template_id'] ) ;
+            $this->data['szablon'] = $this->model_ebay_debaytemplates->getSzablon( $this->request->get['debay_template_id'], $this->request->get['site'] ) ;
         }
 
         $this->template = 'ebay/debay_templates_form.tpl' ;

@@ -28,6 +28,8 @@ class ModelEbayDebay extends Model{
     );
 
 
+
+
     public function getMessagesFromEbay($type,$pagination = false,$page = 1, $limit = 15)
     {
         $params = array(
@@ -401,6 +403,8 @@ class ModelEbayDebay extends Model{
 
           $this->deleteCategories();
 
+         $site = debay::getSite();
+
           foreach($data->CategoryArray->Category as $key => $category)
           {
 
@@ -428,6 +432,7 @@ class ModelEbayDebay extends Model{
                 `category_name` = '".$this->db->escape($category->CategoryName)."',
                 `category_parent_id` = '".$category->CategoryParentID."',
                 `leaf_category` = '".$category->LeafCategory."'
+                ,country = '".$site."'
 
 
                  ");
@@ -445,7 +450,7 @@ class ModelEbayDebay extends Model{
          $this->db->query("DELETE FROM debay_categories");
     }
 
-    public function getChildrenById($parent_id)
+    public function getChildrenById($parent_id,$site)
     {
          if(!$parent_id)
          {
@@ -453,7 +458,8 @@ class ModelEbayDebay extends Model{
              throw new Exception('Nie podano id rodzica kategorii');
          }
 
-         $results = $this->db->query("SELECT * FROM debay_categories WHERE `category_parent_id`='".(int)$parent_id."' AND `category_id`!='".(int)$parent_id."'  ");
+         $results = $this->db->query("SELECT * FROM debay_categories WHERE `category_parent_id`='".(int)$parent_id."' AND `category_id`!='".(int)$parent_id."'
+           AND country = '".$site."' ");
 
          $data = array();
 
@@ -468,11 +474,13 @@ class ModelEbayDebay extends Model{
          return $data;
     }
 
-    public function getFirstLevel()
+    public function getFirstLevel($site)
     {
 
 
-        $results = $this->db->query("SELECT * FROM debay_categories WHERE `category_level`='1'  ");
+
+        $results = $this->db->query("SELECT * FROM debay_categories WHERE `category_level`='1'
+          AND country = '".$site."' ");
 
         $data = array();
 
@@ -824,11 +832,18 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o czasach wysyłki");
         }
 
+
+
         $this->deleteDispatchTime();
+
+        $site = debay::getSite();
+
+        var_dump('in');
 
         foreach($data->DispatchTimeMaxDetails as $time)
         {
-            $this->db->query("INSERT INTO debay_time_max_details SET `dispatch_time_max`= '".(int)$time->DispatchTimeMax."',  `description`='".$this->db->escape($time->Description)."', `extended_handling`='".(int)$time->ExtendedHandling."'    ");
+            $this->db->query("INSERT INTO debay_time_max_details SET `dispatch_time_max`= '".(int)$time->DispatchTimeMax."',  `description`='".$this->db->escape($time->Description)."', `extended_handling`='".(int)$time->ExtendedHandling."'
+                ,country = '".$site."' ");
         }
 
     }
@@ -898,9 +913,12 @@ class ModelEbayDebay extends Model{
 
         $this->deleteRegionDetails();
 
+        $site = debay::getSite();
+
         foreach($data->RegionDetails as $region)
         {
-            $this->db->query("INSERT INTO debay_regions SET `region_id`= '".(int)$region->RegionID."',  `description`='".$this->db->escape($region->Description)."'   ");
+            $this->db->query("INSERT INTO debay_regions SET `region_id`= '".(int)$region->RegionID."',  `description`='".$this->db->escape($region->Description)."'
+             ,country = '".$site."'  ");
         }
 
     }
@@ -970,9 +988,12 @@ class ModelEbayDebay extends Model{
 
         $this->deleteShippingLocationDetails();
 
+        $site = debay::getSite();
+
         foreach($data->ShippingLocationDetails as $location)
         {
-            $this->db->query("INSERT INTO debay_shipping_location SET `shipping_location`= '".(int)$location->ShippingLocation."',  `description`='".$this->db->escape($location->Description)."'    ");
+            $this->db->query("INSERT INTO debay_shipping_location SET `shipping_location`= '".(int)$location->ShippingLocation."',  `description`='".$this->db->escape($location->Description)."'
+                ,country = '".$site."' ");
         }
 
     }
@@ -1042,6 +1063,8 @@ class ModelEbayDebay extends Model{
 
         $this->deleteShippingPackageDetails();
 
+        $site = debay::getSite();
+
         foreach($data->ShippingPackageDetails as $package)
         {
 
@@ -1055,6 +1078,7 @@ class ModelEbayDebay extends Model{
             `description`='".$this->db->escape($package->Description)."',
             `shipping_package`='".$this->db->escape($package->ShippingPackage)."',
             `default_value`='".(int)$package->DefaultValue."'
+            ,country = '".$site."'
                 ");
         }
 
@@ -1156,12 +1180,15 @@ class ModelEbayDebay extends Model{
 
         $this->deleteShippingCarrierDetails();
 
+        $site = debay::getSite();
+
         foreach($data->ShippingCarrierDetails as $package)
         {
             $this->db->query("INSERT INTO debay_shipping_carriers SET
             `shipping_carrier_id`= '".(int)$package->ShippingCarrierID."',
             `description`='".$this->db->escape($package->Description)."',
             `shipping_carrier`='".$this->db->escape($package->ShippingCarrier)."'
+            ,country = '".$site."'
 
                 ");
         }
@@ -1233,6 +1260,8 @@ class ModelEbayDebay extends Model{
 
         $this->deleteShippingServiceDetails();
 
+        $site = debay::getSite();
+
 
         foreach($data->ShippingServiceDetails as $service)
         {
@@ -1261,6 +1290,7 @@ class ModelEbayDebay extends Model{
             `shipping_service_id`='".(int)$service->ShippingServiceID."',
             `shipping_time_max`='".(int)$service->ShippingTimeMax."',
             `shipping_time_min`='".(int)$service->ShippingTimeMin."'
+            ,country = '".$site."'
              ");
 
             if(isset($service->ShippingPackage) AND is_array($service->ShippingPackage))
@@ -1270,6 +1300,7 @@ class ModelEbayDebay extends Model{
                     $this->db->query("INSERT INTO debay_packages_to_services SET
             `service`='".$service->ShippingService."',
             `package`='".$package."'
+            ,country = '".$site."'
 
                 ");
                 }
@@ -1287,9 +1318,9 @@ class ModelEbayDebay extends Model{
         $this->db->query("DELETE FROM debay_packages_to_services");
     }
 
-    public function getShippingServiceDetails()
+    public function getShippingServiceDetails($country)
     {
-        $results = $this->db->query("SELECT * FROM debay_shipping_services  ");
+        $results = $this->db->query("SELECT * FROM debay_shipping_services WHERE country = '".$country."' ");
 
         $data = array();
 
@@ -1297,7 +1328,8 @@ class ModelEbayDebay extends Model{
         {
             foreach($results->rows as $row)
             {
-                $subresult = $this->db->query("SELECT * FROM debay_packages_to_services WHERE service='".$row['shipping_service']."'  ");
+                $subresult = $this->db->query("SELECT * FROM debay_packages_to_services WHERE service='".$row['shipping_service']."'
+                  AND country = '".$country."'");
 
 
                 $data[] = new shippingServiceRow($row,$subresult);

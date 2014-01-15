@@ -259,11 +259,19 @@ function hidedesc(divid) {
         </ul>
       </li>
 
-        <li id="ebay"><a class="top">Ebay</a>
+        <li id="ebay"><a class="top">Ebay UK</a>
             <ul>
-                <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>">Ebay konfiguracja</a></li>
-				<li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>">Szablony</a></li>
-                <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>">Panel sprzedawcy</a></li>
+                <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>&site=en">Ebay konfiguracja</a></li>
+                <li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>&site=en">Szablony</a></li>
+                <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>&site=en">Panel sprzedawcy</a></li>
+            </ul>
+        </li>
+
+        <li id="ebay"><a class="top">Ebay DE</a>
+            <ul>
+                <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>&site=de">Ebay konfiguracja</a></li>
+                <li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>&site=de">Szablony</a></li>
+                <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>&site=de">Panel sprzedawcy</a></li>
             </ul>
         </li>
 

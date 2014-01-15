@@ -11,7 +11,8 @@
              dataType: 'json',
              type: 'post',
              data     : {
-                 category_id : category_id
+                 category_id : category_id,
+                 site: '<?php echo $this->request->get["site"]; ?>'
 
              },
              success: function(json) {
@@ -63,7 +64,8 @@
                          dataType: 'json',
                          type: 'post',
                          data     : {
-                             category_id : category_id
+                             category_id : category_id,
+                             site: '<?php echo $this->request->get["site"]; ?>'
 
                          },
                          success: function(json) {
@@ -144,7 +146,8 @@
              dataType: 'json',
              type: 'post',
              data     : {
-                 category_id : category_id
+                 category_id : category_id,
+                 site: '<?php echo $this->request->get["site"]; ?>'
 
              },
              success: function(json) {

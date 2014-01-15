@@ -18,12 +18,12 @@
            <?php if(!$i){ echo '</tr>'; } ?>
            <?php if($i){ $i=false; }else{ $i=true; }            } ?>
 
-          <tr>
+          <?php /* <tr>
               <label for="debay_PaymentInstructions" ><h2>Instrukcje płatności, wyświetlą się na stronie ebay po dokonaniu zakupu</h2></label>
               <textfield  name="debay_PaymentInstructions" value="<?php echo $debay_PaymentInstructions ?>" >
 
               </textfield>
-          </tr>
+          </tr> */ ?>
        </table>
 
        <div style="padding:5px; font-weight:bold;">
@@ -33,16 +33,16 @@
             <tr>
                 <td>
 				<div style="float:left; width:100%;">
-                    <label for="debay_ReturnsAccepted">Czy przymujesz zwroty?</label>
+                    <label for="debay_ReturnsAccepted_<?php echo $site; ?>">Czy przymujesz zwroty?</label>
                     <?php if($debay_ReturnsAccepted){ ?>
-                    <input type="checkbox" name="debay_ReturnsAccepted" value="1" checked="checked" >
+                    <input type="checkbox" name="debay_ReturnsAccepted_<?php echo $site; ?>" value="1" checked="checked" >
                     <?php }else{ ?>
-                    <input type="checkbox" name="debay_ReturnsAccepted" value="1"  >
+                    <input type="checkbox" name="debay_ReturnsAccepted_<?php echo $site; ?>" value="1"  >
                     <?php } ?>
 					Akceptuj zwroty
 				</div><div style="float:left; width:100%; margin:5px 0;">
-                    <label for="debay_ReturnsWithinOption">Ile dni na zwrot?</label>
-                    <select name="debay_ReturnsWithinOption"  >
+                    <label for="debay_ReturnsWithinOption_<?php echo $site; ?>">Ile dni na zwrot?</label>
+                    <select name="debay_ReturnsWithinOption_<?php echo $site; ?>"  >
                           <?php foreach($return_duration_codes as $key => $code){ ?>
                                <?php if($key == $debay_ReturnsWithinOption ){ ?>
                                    <option value="<?php echo $key ?>" selected="selected" ><?php echo $code; ?></option>
@@ -53,8 +53,8 @@
                           <?php } ?>
                     </select>
 				</div></div><div style="float:left; width:100%; margin:5px 0;">
-                    <label for="debay_Description">Instrukcje do zwrotu</label>
-                    <textarea name="debay_Description"  style="width:100%; height:100px; padding:5px;"><?php echo $debay_Description; ?></textarea>
+                    <label for="debay_Description_<?php echo $site; ?>">Instrukcje do zwrotu</label>
+                    <textarea name="debay_Description_<?php echo $site; ?>"  style="width:100%; height:100px; padding:5px;"><?php echo $debay_Description; ?></textarea>
 				</div>
                 </td>
 
@@ -70,8 +70,8 @@
                    <td><input type="checkbox" value="<?php echo $key; ?>" name="debay_payment_method_<?php echo $key; ?>" <?php if($debay_payment_method[$key]){ echo 'checked="checked"'; } ?>  /></td>
                     <?php } ?>
                    <td>
-                       <label for="debay_paypal_email" >Adres email PayPal</label>
-                       <input type="text" name="debay_paypal_email" value="<?php echo $debay_paypal_email; ?>" />
+                       <label for="debay_paypal_email_<?php echo $site; ?>" >Adres email PayPal</label>
+                       <input type="text" name="debay_paypal_email_<?php echo $site; ?>" value="<?php echo $debay_paypal_email; ?>" />
                    </td>
             </tr>
         </table>

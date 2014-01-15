@@ -212,7 +212,7 @@ class ModelCatalogProduct extends Model {
 		  date_available = '" . $this->db->escape($data['date_available']) . "',
 		  manufacturer_id = '" . (int)$data['manufacturer_id'] . "',
 		  shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "',
-		  points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "',
+		  points = '0', weight = '" . (float)$data['weight'] . "',
 		  weight_class_id = '" . (int)$data['weight_class_id'] . "',
 		  length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "',
 		  height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "',
@@ -292,11 +292,11 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		if (isset($data['product_discount'])) {
-			foreach ($data['product_discount'] as $product_discount) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
-			}
-		}
+        if (isset($data['product_discount'])) {
+            foreach ($data['product_discount'] as $product_discount) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)(isset($product_discount['customer_group_id'])?$product_discount['customer_group_id']:0) . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
+            }
+        }
 
 		if (isset($data['product_special'])) {
 			foreach ($data['product_special'] as $product_special) {
@@ -392,7 +392,7 @@ class ModelCatalogProduct extends Model {
 		   date_available = '" . $this->db->escape($data['date_available']) . "',
 		   manufacturer_id = '" . (int)$data['manufacturer_id'] . "',
 		   shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "',
-		   points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "',
+		   points = '0', weight = '" . (float)$data['weight'] . "',
 		   weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "',
 		    width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "',
 		    length_class_id = '" . (int)$data['length_class_id'] . "',
@@ -480,7 +480,7 @@ class ModelCatalogProduct extends Model {
  
 		if (isset($data['product_discount'])) {
 			foreach ($data['product_discount'] as $product_discount) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)(isset($product_discount['customer_group_id'])?$product_discount['customer_group_id']:0) . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
 			}
 		}
 		

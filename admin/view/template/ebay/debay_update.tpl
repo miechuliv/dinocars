@@ -1,8 +1,8 @@
 <?php echo $header; ?>
 
-    <?php if($success){ echo 'Uaktualniono baze danych!</br>'; } ?>
+    <?php if(isset($success)){ echo 'Uaktualniono baze danych!</br>'; } ?>
 
-    <?php if($error){ echo 'Błąd: ' .$error.'</br>';} ?>
+    <?php if(isset($error)){ echo 'Błąd: ' .$error.'</br>';} ?>
 
     Uaktualnij dane kategorii, wysyłki itp.
 

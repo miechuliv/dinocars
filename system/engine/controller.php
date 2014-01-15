@@ -1,5 +1,5 @@
 <?php
-abstract class Controller {
+abstract class Controller{
 	protected $registry;	
 	protected $id;
 	protected $layout;
@@ -7,6 +7,8 @@ abstract class Controller {
 	protected $children = array();
 	protected $data = array();
 	protected $output;
+
+
 	
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -31,6 +33,8 @@ abstract class Controller {
             $debugger->addController($this);
         }
 	}
+
+
 
     public function getAllData()
     {
