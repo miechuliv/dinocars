@@ -250,7 +250,7 @@ class ControllerProductCategory extends Controller {
 
 
 
-            if(isset($this->request->get['make']) AND $this->request->get['make']!='Marka' AND $this->request->get['make']!='Marke' AND $this->request->get['make']!='')
+            if(isset($this->request->get['make']) AND is_numeric($this->request->get['make']))
         {
             $filtering = true;
             $data['cars']['make'] = $this->request->get['make'];
@@ -264,22 +264,18 @@ class ControllerProductCategory extends Controller {
 
         }
 
-        if(isset($this->request->get['model']) AND $this->request->get['model']!='Model' AND $this->request->get['model']!='Modell' AND $this->request->get['model']!='')
+        if(isset($this->request->get['model']) AND is_numeric($this->request->get['model']))
         {
             $filtering = true;
             $data['cars']['model'] = $this->request->get['model'];
 
-
-
         }
 
 
-        if(isset($this->request->get['type']) AND $this->request->get['type']!='Typ'  AND $this->request->get['type']!='')
+        if(isset($this->request->get['type']) AND is_numeric($this->request->get['type']))
         {
             $filtering = true;
             $data['cars']['type'] = $this->request->get['type'];
-
-
 
         }
 
@@ -288,7 +284,7 @@ class ControllerProductCategory extends Controller {
 
 
 
-            if(isset($this->request->get['make']) AND $this->request->get['make']!='Marka' AND $this->request->get['make']!='Marke' AND $this->request->get['make']!='')
+            if(isset($this->request->get['make']) AND is_numeric($this->request->get['make']))
             {
 
                 $filtering = true;
@@ -318,7 +314,7 @@ class ControllerProductCategory extends Controller {
 
 
 
-                if(isset($this->request->get['model']) AND $this->request->get['model']!='Model' AND $this->request->get['model']!='Modell' AND $this->request->get['model']!='')
+                if(isset($this->request->get['model']) AND is_numeric($this->request->get['model']))
                 {
 
                     $model = $this->model_tool_cars->getOneModelById($this->request->get['model'],true);
@@ -334,7 +330,7 @@ class ControllerProductCategory extends Controller {
                     $data['types'] = $this->model_tool_cars->getTypebyModel($this->request->get['model']);
                 }
 
-                if(isset($this->request->get['type']) AND $this->request->get['type']!='Typ' AND $this->request->get['type']!='')
+                if(isset($this->request->get['type']) AND is_numeric($this->request->get['type']))
                 {
                     $type = $this->model_tool_cars->getOneTypeById($this->request->get['type'],true);
 

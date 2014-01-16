@@ -16,6 +16,7 @@ class ControllerCommonHome extends Controller {
 
         }
 
+
         $this->data['car_action'] = $this->url->link('product/category');
 
 		$this->data['heading_title'] = $this->config->get('config_title');

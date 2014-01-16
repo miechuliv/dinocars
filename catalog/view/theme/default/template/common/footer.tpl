@@ -11,8 +11,8 @@
 
 <div id="ultraheader">
 	<div class="poziom">
-		<div>Biuro obsługi Klienta <strong>+48 888 888 999</strong></div>
-		<div>Rejestracja | Moje konto | DE | PL | EN</div>
+		<div>Biuro obsługi Klienta <strong>+48 888 888 999</strong> | e-mail: <strong>email@email.pl</strong></div>
+		<div><a href="./index.php?route=account/login">Logowanie</a> | <a href="./index.php?route=account/register">Rejestracja</a> | DE | PL | EN</div>
 	</div>
 </div>
 
@@ -56,15 +56,17 @@
       <li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li>
     </ul>
   </div>
-  <div class="column">
-	
+  <div class="column" style="color:#D94444;">
+	<h3>Kontakt</h3>
+	Ul. Długa 301/340</br>
+	80-330 Gdańsk<br/></br>
+	+48 888 888 999<br/>
+	email@email.pl
 
-</div>
+	</div>
 <div class="column">
 <h3>Facebook</h3>
-<?/*
-<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FDiesel-Land%2F607667069295896&amp;width=200&amp;height=180&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=112173815552215" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:180px;" allowTransparency="true"></iframe>
-*/?>
+<div class="fb-like-box" data-href="https://www.facebook.com/pages/Dinocars/583125971761725?skip_nax_wizard=true" data-width="200" data-height="100" data-colorscheme="dark" data-show-faces="false" data-header="false" data-stream="false" data-show-border="false"></div>
 </div>
 </div>
 

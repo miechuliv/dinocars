@@ -17,6 +17,10 @@ class ControllerModuleCategory extends Controller {
             $path = '';
         }
 
+        $this->data['path'] = $path;
+
+        $this->data['route'] = isset($this->request->get['route'])?$this->request->get['route']:false;
+
 		
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
@@ -35,6 +39,28 @@ class ControllerModuleCategory extends Controller {
 		} else {
 			$this->data['child_id'] = 0;
 		}
+
+        $url = '';
+
+        if(isset($this->request->get['make']))
+        {
+            $url .= '&make='.$this->request->get['make'];
+        }
+
+        if(isset($this->request->get['model']))
+        {
+            $url .= '&model='.$this->request->get['model'];
+        }
+
+        if(isset($this->request->get['type']))
+        {
+            $url .= '&type='.$this->request->get['type'];
+        }
+
+        if(isset($this->request->get['filters']['product_type']))
+        {
+            $url .= '&typ='.$this->request->get['filters']['product_type'];
+        }
 
         $this->data['car_action'] = $this->url->link('product/category');
 							
@@ -68,7 +94,7 @@ class ControllerModuleCategory extends Controller {
 					'category_id' => $child['category_id'],
 				//	'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
                     'name'        => $child['name'],
-					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
+					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'].$url)
 				);
 
 
@@ -81,7 +107,7 @@ class ControllerModuleCategory extends Controller {
 				//'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
                 'name'        => $category['name'],
 				'children'    => $children_data,
-				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
+				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'].$url)
 			);
 
          }

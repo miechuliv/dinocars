@@ -7,47 +7,54 @@
  */
 $(document).ready(function(){
 
-
-    $.ajax({
-        type     : "POST",
-        url      : "index.php?route=tool/cars/getAllMakes",
-        dataType: 'json',
-
-        success : function(data) {
-
-            var html='';
+    var check = $('input[name="m_autoload"]').val();
 
 
-            // var obj = jQuery.parseJSON(data);
-            if(data['output']==null)
-            {
-                // alert("Wir konnten leider kein Auto zu Ihren Baujahr und Ihrer  angegebenen Marke finden. Bitte wahelen Sie ein anderes Baujahr oder waehlen Sie einfach alle Baujahre aus! Vielen Dank");
 
-                $('#model').html('<option>Model</option>');
-                $('#type').html('<option>Typ</option>');
+    if(check.length > 1)
+    {
+        $.ajax({
+            type     : "POST",
+            url      : "index.php?route=tool/cars/getAllMakes",
+            dataType: 'json',
+
+            success : function(data) {
+
+                var html='';
+
+
+                // var obj = jQuery.parseJSON(data);
+                if(data['output']==null)
+                {
+                    // alert("Wir konnten leider kein Auto zu Ihren Baujahr und Ihrer  angegebenen Marke finden. Bitte wahelen Sie ein anderes Baujahr oder waehlen Sie einfach alle Baujahre aus! Vielen Dank");
+
+                    $('#model').html('<option>Model</option>');
+                    $('#type').html('<option>Typ</option>');
+
+                }
+
+
+                html+='<option value="" >Marka</option>';
+
+                jQuery.each( data['output'] , function(index, value) {
+
+                    html+='<option value="'+value['make_id']+'" >'+value['make_name']+'</option>';
+                });
+
+                $('#make').html(html);
+
+            },
+            complete : function(r) {
+
+
+            },
+            error:    function(error) {
+
 
             }
+        });
+    }
 
-
-            html+='<option value="" >Marka</option>';
-
-            jQuery.each( data['output'] , function(index, value) {
-
-                html+='<option value="'+value['make_id']+'" >'+value['make_name']+'</option>';
-            });
-
-            $('#make').html(html);
-
-        },
-        complete : function(r) {
-
-
-        },
-        error:    function(error) {
-
-
-        }
-    });
 
     $('#year').change(function(){
 

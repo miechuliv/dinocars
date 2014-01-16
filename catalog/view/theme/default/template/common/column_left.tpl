@@ -7,7 +7,7 @@
   <?php } ?>
 <?php } ?>
 
-
+<?/*
 <script type="text/javascript">
 
         $('select').each(function(){
@@ -34,6 +34,6 @@
 	});
 		
 </script>
-
+*/?>
 </div>
 

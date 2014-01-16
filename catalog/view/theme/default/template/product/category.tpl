@@ -1,13 +1,18 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+<?php echo $header; ?>
+
+
+  
+  <?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content">
+  <div class="breadcrumb" style="margin:-43px 0 25px -20px;">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
   </div>
-  
+
    <?php  if(!empty($filter_labels)){ ?>
       <div id="filtery">
+	  <h3 style="margin:0 0 5px;">Aktywne filtry:</h3>
           <?php  foreach($filter_labels as $label){ ?>
                 <div class="kill-filter">
                     <input type="hidden" name="input_name" value="<?php echo $label['input_name']; ?>"  />
@@ -18,6 +23,12 @@
 
 	</div>
   <?php  } ?>
+
+
+<?php echo $content_top; ?>
+
+  
+
   
  <?php /*  <h1 style="float:left; margin-bottom:0; font-size:25px;"><?php echo $heading_title; ?></h1>
   if ($thumb || $description) { ?>
@@ -99,7 +110,7 @@
         <?php } ?>
         <?php } ?>
       <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
-      <div class="description"><?php echo $product['description']; ?></div>
+      <div class="description"><?php echo $product['description']; ?><br/><br/><div class="dost">Dostawa: 48h</div></div>
       <?php if ($product['price']) { ?>
       <div class="price">
         <?php if (!$product['special']) { ?>
@@ -117,7 +128,7 @@
       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
       <?php } ?>
       <div class="cart">
-        <a href="<?php echo $product['href']; ?>"  ><input type="button" value="jetzt anzeigen"  class="button" /></a>
+        <a href="<?php echo $product['href']; ?>"  ><input type="button" value="zobacz"  class="button" /></a>
       </div>
 	  <?/*
       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
@@ -132,7 +143,7 @@
   <?php }else{ ?>
 	<div id="search-error">
 		<?php echo $contact_link_text; ?><br/>
-		<strong>+49 (0) 160 951 432 00</strong><br/><a href="mailto:kontakt@diesel-land.de" style="font-size:16px;"><strong>kontakt@diesel-land.de</strong></a>
+		
 	</div>
   <?php } /* ?>
   <?php if (!$categories && !$products) { ?>

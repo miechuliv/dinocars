@@ -25,7 +25,12 @@
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="catalog/view/javascript/common.js"></script>
-    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.cycle.js"></script>
+<?/*
+<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/phpfreechat-2.1.0/client/themes/default/jquery.phpfreechat.min.css" />
+<script src="/phpfreechat-2.1.0/client/jquery.phpfreechat.min.js" type="text/javascript"></script>
+*/?>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
@@ -39,36 +44,27 @@
 DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
-<?/*
-    <link rel="stylesheet" type="text/css" href="/phpfreechat-2.1.0/client/themes/default/jquery.phpfreechat.min.css" />
-    <script src="/phpfreechat-2.1.0/client/jquery.phpfreechat.min.js" type="text/javascript"></script>
-*/?>
 
 <script type="text/javascript"><!--
-function mobiles() {
-	var menu = $('#homepage > #column-left');
-	var navi = $('#homepage > #column-left .box-category');
 
+// stopka 165px;
+
+function dynafoot() {
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 165) {
+      $('#ultraheader').addClass('klej');
+   } else {
+	$('#ultraheader').removeClass('klej');
+   }
 }
 
-$(window).resize(function(){
-	mobiles();
+$(window).scroll(function() {
+	dynafoot();
 });
 
 $(document).ready(function() {
+	dynafoot();
 
-	mobiles();
-
-/*
-    $('.name a').each(function(index, element) {
-
-        $(element).text($(element).text().substr(0,50));
-        $(element).append('...');
-    })
-
-*/
-
-    <?php if ($stores) { ?>
+<?php if ($stores) { ?>
 <?php foreach ($stores as $store) { ?>
 $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></iframe>');
 <?php } ?>
@@ -206,7 +202,14 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
      </script> */ ?>
 </head>
 <body>
-
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pl_PL/all.js#xfbml=1&appId=112173815552215";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div id="black"></div>
 
 
