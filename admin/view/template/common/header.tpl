@@ -261,14 +261,18 @@ function hidedesc(divid) {
 
         <li id="ebay"><a class="top">Ebay UK</a>
             <ul>
-                <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>&site=en">Ebay konfiguracja</a></li>
-                <li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>&site=en">Szablony</a></li>
-                <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>&site=en">Panel sprzedawcy</a></li>
+                <li><a href="index.php?route=ebay/debay_auth&token=<?=$_GET['token']?>&site=gb">Powiaż z kontem</a></li>
+                <li><a href="index.php?route=ebay/debay_auth/fetchToken&token=<?=$_GET['token']?>&site=gb">Pobierz Token</a></li>
+                <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>&site=gb">Ebay konfiguracja</a></li>
+                <li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>&site=gb">Szablony</a></li>
+                <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>&site=gb">Panel sprzedawcy</a></li>
             </ul>
         </li>
 
         <li id="ebay"><a class="top">Ebay DE</a>
             <ul>
+                <li><a href="index.php?route=ebay/debay_auth&token=<?=$_GET['token']?>&site=de">Powiaż z kontem</a></li>
+                <li><a href="index.php?route=ebay/debay_auth/fetchToken&token=<?=$_GET['token']?>&site=de">Pobierz Token</a></li>
                 <li><a href="index.php?route=ebay/debayconfig&token=<?=$_GET['token']?>&site=de">Ebay konfiguracja</a></li>
                 <li><a href="index.php?route=ebay/debaytemplates&token=<?=$_GET['token']?>&site=de">Szablony</a></li>
                 <li><a href="index.php?route=ebay/debayseller/active&token=<?=$_GET['token']?>&site=de">Panel sprzedawcy</a></li>

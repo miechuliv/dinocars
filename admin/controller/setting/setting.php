@@ -1235,13 +1235,13 @@ class ControllerSettingSetting extends Controller {
 
 
 
-        if (strlen($this->request->post['config_smsapi_order_update_msg']) > 160) {
+       /* if (strlen($this->request->post['config_smsapi_order_update_msg']) > 160) {
             $this->error['error_smsapi_order_update_msg'] = 'przekroczono limit 160 znaków';
-        }
+        } */
 
-        if (strlen($this->request->post['config_smsapi_order_confirm_msg']) > 160) {
+       /* if (strlen($this->request->post['config_smsapi_order_confirm_msg']) > 160) {
             $this->error['error_smsapi_order_confirm_msg'] = 'przekroczono limit 160 znaków';
-        }
+        } */
         // code end
 
 		if (!$this->request->post['config_name']) {

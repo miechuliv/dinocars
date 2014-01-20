@@ -12,7 +12,7 @@
              type: 'post',
              data     : {
                  category_id : category_id,
-                 site: '<?php echo $this->request->get["site"]; ?>'
+                 site: '<?php echo $site; ?>'
 
              },
              success: function(json) {
@@ -65,7 +65,7 @@
                          type: 'post',
                          data     : {
                              category_id : category_id,
-                             site: '<?php echo $this->request->get["site"]; ?>'
+                             site: '<?php echo $site; ?>'
 
                          },
                          success: function(json) {
@@ -147,7 +147,7 @@
              type: 'post',
              data     : {
                  category_id : category_id,
-                 site: '<?php echo $this->request->get["site"]; ?>'
+                 site: '<?php echo $site; ?>'
 
              },
              success: function(json) {
@@ -228,18 +228,25 @@
              dataType: 'json',
              type: 'post',
              data     : $('input[type=\'text\'], textarea, select, input[type=\'checkbox\'], input[type=\'radio\']:checked, input[type=\'password\'], input[type=\'hidden\']'),
+
                    beforeSend: function(){
                        $('input[name=\'Title\']').next('.eba_error').empty();
                        $('input[name=\'BuyItNowPrice\']').next('.eba_error').empty();
                        $('input[name=\'StartPrice\']').next('.eba_error').empty();
                        $('input[name=\'ReservePrice\']').next('.eba_error').empty();
                        $('input[name=\'Quantity\']').next('.eba_error').empty();
+                       $('#general_error').empty();
                        $('#sub-categories').next('.eba_error').empty();
                        $('select[name=\'category\']').find('.eba_error').empty();
                    },
              success: function(json) {
                  if(json['error'])
                  {
+
+                     if(json['error']['ShippingCost'])
+                     {
+                         $('#general_error').append(json['error']['ShippingCost']);
+                     }
 				 
 				    if(json['error']['Title'])
 					{
@@ -328,8 +335,11 @@
              },
              error: function(xhr, ajaxOptions, thrownError) {
                 // alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                 alert('Wystapił nieznany błąd aplikacji');
+                 alert('Wystapił nieznany błąd aplikacji. Proszę sprawdzić czy integracja została skonfigurowana: Czy wybrana została chociaż jedna forma przysyłki i płatności, czy określono zasdy zwrotów ( mogą być wymagane ), jesli ten komunikat' +
+                         ' nadal sie pojawia proszę zwrócić uwage czy koszty wysyłki nie przekraczaja ograniczeń ustanowionych przez Ebay oraz czy wybrane metody wysyłki' +
+                         ' na pewno sa dozwolone');
              }
+
          });
                     
 
@@ -350,3 +360,5 @@
 
      }
 </script>
+
+

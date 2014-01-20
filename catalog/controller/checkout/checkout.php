@@ -614,7 +614,7 @@ class ControllerCheckoutCheckout extends Controller {
         $this->getInputNames();
 
 
-
+        $this->data['zone_id'] = false;
 
 
         // payment

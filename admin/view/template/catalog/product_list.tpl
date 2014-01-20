@@ -502,7 +502,7 @@
 
               <td id="action-td" class="right"><?php foreach ($product['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>&site=en">Wystaw na Ebay UK</a> ]
+                <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>&site=gb">Wystaw na Ebay UK</a> ]
                   <br>[ <a href="index.php?route=ebay/debayproduct&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>&site=de">Wystaw na Ebay DE</a> ]
                 <br>[ <a href="index.php?route=allegro/product&product_id=<?php echo $product['product_id'];?>&token=<?php echo $_GET['token'];?>">Wystaw na Allegro</a> ]
                 <?php } ?></td>

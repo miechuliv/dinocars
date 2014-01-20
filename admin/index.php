@@ -4,8 +4,8 @@ define('VERSION', '1.5.5.1');
 $time = microtime(true);
 
 // Configuration
-if (file_exists('config_local.php')) {
-	require_once('config_local.php');
+if (file_exists('config.php')) {
+	require_once('config.php');
 }  
 
 // Install
@@ -104,6 +104,8 @@ foreach ($query->rows as $setting) {
 	}
 }
 
+
+
 $logger = new Logger($config);
 
 $registry->set('logger',$logger);
@@ -186,6 +188,19 @@ set_error_handler('error_handler');
 $request = new Request();
 $registry->set('request', $request);
 
+// ebay konfig
+debay::setDebug(true);
+if(isset($request->get['site']))
+{
+    debay::setToken($config->get('debay_token_'.$request->get['site']));
+
+}
+if(isset($request->post['site']))
+{
+    debay::setToken($config->get('debay_token_'.$request->post['site']));
+}
+
+
 $debugger->setRequest($request);
 
 // Response
@@ -243,7 +258,7 @@ $controller = new Front($registry);
 
 
 
-if(((isset($request->get['route']) AND strpos($request->get['route'],'cron')===false) OR !isset($request->get['route'])) AND !isset($request->post['pass']) )
+if(((isset($request->get['route']) AND strpos($request->get['route'],'cron')===false) OR(isset($request->get['route']) AND strpos($request->get['route'],'ebay/debay_auth/fetch')===false) OR !isset($request->get['route'])) AND !isset($request->post['pass']) )
 {
 
     // Login

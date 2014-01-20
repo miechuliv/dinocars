@@ -43,13 +43,13 @@ class ControllerEbayDebayProduct extends Controller {
     private function getForm()
     {
 
-        $site = $this->request->get['site'];
+        $this->data['site'] = $site = $this->request->get['site'];
 
         // id jezyka potrzebne do opisuw
         $this->load->model('localisation/language');
 
         $data = array(
-            'filter_code' => $site
+            'filter_code' => ($site=='gb'?'en':$site)
         );
 
         $langs = $this->model_localisation_language->getLanguages($data);
@@ -119,6 +119,8 @@ class ControllerEbayDebayProduct extends Controller {
             // skrocenie tytułu
             $this->data['Title'] = trim($Title);
         }
+
+        $this->data['price'] = $product['price'];
 
 
 
@@ -296,7 +298,7 @@ class ControllerEbayDebayProduct extends Controller {
 
 
 
-        debay::setSite($this->request->post['site']);
+        //debay::setSite($this->request->post['site']);
 
         $json = array();
 
@@ -365,24 +367,28 @@ class ControllerEbayDebayProduct extends Controller {
     {
 
      //  ob_start();
-        $this->config->set('debay_debug',1);
+
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
 
-            $site = $this->request->get['site'];
+            $site = $this->request->post['site'];
 
-           // var_dump($this->request->post);
+            error_reporting(E_ALL);
+            ini_set('display_errors', '1');
 
             $this->load->model('catalog/product');
 
             $product = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+
+
 
             // dane niezbedne do wystawienia produktu:
             // metody wysyłki
 
             $this->load->model('ebay/debay');
             // lista metod
-            $this->data['shipping_services'] = $this->model_ebay_debay->getShippingServiceDetails();
+            $this->data['shipping_services'] = $this->model_ebay_debay->getShippingServiceDetails($site);
+
 
             // spraawdza ktore z nich sa zdefiniowanie ww config
             foreach($this->data['shipping_services'] as $key => $value)
@@ -396,6 +402,7 @@ class ControllerEbayDebayProduct extends Controller {
                    unset($this->data['shipping_services'][$key]);
                 }
             }
+
 
             $shipping = array();
 
@@ -428,24 +435,46 @@ class ControllerEbayDebayProduct extends Controller {
 
             foreach($payment_methods as $key => $payment)
             {
-                if(!$this->config->get('debay_payment_method_'.$key))
+                if(!$this->config->get('debay_payment_method_'.$site.'_'.$key))
                 {
                     unset($payment_methods[$key]);
                 }
 
             }
 
+
+
             $payment_methods = array_flip($payment_methods);
+
+            $extraNodes = array();
+
+            foreach($payment_methods as $payment)
+            {
+                $extraNodes[] = array(
+                    'parent' => 'Item',
+                    'namespace' => 'ns1',
+                    'name' => 'PaymentMethods',
+                    'value' => $payment,
+                );
+            }
+
+
 
 
 
             $returnPolicy = array(
-                'ReturnsAcceptedOption' => ($this->config->get('debay_ReturnsAccepted_'.$site)) ? 'ReturnsAccepted_'.$site : 'ReturnsNotAccepted_'.$site,
+
+                'ReturnsAcceptedOption' => ($this->config->get('debay_ReturnsAccepted_'.$site)) ? 'ReturnsAccepted' : 'ReturnsNotAccepted',
                 'RefundOption' => 'MoneyBack',
-                'ReturnsWithinOption' => ($this->config->get('debay_ReturnsWithinOption_'.$site)) ? $this->config->get('debay_ReturnsWithinOption_'.$site) : NULL,
-                'Description ' =>($this->config->get('debay_Description_'.$site)) ? $this->config->get('debay_Description_'.$site) : NULL,
-                'ShippingCostPaidByOption' => 'Buyer',
+            //   'ReturnsWithinOption' => ($this->config->get('debay_ReturnsWithinOption_'.$site)) ? $this->config->get('debay_ReturnsWithinOption_'.$site) : NULL,
+                'Description' =>($this->config->get('debay_Description_'.$site)) ? $this->config->get('debay_Description_'.$site) : NULL,
+            //    'ShippingCostPaidByOption' => 'Buyer',
             );
+
+
+
+
+
 
             $subcategories = array();
 
@@ -456,6 +485,18 @@ class ControllerEbayDebayProduct extends Controller {
                        $subcategories[] = $value;
                    }
             }
+
+            $category = array_pop($subcategories);
+
+            // ch-ka danej kategorii
+            $features = $this->model_ebay_debay->updateCategoryFeaturesFromEbay($category);
+
+            $rules = $features->Category;
+
+
+            // to do walidacji
+            $errors = $this->checkCategoryRules($rules,$options);
+
 
             // specyfikacja produktu
 
@@ -490,20 +531,44 @@ class ControllerEbayDebayProduct extends Controller {
                     }
 
 
+            $currency = debay::getSiteCurrency();
+
+            $site_code = debay::getSiteCode();
+
+            $localisation = $this->config->get('debay_localisation_'.$site);
+
+            $country = $this->config->get('debay_country_'.$site);
+
+            $pay_pal_email = $this->config->get('debay_paypal_email_'.$site);
+
+            $site_ebay = 'US';
+
+            if($site_code == 0)
+            {
+                $site_ebay = 'US';
+            }
+            if($site_code == 3)
+            {
+                $site_ebay = 'UK';
+            }
+            if($site_code == 77)
+            {
+                $site_ebay = 'Germany';
+            }
 
             $item = array(
-                'PrimaryCategory' => array('CategoryID' => array_pop($subcategories)),  // ok
-                'Title' => utf8_encode($this->request->post['Title']),
+                'PrimaryCategory' => array('CategoryID' => $category ),  // ok
+                'Title' => $this->request->post['Title'],
                 // @todo zrobixc templating
                // 'Description' => $this->request->post['Description'],
-                'Description' => utf8_encode($this->gettemplate($price,$this->request->post['template'],$this->request->post['product_id'])),
+                'Description' => $this->gettemplate($price,$this->request->post['template'],$this->request->post['product_id']),
 
                 // na razie na sztywno
-                'Country' => strtoupper($site),//
+                'Country' => $country,//
 
                 // tak samoi
                 // @todo zmieniac walute wg kraju
-                'Currency' => 'EUR',//
+                'Currency' => $currency,//
 
                 'ListingDuration' =>  $this->request->post['ListingDuration'],//
                 // @todo z produktu, w przyszłości wybór zdjęcia, działa ale potrzebna miniaturka
@@ -517,17 +582,16 @@ class ControllerEbayDebayProduct extends Controller {
                     //
                 // na razie na sztywno
 
-                'Site' => strtoupper($site),//
+                'Site' => $site_ebay,//
                 // @todo do wbicia gdzie najlepiej w config debaya
-                'Location' => 'Grambow',//
-                // @todo rozwiązać ten problem
-                'PaymentMethods' => 'PayPal' ,//
-                'PayPalEmailAddress' => $this->config->get('debay_paypal_email'),//
+                'Location' => $localisation?$localisation:'N/A',//
+
+                'PayPalEmailAddress' => $pay_pal_email?$pay_pal_email:'none@wp.pl',//
                 // @todo w konfig ptrzebne dodatkowe pola bo to zacznie więcej opcji
                 'ShippingDetails' => $shipping,//
                 'DispatchTimeMax' => $this->request->post['DispatchTimeMax'],//
-                'ConditionID' => $this->request->post['ConditionID'],//
-             //   'ReturnPolicy' => $returnPolicy,//
+
+
                 'ItemSpecifics' => $itemSpecifics,
                 'Quantity' => $this->request->post['Quantity'],
 
@@ -537,6 +601,15 @@ class ControllerEbayDebayProduct extends Controller {
             );
 
 
+            if($this->ConditionEnabled)
+            {
+                $item['ConditionID'] = $this->request->post['ConditionID'];
+            }
+
+            if($this->returnAllowed)
+            {
+                $item['ReturnPolicy'] = $returnPolicy;
+            }
 
             // ListingType standardowo ustawiony jest na aukcję !!!
             if($this->request->post['cena']=='kup-teraz')
@@ -550,6 +623,10 @@ class ControllerEbayDebayProduct extends Controller {
                 $item['StartPrice'] = (int)$this->request->post['StartPrice'];
                 $item['ReservePrice'] = (int)$this->request->post['ReservePrice'];
             }
+
+
+
+
 
             $params = array(
                 'Version' => 831,
@@ -574,12 +651,15 @@ class ControllerEbayDebayProduct extends Controller {
             $this->data['response']=array();
 
 
+
+
             try{
 
-                $resp =  debay::sendRequest($method,$params);
+                $resp =  debay::sendRequest($method,$params,$extraNodes);
 
 
-                if(isset($resp) AND $resp->Ack=='Success' OR $resp->Ack=='Warning')
+
+                if(isset($resp) AND ($resp->Ack=='Success' OR $resp->Ack=='Warning'))
                 {
 
                     if($this->request->post['real']=='true'){
@@ -677,6 +757,56 @@ class ControllerEbayDebayProduct extends Controller {
 
     }
 
+    private function checkCategoryRules($rules,$shipping_methods)
+    {
+
+
+        $errors = array();
+        // sprawdzamy maksymalna oplate za wysylke
+        if(isset($rules->MaxFlatShippingCost) AND $rules->MaxFlatShippingCost)
+        {
+            foreach($shipping_methods as $method)
+            {
+
+                if((int)$method['ShippingServiceCost'] > (int)$rules->MaxFlatShippingCost->_)
+                {
+                    $errors[] = array(
+                        'type' => 'ShippingCost',
+                        'desc' => 'Wybrana kategoria ma ograniczenia kosztów wysyłki: '.$rules->MaxFlatShippingCost->_.'
+                         '.$rules->MaxFlatShippingCost->currencyID.' Skonfiguruj koszt wysyłki dla danego kraju aby móc wystawiać w tej kategorii',
+                    );
+
+                    break;
+                }
+            }
+
+            return $errors;
+        }
+
+        // sprawdxzamy czy jest wymagane zasady zwrotuw
+        if(isset($rules->ReturnPolicyEnabled) AND !$rules->ReturnPolicyEnabled)
+        {
+            $this->returnAllowed = false;
+        }
+
+        if(isset($rules->ConditionEnabled) AND $rules->ConditionEnabled)
+        {
+            $this->ConditionEnabled = true;
+        }
+
+        // $todo trzeba tez sprawdzić jakei sa ConditionValues bo moga byc inne dla niektorych kategorii
+        // lista pozostalych warunkow: http://developer.ebay.com/DevZone/XML/docs/reference/ebay/types/FeatureIDCodeType.html
+
+
+
+
+
+    }
+
+    private $returnAllowed = true;
+
+    private $ConditionEnabled = false;
+
     public function finalize()
     {
 
@@ -701,13 +831,21 @@ class ControllerEbayDebayProduct extends Controller {
         }
 
 
-        $site  = $this->request->get['site'];
+        if(isset($this->request->post['site']))
+        {
+            $site  = $this->request->post['site'];
+        }
+        elseif(isset($this->request->get['site']))
+        {
+            $site  = $this->request->get['site'];
+        }
+
 
         // id jezyka potrzebne do opisuw
         $this->load->model('localisation/language');
 
         $data = array(
-            'filter_code' => $site
+            'filter_code' => ($site=='gb'?'en':$site)
         );
 
         $langs = $this->model_localisation_language->getLanguages($data);
@@ -864,18 +1002,70 @@ class ControllerEbayDebayProduct extends Controller {
             $json['error']['category'] = 'Proszę wybrać główna kategorię';
         }
 
-
+        $subcategories = array();
 
         foreach($post  as $key =>  $sub)
         {
-
-
 
             if(strpos($key,'subcategory')!==false AND $sub=='Wybierz podkategorię')
             {
                 $json['error']['subcategory'] = 'Proszę dokładnie okreslić kategorię';
             }
+            elseif(strpos($key,'subcategory')!==false)
+            {
+                $subcategories[] = $sub;
+            }
 
+        }
+
+        $this->load->model('ebay/debay');
+        // lista metod
+        $this->data['shipping_services'] = $this->model_ebay_debay->getShippingServiceDetails($post['site']);
+
+        // spraawdza ktore z nich sa zdefiniowanie ww config
+        foreach($this->data['shipping_services'] as $key => $value)
+        {
+            if($this->config->get('debay_shipping_cost_'.$value->ShippingService))
+            {
+                $this->data['shipping_services'][$key]->Cost = $this->config->get('debay_shipping_cost_'.$value->ShippingService);
+            }
+            else
+            {
+                unset($this->data['shipping_services'][$key]);
+            }
+        }
+
+
+        $options = array();
+
+        foreach($this->data['shipping_services'] as $key => $service)
+        {
+            $options[] = array(
+                'ShippingService' => $service->ShippingService,
+                'ShippingServiceCost' => $service->Cost,
+                //   'ShippingServiceAdditionalCost' => 0.0,
+                'ShippingServicePriority' => $key+1,
+                'ExpeditedService' => false,
+            );
+
+
+        }
+
+        $category = array_pop($subcategories);
+
+        // ch-ka danej kategorii
+        $features = $this->model_ebay_debay->updateCategoryFeaturesFromEbay($category);
+
+        $rules = $features->Category;
+
+        $errors = $this->checkCategoryRules($rules,$options);
+
+        if(!empty($errors))
+        {
+            foreach($errors as $error)
+            {
+                $json['error'][$error['type']] = $error['desc'];
+            }
         }
 
 

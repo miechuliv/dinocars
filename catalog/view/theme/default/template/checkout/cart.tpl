@@ -8,20 +8,22 @@
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
-<?php // echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+<?php // echo $column_left; ?><?php echo $column_right; ?>  <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
   </div>
+<div id="content" class="kontentw">
+<div class="resizer koszyk">
+<?php echo $content_top; ?>
+
   <h1 style="margin:10px 0;"><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
     &nbsp;(<?php echo $weight; ?>)
     <?php } ?>
   </h1>
     <div class="buttons basket" style="margin-bottom:10px;">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button buttonred"><?php echo $button_checkout; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="button action"><?php echo $button_checkout; ?></a></div>
    <?/* <div class="left"><a class="button grey cofka"><?php echo $button_shopping; ?></a></div> */?>
   </div>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
@@ -195,7 +197,7 @@
   <?php } */ ?>
   <div class="cart-total">
   
-	<div id="koszyk-promo" style="background:#fff; border:1px solid #ccc; padding:10px; margin:10px; width:570px; float:left;">
+	<div id="koszyk-promo" style="background:#fff; padding:10px 0; float:left;">
 		<div style="float:left;margin-right:10px; font-size:12px;">
 			<strong class="ok">Lorem ipsum</strong> Lorem ipsum opis<br>
 			<strong class="ok">Lorem ipsum</strong> Inny opis lorem ipsum<br>
@@ -221,10 +223,11 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button buttonred"><?php echo $button_checkout; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="button action"><?php echo $button_checkout; ?></a></div>
     <div class="left"><a class="button grey cofka"><?php echo $button_shopping; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
+ </div>
 <script type="text/javascript"><!--
 $('input[name=\'next\']').bind('change', function() {
 	$('.cart-module > div').hide();

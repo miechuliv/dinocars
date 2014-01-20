@@ -13,6 +13,20 @@ class ControllerEbayDebayJs extends Controller{
         {
             $this->template = 'ebay/debay_js.tpl';
 
+            if(isset($this->request->get['site']))
+            {
+                $this->data['site'] = $this->request->get['site'];
+            }
+            elseif(isset($this->request->post['site']))
+            {
+                $this->data['site'] = $this->request->post['site'];
+            }
+            else
+            {
+                $this->data['site'] = '';
+            }
+
+
 
             $this->response->setOutput($this->render());
         }

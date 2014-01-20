@@ -3,6 +3,8 @@
 <div id="content">
    <form method="post" action="<?php echo $debay_product_add_action; ?>" id="debay-form">
      <div id="lista" style="width:100%" class="procent15">
+         <div class="eba_error" id="general_error"></div>
+
            <table>
 		   <tr class="scalone">
 			<td>Rodzaj sprzedaży</td>
@@ -19,16 +21,21 @@
 
               <input type="radio" value="kup-teraz" name="cena" checked="checked" />Kup teraz
               <div id="kup-teraz-cena" style="margin:5px; float:left; width:100%;" >
-                   <label for="BuyItNowPrice">Cena kup teraz</label>
+                   <label for="BuyItNowPrice">Cena kup teraz <?php if($site == 'gb'){ echo 'GBP'; }else{ echo 'EUR'; } ?></label>
+
                    <input type="text" name="BuyItNowPrice" value="<?php if($BuyItNowPrice1=0){ echo $BuyItNowPrice; } ?>" />
+                  <label for="price">Cena na sklepie</label>
+                  <input type="text" name="price" value="<?php echo $price; ?>" />
               </div>
               <input type="radio" value="aukcja" name="cena" />Aukcja
 
          <div id="aukcja-cena" style="display:none; margin:5px; float:left; width:100%;" >
-             <label for="StartPrice">Cena poczatkowa</label>
+             <label for="StartPrice">Cena poczatkowa <?php if($site == 'gb'){ echo 'GBP'; }else{ echo 'EUR'; } ?></label>
              <input type="text" name="StartPrice" value="<?php echo $StartPrice; ?>" /><br/>
-             <label for="ReservePrice">Cena minimalna</label>
+             <label for="ReservePrice">Cena minimalna <?php if($site == 'gb'){ echo 'GBP'; }else{ echo 'EUR'; } ?></label>
              <input type="text" name="ReservePrice" value="<?php echo $ReservePrice; ?>" />
+             <label for="price">Cena na sklepie</label>
+             <input type="text" name="price" value="<?php echo $price; ?>" />
          </div>
 		 </td><td>
          <div id="nazwa">
@@ -110,6 +117,7 @@
 
      </div>
 	 <input type="hidden" value="false" name="real" checked="checked" id="real"/>
+       <input type="hidden" name="site" value="<?php echo $site; ?>" />
       <a href="javascript:void(0)" class="button" onclick="validate()">Oblicz koszt wystawienia</a>
 	  
    </form>

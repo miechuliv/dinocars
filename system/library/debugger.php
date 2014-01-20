@@ -228,7 +228,11 @@ class Debugger {
             }
             else
             {
-                 $html .= '<tr class="d_row" ><td>'.$key.' => </td><td>'.$ar.'</td></tr>';
+                if(!is_object($ar))
+                {
+                    $html .= '<tr class="d_row" ><td>'.$key.' => </td><td>'.$ar.'</td></tr>';
+                }
+
             }
         }
 

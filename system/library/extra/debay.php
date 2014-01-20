@@ -9,33 +9,89 @@
 
 class Debay {
 
-     // @todo aktualizacja tokenów
-     // test token
-    // private static $_token = "AgAAAA**AQAAAA**aAAAAA**A1HlUQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCpWBpg2dj6x9nY+seQ**nUcCAA**AAMAAA**Pd7nwyCk/qVFAozflbzwpGo1OsYqb8m8EUFsxA0eaM5jCSnlSKkzlaMl06Eb7NdlvCmFCCfy2cQlu2bMAPTAA9n5Oksp98a1yF7uA4VUUuSYpi+ukima4a8GQMOdGzIn/UogtCZ4WMUveVqzKiSLj6qygjY96m2icxwmp70txF3xvec0u8SUuALox4bDR9Qcu7T1u+Dv5RG55pjsTt1BY+DJl94Tgfee+yb3KLJYyeCaRTcI71aQQbUmquyDjEWbhKuzsh9CFU1XT+mEoJMJRXHcv3E/7E7qPDt89q+7McincSnHsG4XNPTnt1a8rmDhTHU2uKXbA4+HoIVupMnOz+po+kO2x7Bia63YIexGbHuFMbhmBgL6Dq5ahMoTPNPaPGz3AKG4hS0NcLAqcD+xbhr51odu2E+BxjRE8HIqI/PKPYCcqbXszbHUAvqowrar5cum30FQKWTFjTnjCapLcnjE+u8iBBSOJA4U2NWQIW6tVAezlySScl6xjADaUF2w6WqskDmnKdvdARORlNrkY1fwDsHD5M9RPDkM6HXVJXgt8EoIjwar2OQKBRswVFzJv93T+eYAYGI3feFBwXd6cVZZ4LIVlsXuAfPWvI59gKjZ5kJ6tVqFE71/6cSxInJwNlSarTUh07CJc3kdLQS2Vfiq4D9eQAvaTD/mstRLUUoKqh+7mQeCVz9O3gOvz7cmUBKGJJjo64/Qbe6Ebf4pQYyRHHNfqKATZK3KAr87my9sTWxW0rWX/fBw8iFRa2IK";
-    // production token
-    // @todo wygenerowac tokeny
-    private static $_token =
-        array(
-           'de' => "AgAAAA**AQAAAA**aAAAAA**NKnWUg**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCpWBpg2dj6x9nY+seQ**Oj0CAA**AAMAAA**Yvrbw+rBuete+VxQHK9OK5K4lTXqr1qI5p4VXEybqa7LIP+cbKcN+3y/DKNfPFVKUGE5x/sRKyc6ch/101wzJMA9rAq1tqxBTBWJFuxhXsmjB0CZK4yGYaHWVwCafYtkg4fOCW13u9eOGmYq8M3Eno+USyz1D3KKHvWnBBd/SFrxEa3Dg0NZew2AcRgSDZgmmbVDO2nsh7DQZ+IRQ6fsQ8BNZm9Wox/BPR1AovelOYWkk2xK0jkQD1hhRIf63DivNniXF4ywA5pUgpCEDQyu/VdcMRTsru+wQ0/Qe1SnMCZOAMTE9NCzWkYTB7kHZ5UDl6ZtbWrRA8G9fAVKRNWfc90cL/Jo0n3f2+VMXajzWx7j11nS2tXyevSNhJA6ljv67+W0JtFvHsa2sqiY9XXkqh4rRUXN853VXqLK1Abt8klvrfQdK4QEAlowIwEboNRmrIWVf+Da9X0XaHNpImAjE3EOKYf+c2t3F8UPlXurkmPZ2IFWnHxDbDrWVd4Syz5fvjtHomRRmyArl1Mz16/MLbi6VMwkigiXYRMNGrln0//iZaQsz23AHl5AKiUZx6SLu/trjp9WGwmk0EvWz1ZLBxL5jXGn9wF1jSIRsXyQVdQ28GX7ZdUbiBnNGi2r9AZS1WZZifoJMeeqnImwwsd8oozj/AX4C+1T8bFT24cduYRSx/Alom23RJcI499sXnzTb3ZpvSTRS9tfcgGnQg8ucnqvpqEq/uLjxD96B64x5x/oDDwbVpYTkG3X2imjraxd",
-           'en' => "AgAAAA**AQAAAA**aAAAAA**06TWUg**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wCl4ahDZCFow6dj6x9nY+seQ**7OoBAA**AAMAAA**11GXWShOqDq1LdvDd/zQjmg2q9F/hdchPo4PgBq6cmOYoz/IsltL9T2Yr5vVE8T4WqY3Lc/l25mJX5LaPN//Ol7QhBwvNBdfLxQzwh3X7yQwsAw/ObkXbdEwZYxVybvw9mivhxL33VqZ3CKQoTUOv2L1TypXwyz/poOsmvASsv4CwojIbgiBqLD6BMImRP9BmQzEIoiSJqgaqZhWQBHCdeinklZwN5uPxvsrX9zv6Xo1p8Ty83RGlN2xiDXBIjNAkeHhHy/TsAkkv4FVXeGOKHK6l0216bBwntg4qgZ3yN7isolbifwCfcNnGUWPYVhRuGawOyilCyOautz87QjMTs1XZC9q4Qp8/sWC/hSawIJO1RzjGvGsWb+k9oUGF6+wSEpGvPhJthHYdYE/OD3JmQMOnJ0X6ZU7lzn0EZpDyHsoA2oaULglxs9sEcxDx/Dd20kG2PSM61GQKoru0S6729YCOX8kvAlWCE7vcKPMXT8z7FZkUEN+pBhYBV4RWyo7vh828ohCk3lW7A9XvqdO6zpyGXsNTbHR7VQN5G9qQiRsMmstpoQMEGGRAiiC4G7jM75LTsXP0TSeYqIOlaEKrItFP+g7Kv7p88jFlWyJoFs+tfEnasYc7Xc8djnIm6h3AEWn+zV1bSUpRene8k4iUUIiI4LNXO+EHQUOQ6lduz90HbPT1ywkDTmIsREI4RhJ3tZVm4+IKJTdMww2IgdzEbGF/X66v8soayhvgQ171RQCHuJfUMjmypDWtw7gtYR0",
-            'us' => "AgAAAA**AQAAAA**aAAAAA**06TWUg**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wCl4ahDZCFow6dj6x9nY+seQ**7OoBAA**AAMAAA**11GXWShOqDq1LdvDd/zQjmg2q9F/hdchPo4PgBq6cmOYoz/IsltL9T2Yr5vVE8T4WqY3Lc/l25mJX5LaPN//Ol7QhBwvNBdfLxQzwh3X7yQwsAw/ObkXbdEwZYxVybvw9mivhxL33VqZ3CKQoTUOv2L1TypXwyz/poOsmvASsv4CwojIbgiBqLD6BMImRP9BmQzEIoiSJqgaqZhWQBHCdeinklZwN5uPxvsrX9zv6Xo1p8Ty83RGlN2xiDXBIjNAkeHhHy/TsAkkv4FVXeGOKHK6l0216bBwntg4qgZ3yN7isolbifwCfcNnGUWPYVhRuGawOyilCyOautz87QjMTs1XZC9q4Qp8/sWC/hSawIJO1RzjGvGsWb+k9oUGF6+wSEpGvPhJthHYdYE/OD3JmQMOnJ0X6ZU7lzn0EZpDyHsoA2oaULglxs9sEcxDx/Dd20kG2PSM61GQKoru0S6729YCOX8kvAlWCE7vcKPMXT8z7FZkUEN+pBhYBV4RWyo7vh828ohCk3lW7A9XvqdO6zpyGXsNTbHR7VQN5G9qQiRsMmstpoQMEGGRAiiC4G7jM75LTsXP0TSeYqIOlaEKrItFP+g7Kv7p88jFlWyJoFs+tfEnasYc7Xc8djnIm6h3AEWn+zV1bSUpRene8k4iUUIiI4LNXO+EHQUOQ6lduz90HbPT1ywkDTmIsREI4RhJ3tZVm4+IKJTdMww2IgdzEbGF/X66v8soayhvgQ171RQCHuJfUMjmypDWtw7gtYR0",
-        );
 
-    public static function getSite()
-    {
-        return self::$site;
-    }
+
 
     private static $debug = false;
-     // testowy
-  //   private static $_appId = 'dawidrza-1bcd-4bb7-9792-7f7dfb979810';
-     // produkcyjny
-     private static $_appId = 'somecomp-4d5c-4469-905d-dff647372cf4';
+
+    private static $_appId = array (
+        'prod' => 'somecomp-4d5c-4469-905d-dff647372cf4',
+        'sandbox' => 'somecomp-6fb7-4d95-b2b9-7ca9b5776f4d'
+    );
+
+
+    private static $_devId = array(
+        'prod' => '98c5c5a7-355b-484d-9933-cceaa90541db',
+        'sandbox' => '98c5c5a7-355b-484d-9933-cceaa90541db',
+    );
+
+
+    private static $_certId = array(
+        'sandbox' => '6f7f9ff7-f0fc-4c76-8a30-37b18072a5d6',
+        'prod' => 'b89247ba-6521-452c-af9a-12d4c88f11e5',
+
+
+    );
+
+    private $ruName = 'some_company-somecomp-6fb7-4-nlfztp';
+
+    private static  $sandboxUrl = 'https://api.sandbox.ebay.com/wsapi';
+
+    private static  $productionUrl = 'https://api.ebay.com/wsapi';
 
     public static function setDebug($debug)
     {
         self::$debug = $debug;
     }
+
+    private static function getServer()
+    {
+        if(self::$debug)
+        {
+             return self::$sandboxUrl;
+        }
+        else
+        {
+            return self::$productionUrl;
+        }
+    }
+
+    private static function getApi()
+    {
+        if(self::$debug)
+        {
+            return self::$_appId['sandbox'];
+        }
+        else
+        {
+            return self::$_appId['prod'];
+        }
+    }
+
+    private static function getCert()
+    {
+        if(self::$debug)
+        {
+            return self::$_certId['sandbox'];
+        }
+        else
+        {
+            return self::$_certId['prod'];
+        }
+    }
+
+    private static function getDev()
+    {
+        if(self::$debug)
+        {
+            return self::$_devId['sandbox'];
+        }
+        else
+        {
+            return self::$_devId['prod'];
+        }
+    }
+
 
 
 
@@ -57,41 +113,121 @@ class Debay {
            self::$site = $site;
      }
 
+    public static function getSite()
+    {
 
-     public static function sendRequest($method,$params){
 
-         if(!self::$site)
+        return self::$site;
+    }
+
+
+    public static function getSiteCurrency()
+    {
+        if(!self::$site)
+        {
+            throw new Exception('Nie wybrano strony ebay');
+        }
+
+        $currency = 'EUR';
+
+        if(self::$site == 'de')
+        {
+            $currency = 'EUR';
+        }
+        elseif(self::$site == 'gb')
+        {
+            // $todo kod angielski
+            $currency = 'GBP';
+
+        }
+        elseif(self::$site == 'us')
+        {
+
+
+            $currency = 'USD';
+
+        }
+
+        return $currency;
+    }
+
+    public static function getSiteCode()
+    {
+        if(!self::$site)
+        {
+            throw new Exception('Nie wybrano strony ebay');
+        }
+
+        $site_id = 0;
+
+        if(self::$site == 'de')
+        {
+            $site_id = 77;
+        }
+        elseif(self::$site == 'gb')
+        {
+            // $todo kod angielski
+            $site_id = 3;
+
+        }
+        elseif(self::$site == 'us')
+        {
+
+
+            $site_id = 0;
+
+        }
+
+        return $site_id;
+    }
+
+
+
+     public static function sendFullRequest($method,$params)
+     {
+         error_reporting(E_ALL);
+         ini_set('display_errors', '1');
+
+        $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => self::getServer().'?callname=' . $method . '&appid=' . self::getApi() . '&siteid='.self::getSiteCode().'&version=821&routing=new'));
+        // $client = new SoapProxy(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => self::getServer().'?callname=' . $method . '&appid=' . self::getApi() . '&siteid='.self::getSiteCode().'&version=821&routing=new'));
+
+
+
+         $requesterCredentials = new stdClass();
+         $requesterCredentials->Credentials  = new stdClass();
+         $requesterCredentials->Credentials->DevId = self::getDev();
+         $requesterCredentials->Credentials->AppId = self::getApi();
+         $requesterCredentials->Credentials->AuthCert = self::getCert();
+
+         $header = new SoapHeader('urn:ebay:apis:eBLBaseComponents', 'RequesterCredentials', $requesterCredentials);
+
+         try{
+
+             $responseObj = $client->__soapCall($method, array($params), null, $header);  // make the API call
+
+         }catch (Exception $e)
          {
-              throw new Exception('Nie wybrano strony ebay');
+             Throw new Exception($e->getMessage());
          }
 
-         $site_id = 0;
+         return $responseObj;
+     }
 
-         if(self::$site == 'de')
-         {
-             $site_id = 77;
-         }
-         elseif(self::$site == 'en')
-         {
-             // $todo kod angielski
-             $site_id = 3;
+    private static $token;
 
-         }
-         elseif(self::$site == 'us')
-         {
+    public static function setToken($token)
+    {
+        self::$token = $token;
+    }
 
-
-             $site_id = 0;
-
-         }
-
-         if(self::$debug)
-         {
-             self::$site = 'us';
-             $site_id = 0;
-         }
+    public static function getToken()
+    {
+        return self::$token;
+    }
 
 
+
+     public static function sendRequest($method,$params,$extraNodes = false){
 
 
          // upewnia się ze jest wlasciwa wersja
@@ -99,15 +235,29 @@ class Debay {
 
          $param['ErrorLanguage'] = 'en_GB';
 
-
          // site codes 0 -US 77 - DE  212 - Polska
          // test
         // $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.sandbox.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid=0&version=821&routing=new'));
 //
+
+         error_reporting(0);
+         ini_set('display_errors', '0');
          // production
-         $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => 'https://api.ebay.com/wsapi?callname=' . $method . '&appid=' . self::$_appId . '&siteid='.$site_id.'&version=821&routing=new'));
+
+         if($extraNodes)
+         {
+             $client = new SoapProxy(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => self::getServer(). '?callname=' . $method . '&appid=' . self::getApi() . '&siteid='.self::getSiteCode().'&version=821&routing=new', array('trace' => TRUE)));
+             $client->setExtraNodes($extraNodes);
+         }
+         else
+         {
+             $client = new SOAPClient(self::$_wsdl_url, array('trace' => 1, 'exceptions' => true, 'location' => self::getServer(). '?callname=' . $method . '&appid=' . self::getApi() . '&siteid='.self::getSiteCode().'&version=821&routing=new'));
+         }
+
+
+
          $requesterCredentials = new stdClass();
-         $requesterCredentials->eBayAuthToken = self::$_token[self::$site];
+         $requesterCredentials->eBayAuthToken = self::getToken();
 
          $header = new SoapHeader('urn:ebay:apis:eBLBaseComponents', 'RequesterCredentials', $requesterCredentials);
 
@@ -115,7 +265,6 @@ class Debay {
 
          try{
              $responseObj = $client->__soapCall($method, array($params), null, $header);  // make the API call
-
 
 
              if($responseObj->Ack=='Failure')
@@ -133,6 +282,15 @@ class Debay {
              $error.= '$e->getMessage()';
              $error.= '<pre>' . $e->getMessage() . '</pre>';
 
+             if(self::$debug)
+             {
+                 if(ob_get_status())
+                 {
+                     ob_end_clean();
+                 }
+
+                 var_dump($error);
+             }
 
              $resp = $client->__getLastResponse();
              $z = new DOMDocument();

@@ -401,9 +401,13 @@ class ModelEbayDebay extends Model{
               throw new Exception('Brak kategorii do zaktualizowania!');
           }
 
-          $this->deleteCategories();
+        $site = debay::getSite();
 
-         $site = debay::getSite();
+        $this->deleteCategories($site);
+
+
+
+
 
           foreach($data->CategoryArray->Category as $key => $category)
           {
@@ -445,9 +449,9 @@ class ModelEbayDebay extends Model{
 
     }
 
-    public function deleteCategories()
+    public function deleteCategories($site)
     {
-         $this->db->query("DELETE FROM debay_categories");
+         $this->db->query("DELETE FROM debay_categories WHERE country = '".$site."' ");
     }
 
     public function getChildrenById($parent_id,$site)
@@ -498,13 +502,12 @@ class ModelEbayDebay extends Model{
     /*
      * sciaga features dozwolone dla danej kategorii
      */
-    public function updateCategoryFeaturesFromEbay($site = '0')
+    public function updateCategoryFeaturesFromEbay($category)
     {
         $params = array(
             'Version' => 831,
 
-            'CategorySiteID' => $site,
-            'CategoryID' => 111422,
+            'CategoryID' => $category,
             'DetailLevel' => 'ReturnAll',
 
 
@@ -527,6 +530,8 @@ class ModelEbayDebay extends Model{
             $this->logger->warning("Prblem przy aktualizacji cech kategorii: ".$contents,'ebay');
             echo $e->getMessage();
         }
+
+        return $resp;
     }
 
     /*
@@ -569,6 +574,11 @@ class ModelEbayDebay extends Model{
         }
     }
 
+    /*
+     * charakterystyka danej kategorii
+     */
+
+
 
 
     /*
@@ -578,16 +588,12 @@ class ModelEbayDebay extends Model{
      * @todo podzialić to wszystko an pliki i segmenty, złapac ficzersy kategorii
      */
 
-    public function updateEbayDetails($post)
+    public function updateEbayDetails($post,$site)
     {
 
         set_time_limit(3000);
 
-        define("US",0);
-        define("DE",77);
-        define("PL",212);
-
-        $site = '77';
+        $site = debay::getSiteCode($site);
 
 
         if(isset($post['country']) AND $post['country']=='on')
@@ -911,9 +917,12 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o wojewodztwach");
         }
 
-        $this->deleteRegionDetails();
-
         $site = debay::getSite();
+
+        $this->deleteRegionDetails($site);
+
+
+
 
         foreach($data->RegionDetails as $region)
         {
@@ -923,9 +932,9 @@ class ModelEbayDebay extends Model{
 
     }
 
-    public function deleteRegionDetails()
+    public function deleteRegionDetails($site)
     {
-        $this->db->query("DELETE FROM debay_regions");
+        $this->db->query("DELETE FROM debay_regions WHERE country = '".$site."'");
     }
 
     public function getRegionDetails()
@@ -986,9 +995,11 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o strefach wysyłki");
         }
 
-        $this->deleteShippingLocationDetails();
-
         $site = debay::getSite();
+
+        $this->deleteShippingLocationDetails($site);
+
+
 
         foreach($data->ShippingLocationDetails as $location)
         {
@@ -998,9 +1009,9 @@ class ModelEbayDebay extends Model{
 
     }
 
-    public function deleteShippingLocationDetails()
+    public function deleteShippingLocationDetails($site)
     {
-        $this->db->query("DELETE FROM debay_shipping_location");
+        $this->db->query("DELETE FROM debay_shipping_location WHERE country = '".$site."'");
     }
 
     public function getShippingLocationDetails()
@@ -1061,9 +1072,11 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o rodzajach paczek");
         }
 
-        $this->deleteShippingPackageDetails();
-
         $site = debay::getSite();
+
+        $this->deleteShippingPackageDetails($site);
+
+
 
         foreach($data->ShippingPackageDetails as $package)
         {
@@ -1085,9 +1098,9 @@ class ModelEbayDebay extends Model{
 
     }
 
-    public function deleteShippingPackageDetails()
+    public function deleteShippingPackageDetails($site)
     {
-        $this->db->query("DELETE FROM debay_package_types");
+        $this->db->query("DELETE FROM debay_package_types WHERE country = '".$site."'");
     }
 
     public function getShippingPackageDetails()
@@ -1178,12 +1191,19 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o kurierach");
         }
 
-        $this->deleteShippingCarrierDetails();
-
         $site = debay::getSite();
+
+        $this->deleteShippingCarrierDetails($site);
+
+
 
         foreach($data->ShippingCarrierDetails as $package)
         {
+            if(!is_object($package))
+            {
+                continue;
+            }
+
             $this->db->query("INSERT INTO debay_shipping_carriers SET
             `shipping_carrier_id`= '".(int)$package->ShippingCarrierID."',
             `description`='".$this->db->escape($package->Description)."',
@@ -1194,9 +1214,9 @@ class ModelEbayDebay extends Model{
         }
     }
 
-    public function deleteShippingCarrierDetails()
+    public function deleteShippingCarrierDetails($site)
     {
-        $this->db->query("DELETE FROM debay_shipping_carriers");
+        $this->db->query("DELETE FROM debay_shipping_carriers WHERE country = '".$site."'");
     }
 
     public function getShippingCarrierDetails()
@@ -1235,6 +1255,7 @@ class ModelEbayDebay extends Model{
 
             $resp =  debay::sendRequest($method,$params);
 
+
             $this->updateShippingServiceDetails($resp);
 
         }
@@ -1258,15 +1279,18 @@ class ModelEbayDebay extends Model{
             throw new Exception("Brak danych o metodach wysyłki");
         }
 
-        $this->deleteShippingServiceDetails();
-
         $site = debay::getSite();
+
+        $this->deleteShippingServiceDetails($site);
+
+
 
 
         foreach($data->ShippingServiceDetails as $service)
         {
 
-            if(!isset($service->ShippingService))
+
+            if(!isset($service->ShippingService) OR !isset($service->ValidForSellingFlow) OR !$service->ValidForSellingFlow)
             {
                  continue;
             }
@@ -1311,11 +1335,11 @@ class ModelEbayDebay extends Model{
 
     }
 
-    public function deleteShippingServiceDetails()
+    public function deleteShippingServiceDetails($site)
     {
-        $this->db->query("DELETE FROM debay_shipping_services");
+        $this->db->query("DELETE FROM debay_shipping_services WHERE country = '".$site."' ");
 
-        $this->db->query("DELETE FROM debay_packages_to_services");
+        $this->db->query("DELETE FROM debay_packages_to_services WHERE country = '".$site."' ");
     }
 
     public function getShippingServiceDetails($country)

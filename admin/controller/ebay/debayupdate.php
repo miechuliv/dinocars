@@ -17,6 +17,7 @@ class ControllerEbayDebayUpdate extends Controller{
         if(isset($this->request->get['site']))
         {
 
+            debay::setDebug(true);
             debay::setSite($this->request->get['site']);
 
         }
@@ -32,7 +33,7 @@ class ControllerEbayDebayUpdate extends Controller{
 
               $this->load->model('ebay/debay');
 
-              $this->model_ebay_debay->updateEbayDetails($this->request->post);
+              $this->model_ebay_debay->updateEbayDetails($this->request->post,$this->request->get['site']);
 
           }
 

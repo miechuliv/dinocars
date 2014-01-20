@@ -25,9 +25,11 @@ class ControllerEbayDebayConfig extends Controller{
       public function index()
       {
 
+
           $site = $this->request->get['site'];
 
           $this->load->model('setting/setting');
+          $this->load->model('ebay/debay');
 
 
 
@@ -77,6 +79,9 @@ class ControllerEbayDebayConfig extends Controller{
               'Days_60' => '60 dni',
           );
 
+          // token
+          $this->data['token'] = $this->config->get('debay_token_'.$site);
+
           $this->data['debay_ReturnsWithinOption'] = $this->config->get('debay_ReturnsWithinOption_'.$site);
 
           // czy zgadzasz się na zwroty?
@@ -84,13 +89,21 @@ class ControllerEbayDebayConfig extends Controller{
 
           $this->data['debay_Description'] = $this->config->get('debay_Description_'.$site);
 
+          $this->data['debay_localisation'] = $this->config->get('debay_localisation_'.$site);
+
+          $this->data['debay_country'] = $this->config->get('debay_country_'.$site);
+
+          $this->data['debay_country_codes'] = $this->model_ebay_debay->getCountryCodes();
+
+
+
           // metody płatności
 
           // @todo walidacja metod, nie wkzdym ebayu wszystkie sa dostepne, mozna ja przeprowadzic za pomoca metody getCategoryFeatures z opodiwednim filtrem
           $this->data['payment_methods'] = array(
               $site.'_'.'CashOnPickup' => 'Zapłata przy odbiorze',
               $site.'_'.'PayPal' => 'PayPal',
-              $site.'_'.'VisaMC' => 'Płatność kartą visa mastercard',
+             // $site.'_'.'VisaMC' => 'Płatność kartą visa mastercard',
           );
 
           // metody platnosci maja swoje prefixy krajowe

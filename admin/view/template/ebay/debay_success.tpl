@@ -9,12 +9,12 @@
 					    <td>Id aukcji</td><td><?php echo $auction_id; ?><td>
 						
 			          </tr>
-					 <!--  <tr>
+					 <?php /*  <tr>
 					    <td>Czas rozpoczęcia</td><td><?php echo $start_time; ?><td>
 			          </tr>
 					   <tr>
 					    <td>CZas zakończenia</td><td><?php echo $end_time; ?><td>
-			          </tr> -->
+			          </tr> */ ?>
 					  <tr>
 					     <td>Opłaty:</td>
 					  </tr>
