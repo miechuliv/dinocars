@@ -11,8 +11,8 @@
 
 <div id="ultraheader">
 	<div class="poziom">
-		<div>Biuro obsługi Klienta <strong>+48 888 888 999</strong> | e-mail: <strong>email@email.pl</strong></div>
-		<div><a href="./index.php?route=account/login">Logowanie</a> | <a href="./index.php?route=account/register">Rejestracja</a> | DE | PL | EN</div>
+		<div><span>Biuro obsługi Klienta </span><strong>+48 888 888 999</strong> | <span>e-mail: </span><strong>email@email.pl</strong></div>
+		<div><a href="./index.php?route=account/login">Logowanie</a> | Język</div>
 	</div>
 </div>
 
@@ -56,10 +56,10 @@
       <li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li>
     </ul>
   </div>
-  <div class="column" style="color:#D94444;">
+  <div class="column" style="color:#e78888;">
 	<h3>Kontakt</h3>
-	Ul. Długa 301/340</br>
-	80-330 Gdańsk<br/></br>
+	Ul. Długa 301/340<br/>
+	80-330 Gdańsk<br/><br/>
 	+48 888 888 999<br/>
 	email@email.pl
 
@@ -78,7 +78,7 @@
         $.ajax({
             url: 'index.php?route=checkout/cart/add',
             type: 'post',
-            data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea, input[name="kaucja"]'),
+            data: $('.product-inf input[type=\'text\'], .product-inf input[type=\'hidden\'], .product-inf input[type=\'radio\']:checked, .product-inf input[type=\'checkbox\']:checked, .product-inf select, .product-inf textarea, input[name="kaucja"]'),
             dataType: 'json',
             success: function(json) {
                 $('.success, .warning, .attention, information, .error').remove();

@@ -1,8 +1,8 @@
-<div id="cart">
+<div id="cart"><a href="./index.php?route=checkout/cart">
   <div class="heading">
-    <a href="./index.php?route=checkout/cart"><h4><?php echo $heading_title; ?></h4>
-    <span id="cart-total"><?php echo $text_items; ?></span></a>
-	</div>
+    <h4><?php echo $heading_title; ?></h4>
+    <span id="cart-total"> <?php echo $text_items; ?></span><?php echo $q; ?>
+	</div></a>
 	<?/*
   <div class="content">
     <?php if ($products || $vouchers) { ?>

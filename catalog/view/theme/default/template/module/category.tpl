@@ -1,5 +1,6 @@
 <div class="box">
 <?/* <div class="box-heading"><?php echo $heading_title; ?></div>*/?>
+<a href="javascript:void(0);" class="boxclose" style="display:none">x</a>
 <h2><?php echo $heading_title; ?></h2>
   <div class="box-content">
     <ul class="box-category <?php if(array_key_exists('route',$this->request->get)) { ?> normal <?php } ?>">
@@ -30,10 +31,11 @@
 </div>
 
 <div class="serch-right">
+<a href="javascript:void(0);" class="boxclosef" style="display:none">x</a>
 <h2>Filtruj wg auta</h2>
 		<form id="czesci_szuk" class="szukaja" action="<?php echo $car_action; ?>" method="get">
 
-
+          
 		
 			<input type="hidden" value="<?php echo $route; ?>" name="route" />
             <input type="hidden" value="<?php echo $path; ?>" name="path" />

@@ -2,7 +2,7 @@
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
 <?php if ($description) { ?>
@@ -47,21 +47,57 @@ DD_belatedPNG.fix('#logo img');
 
 <script type="text/javascript"><!--
 
-// stopka 165px;
-
 function dynafoot() {
-	if($(window).scrollTop() + $(window).height() > $(document).height() - 165) {
-      $('#ultraheader').addClass('klej');
-   } else {
-	$('#ultraheader').removeClass('klej');
-   }
+	var szerokoscstopki = $('#footer').height();
+
+	if($(window).scrollTop() + $(window).height() > $(document).height() - szerokoscstopki) {
+		$('#ultraheader').addClass('klej');
+	} else {
+		$('#ultraheader').removeClass('klej');
+	}
+	if($(window).scrollTop() > 75) {
+		$('#mobileheader').addClass('stick');
+	} else {
+		$('#mobileheader').removeClass('stick');
+	}
 }
+
+function showmenu() {
+	$('#zaciem').css('display','block');
+	$('#mobileheader').addClass('podmenu');
+	$('.nohome .box').css('display','block');
+}
+
+function hidemenu() {
+	$('#zaciem').css('display','none');
+	$('#mobileheader').removeClass('podmenu');
+	$('.nohome .box').css('display','none');
+}
+
+function showsearch() {
+	$('#zaciem').css('display','block');
+	$('.serch-right').css('display','block');
+	$('#mobileheader').addClass('podmenu');
+}
+
+function hidesearch() {
+	$('#zaciem').css('display','none');
+	$('.serch-right').css('display','none');
+	$('#mobileheader').removeClass('podmenu');
+}
+
 
 $(window).scroll(function() {
 	dynafoot();
 });
 
 $(document).ready(function() {
+
+$('#showmobilemenu').click(function() { showmenu(); });
+$('#showmobilefilter').click(function() { showsearch(); });
+$('.boxclose').click(function() { hidemenu(); });
+$('.boxclosef').click(function() { hidesearch(); });
+
 	dynafoot();
 
 <?php if ($stores) { ?>
@@ -201,7 +237,8 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
             translateSetRoute('<?php echo isset($this->request->get["route"])?$this->request->get["route"]:" "; ?>');
      </script> */ ?>
 </head>
-<body>
+<body <?php if(!in_array('common/home',Utilities::getControllerList() )) { ?> class="nohome" <?php } ?>>
+<div id="zaciem" style="display:none"></div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -223,19 +260,56 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 	  <?php } ?>
  
 </div>
+<div id="telmobile">
+	<h1>+48 111 222 333</h1>
+</div>
 <div>
-	<div style="float:left; width:65%;">
-		<div id="search">
-			<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?> wg nr, lub nazwy części" value="<?php echo $search; ?>" />
-			<div class="button-search"><?php echo $text_search; ?></div>
+	<?php if(in_array('checkout/cart',Utilities::getControllerList() )) { ?>
+		<div style="display:table; width:100%;">
+			<div style="display:table-cell; vertical-align:middle; width:75%;" id="mor">
+				<h1 style="margin:0">Jesteś w <span style="color:#be0000">koszyku</span>.</h1> 
+				<h2>Jeśli masz jakieś pytania, skontaktuj się z nami: <span style="color:#be0000">+48 111 222 333</span></h2>
+			</div>
+			<div style="display:table-cell; vertical-align:middle; width:25%; text-align:right;">	  
+				<img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/>	
+			</div>
 		</div>
-	</div>
-	<div style="float:left; width:35%;">	  
-		<?php echo $cart; ?>    
-		<div id="trusted"><img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/></div>	
-	</div>
+	<?php } else if(in_array('checkout/checkout',Utilities::getControllerList() )) { ?>
+		<div style="display:table; width:100%;">
+			<div style="display:table-cell; vertical-align:middle; width:75%;" id="mor">
+				<h1 style="margin:0">Jesteś w <span style="color:#be0000">kasie</span>.</h1> 
+				<h2>Jeśli masz jakieś pytania, skontaktuj się z nami: <span style="color:#be0000">+48 111 222 333</span></h2>
+			</div>
+			<div style="display:table-cell; vertical-align:middle; width:25%; text-align:right;">	  
+				<img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/>	
+			</div>
+		</div>
+	<?php } else { ?>
+		<div style="float:left;" class="mobilesearch">
+			<div id="search">
+				<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?> wg nr, lub nazwy części" value="<?php echo $search; ?>" />
+				<div class="button-search"><?php echo $text_search; ?></div>
+			</div>
+		</div>
+		<div style="float:right;">	  
+			<?php echo $cart; ?>    
+			<div id="trusted"><img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/></div>	
+		</div>
+	<?php } ?>
 </div>
 </div>
+</div>
+
+<div id="mobileheader">
+	<div>
+		<?php if(!in_array('checkout/cart',Utilities::getControllerList()) && !in_array('checkout/checkout',Utilities::getControllerList()) && !in_array('product/product',Utilities::getControllerList())) { ?>
+			<a href="javascript:void(0);" id="showmobilemenu"><span>Kategorie</span></a>
+			<a href="javascript:void(0);" id="showmobilefilter"><span>Filtruj</span></a>
+		<?php } else { ?>
+			<a href="./index.php?route=account/login" class="clear"><span>Logowanie</span></a>
+		<?php } ?>
+			<span class="phone"><span>+48 888 888 999</span></span>
+	</div>
 </div>
 
 <div id="container">

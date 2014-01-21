@@ -16,18 +16,19 @@
 <div id="content" class="kontentw">
 <div class="resizer koszyk">
 <?php echo $content_top; ?>
-
+<?/*
   <h1 style="margin:10px 0;"><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
     &nbsp;(<?php echo $weight; ?>)
     <?php } ?>
   </h1>
-    <div class="buttons basket" style="margin-bottom:10px;">
+  <div class="buttons basket" style="margin-bottom:10px;">
     <div class="right"><a href="<?php echo $checkout; ?>" class="button action"><?php echo $button_checkout; ?></a></div>
-   <?/* <div class="left"><a class="button grey cofka"><?php echo $button_shopping; ?></a></div> */?>
-  </div>
+  </div>  
+*/?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <div class="cart-info">
+    <div class="cart-info tabelakoszyk">
+	<?/*
       <table>
         <thead>
           <tr>
@@ -40,54 +41,75 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($products as $product) { ?>
-          <tr>
-            <td class="image"><?php if ($product['thumb']) { ?>
-              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
-              <?php } ?></td>
-            <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-              <?php if (!$product['stock']) { ?>
-              <span class="stock">***</span>
-              <?php } ?>
-              <div>
-                <?php foreach ($product['option'] as $option) { ?>
-                - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                <?php } ?>
-              </div>
-              <?php if ($product['reward']) { ?>
-              <small><?php echo $product['reward']; ?></small>
-              <?php } ?>
-              <?php if ($product['kaucja']) { ?>
-              <small><?php echo $text_kaucja; ?> <?php echo $product['kaucja']; ?>  <?php echo $product['kaucja_cost']; ?></small>
-              <?php } ?></td>
-            <td class="model"><?php echo $product['model']; ?></td>
-              <td class="quantity">
-                  <a id="dodaj" href="javascript:void(0);" >+</a>	
-				  <a id="odejmij" href="javascript:void(0);" >-</a>
-				  	  <input type="text" class="ilosc" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
-                <?php /*  &nbsp;
-                  <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
-                  &nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a>
-				  */ ?>
-                  <input type="hidden" class="p_id" value="<?php echo $product['key']; ?>" />
-              </td>
-            <td class="price"><?php echo $product['price']; ?></td>
-            <td class="total"><?php echo $product['total']; ?></td>
-          </tr>
-          <?php } ?>
+		*/?>
+        <?php foreach ($products as $product) { ?>
+		  <div class="produkcik">
+            <div class="image">
+				<?php if ($product['thumb']) { ?>
+				<a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+				<?php } ?>
+			</div>
+			<div>
+				<div class="name">
+					<a href="<?php echo $product['href']; ?>">
+						<h2><?php echo $product['name']; ?>
+						<?php if (!$product['stock']) { ?>
+							<span style="color:red">***</span>
+						<?php } ?>
+						</h2>
+					</a>					
+					<div>
+						<?php foreach ($product['option'] as $option) { ?>
+							- <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+						<?php } ?>
+					</div>
+					<?php if ($product['reward']) { ?>
+						<small><?php echo $product['reward']; ?></small>
+					<?php } ?>
+					<?php if ($product['kaucja']) { ?>
+						<small><?php echo $text_kaucja; ?> <?php echo $product['kaucja']; ?>  <?php echo $product['kaucja_cost']; ?></small>
+					<?php } ?>
+				 </div>
+				 
+				<div class="model">
+					<strong><?php echo $column_model; ?>:</strong> <?php echo $product['model']; ?> 
+				</div>
+				
+				  <div class="quantity">
+					<div style="float:left"><strong><?php echo $column_quantity; ?>:</strong></div>
+					<div style="float:left">
+						  <a id="dodaj" href="javascript:void(0);" >+</a>	
+						  <a id="odejmij" href="javascript:void(0);" >-</a>
+						  <input type="text" class="ilosc" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+						  <input type="hidden" class="p_id" value="<?php echo $product['key']; ?>" />
+					</div>
+				  </div>
+				  
+				<div class="price bord">
+					<strong><?php echo $column_price; ?>:</strong> <?php echo $product['price']; ?>
+				</div>
+				
+				<div class="total">
+					<strong><?php echo $column_total; ?>:</strong> <?php echo $product['total']; ?>
+				</div>
+			</div>
+		</div>	
+        <?php } ?>
+		  <?/*
           <?php foreach ($vouchers as $vouchers) { ?>
           <tr>
             <td class="image"></td>
             <td class="name"><?php echo $vouchers['description']; ?></td>
             <td class="model"></td>
             <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
-            <?php /*  &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a>*/ ?> </td>
+            <?php /*  &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a>/ ?> </td>
             <td class="price"><?php echo $vouchers['amount']; ?></td>
             <td class="total"><?php echo $vouchers['amount']; ?></td>
           </tr>
           <?php } ?>
         </tbody>
       </table>
+	  */?>
     </div>
   </form>
   <?php /* if ($coupon_status || $voucher_status || $reward_status || $shipping_status) { ?>
@@ -196,13 +218,8 @@
   </div>
   <?php } */ ?>
   <div class="cart-total">
-  
+  <?/*
 	<div id="koszyk-promo" style="background:#fff; padding:10px 0; float:left;">
-		<div style="float:left;margin-right:10px; font-size:12px;">
-			<strong class="ok">Lorem ipsum</strong> Lorem ipsum opis<br>
-			<strong class="ok">Lorem ipsum</strong> Inny opis lorem ipsum<br>
-			<strong class="ok">Lorem ipsum</strong> Lorem ipsum lorem ipsum	
-		</div>
 		<div style="float:right; padding:6px;">	
 			<div class="right clearfix" id="payments_types" style="position:relative; right:0; top:0;">
 				<img src="image/data/payment icons/visa_straight_32px.png" alt="visa">
@@ -212,7 +229,7 @@
 			</div>
 		</div>
 	</div>
-  
+  */?>
     <table id="total">
       <?php foreach ($totals as $total) { ?>
       <tr>

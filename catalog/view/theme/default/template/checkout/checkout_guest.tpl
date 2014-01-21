@@ -362,82 +362,81 @@ $('#button-register').live('click', function() {
 </div>
 */?>
 
+
 <div class="left">
     <h2><?php echo $text_your_details; ?></h2>
 	<div class="lab"><span class="required">*</span> <?php echo $entry_firstname; ?></div>
-    <input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
-        <br />
+    <input id="pol1" type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
     <br />
-	    <div class="lab"><span class="required">*</span> <?php echo $entry_address_1; ?></div>
+</div>
+<div class="right">	
+    <div class="lab"><span class="required">*</span> <?php echo $entry_lastname; ?></div>
+    <input id="pol2" type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" />
+    <br />
+</div>
+<div class="left maxwidth"> 
+    <div class="lab"><span class="required">*</span> Adres: <?php // echo $entry_address_1; ?></div>
     <input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" />
-        <br />
     <br />
-
-      <div class="lab"><span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></div>
+</div>
+<div class="right mobilefat" style="height:29px">	
+	&nbsp;
+</div>
+<div class="left">
+    <div class="lab"><span class="required">*</span> <?php echo $entry_postcode; ?></div>
     <input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" />
     <br />
-    <br />
-	    
-    <div class="lab"><span class="required">*</span> <?php echo $entry_email; ?></div>
-    <input type="text" name="email" value="<?php echo $email; ?>" class="large-field" />
-    
-        <br />
-    <br />
-    	
-	<div class="lab"><span class="required">*</span><?php echo $entry_zone; ?></div>
-    <select name="zone_id" class="large-field">
-    </select>
-
-  <?/*  <div class="lab"><?php echo $entry_fax; ?></div> */?>
-    <input type="text" name="fax" style="oveflow:hidden; height:0; padding:0; border:0; margin:0; float:left;" value="<?php echo $fax; ?>" class="large-field" />
- 
-
-	
 </div>
 <div class="right">
-    <h2><?php echo $text_your_address; ?></h2>
-
-    
-    
-    <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <div class="lab"><?php echo $entry_customer_group; ?></div>
-        <?php foreach ($customer_groups as $customer_group) { ?>
-        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-        
-        <?php } else { ?>
-        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
-        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-        
-        <?php } ?>
-        <?php } ?>
-        
-    </div>
-    <div id="tax-id-display"><div class="lab"><span id="tax-id-required" class="required">*</span> NIP</div>
-        <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" class="large-field" />
-          <br />
-    <br />  
-        
-    </div>
-
-        <div class="lab"><span class="required">*</span> <?php echo $entry_lastname; ?></div>
-    <input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" />
-        <br />
-    <br />
-    <div class="lab"><?php echo $entry_address_2; ?></div>
-    <input type="text" name="address_2" value="<?php echo $address_2; ?>" class="large-field" />
-    
-        <br />
-    <br />
-    <div class="lab"><span class="required">*</span> <?php echo $entry_city; ?></div>
+	<div class="lab"><span class="required">*</span> <?php echo $entry_city; ?></div>
     <input type="text" name="city" value="<?php echo $city; ?>" class="large-field" />
     <br />
+</div>
+<div class="left">
+	<div class="lab"><span class="required">*</span> <?php echo $entry_email; ?></div>
+    <input type="text" name="email" value="<?php echo $email; ?>" class="large-field" />
     <br />
-    
-    <div class="lab"><span class="required">*</span> <?php echo $entry_telephone; ?></div>
+</div>
+<div class="right">	
+	<div class="lab"><span class="required">*</span> <?php echo $entry_telephone; ?></div>
     <input type="text" name="telephone" value="<?php echo $telephone; ?>" class="large-field" />
+	<br />	
+</div>
+<div class="left">		
+    <div class="lab"><?php echo $entry_company; ?> <span style="font-weight:normal; font-size:10px;">(opcjonalnie)</span></div>
+    <input type="text" name="company" value="<?php echo $company; ?>" class="large-field" />
     <br />
+</div>
+<div class="right">
+    <div id="company-id-display"><div class="lab"style="height:auto;"><span id="company-id-required" class="required">*</span> NIP: <span style="font-weight:normal; font-size:10px;">(opcjonalnie)</span> <?php // echo $entry_company_id; ?></div>
+        <input type="text" name="company_id" value="<?php echo $company_id; ?>" class="large-field" />
+        <br />
+    </div>
+</div>
+
+<!-- DISABLE -->
+
+	<div style="display:none">
+    <div class="lab"><?php echo $entry_address_2; ?></div>
+    <input type="text" name="address_2" value="<?php echo $address_2; ?>" class="large-field" />
     <br />
+	</div>
+	
+	<div style="display:none">
+	<div class="lab"><span class="required">*</span> <?php echo $entry_zone; ?></div>
+    <select name="zone_id" class="large-field">
+	<option value="4033" selected="selected" ></option>
+    </select>
+    <br />
+	</div>
+
+	<div style="display:none">
+    <div class="lab"><?php echo $entry_fax; ?></div>
+    <input type="text" name="fax" value="<?php echo $fax; ?>" class="large-field" />
+    <br />
+	</div>
+
+	<div style="display:none">
 	<div class="lab"><span class="required">*</span> <?php echo $entry_country; ?></div>
     <select name="country_id" class="large-field">
         <option value=""><?php echo $text_select; ?></option>
@@ -449,10 +448,16 @@ $('#button-register').live('click', function() {
         <?php } ?>
         <?php } ?>
     </select>
-    
+    <br />
+	</div>	
 	
-</div>
-
+	<div id="tax-id-display" style="display:none"><div class="lab"><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></div>
+    <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" class="large-field" />
+    <br />   
+    </div>
+	
+<!-- / DISABLE -->
+    
 
 <?php if ($shipping_required) { ?>
 <div style="float:left; width:100%; margin:20px 0">
@@ -463,10 +468,9 @@ $('#button-register').live('click', function() {
     <?php } ?>
     <label for="shipping"><strong><?php echo $entry_shipping; ?></strong></label>
 </div>
-
 <?php } ?>
 
-
+<?/*
 <div class="right" style="padding:0 0 20px; width:100% !important;">
 <div style="float:left; width:320px; margin-right:10px; margin-left:20px;">
     <div class="lab"><?php echo $entry_company; ?></div>
@@ -476,6 +480,7 @@ $('#button-register').live('click', function() {
     <input type="text" name="company_id" value="<?php echo $company_id; ?>" class="large-field" />
 </div>
 </div>	
+*/?>
 
 </div>
 
@@ -779,7 +784,7 @@ $('#button-register').live('click', function() {
 
                 $.each( json['totals'], function( key, value ) {
                     html+=   '<tr>';
-                    html+=    '<td colspan="3" class="price"><b>'+value['title']+':</b></td>';
+                    html+=    '<td colspan="3" class="price"><b>'+value['title']+'</b> &nbsp;</td>';
                     html+=    '<td class="total">'+value['text']+'</td>';
                     html+=   '</tr>';
                 });
@@ -877,6 +882,10 @@ $('#button-register').live('click', function() {
 					*/?>
 
 				<?php } ?>
+
+    <div>
+        <input type="checkbox" name="auto_account" value="1" />Załóż automatycznie konto
+        </div>
 	
     <div class="buttons">
         <div class="left">
@@ -1033,7 +1042,7 @@ $('#button-register').live('click', function() {
 
                  } else {
 
-				 if(spr1 && spr2) {
+				 if(spr1) {
 				 
                      $.ajax({
                          url: 'index.php?route=checkout/checkout/getPayment',

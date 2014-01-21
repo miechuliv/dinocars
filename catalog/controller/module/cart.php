@@ -59,6 +59,8 @@ class ControllerModuleCart extends Controller {
 		$this->load->model('tool/image');
 		
 		$this->data['products'] = array();
+
+
 			
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
@@ -110,7 +112,11 @@ class ControllerModuleCart extends Controller {
 				'total'    => $total,	
 				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
 			);
+
+
 		}
+
+        $this->data['q'] = $this->cart->countProducts();
 		
 		// Gift Voucher
 		$this->data['vouchers'] = array();

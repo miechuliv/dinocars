@@ -1389,7 +1389,7 @@ class ControllerCheckoutCheckout extends Controller {
             }
 
             if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
-                $json['error']['zone'] = $this->language->get('error_zone');
+              //  $json['error']['zone'] = $this->language->get('error_zone');
             }
 
             // guest shipping validate
@@ -1449,7 +1449,7 @@ class ControllerCheckoutCheckout extends Controller {
                     $json['error']['agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
                 }
 				if ($information_info && !isset($this->request->post['agree2'])) {
-                    $json['error']['agree2'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+                   // $json['error']['agree2'] = sprintf($this->language->get('error_agree'), $information_info['title']);
                 }
             }
             //
@@ -1883,6 +1883,7 @@ class ControllerCheckoutCheckout extends Controller {
 
                 // write order to DB
                 $result = $this->finalStep();
+
                 if($result)
                 {
                     $json['redirect'] = $result;
@@ -2278,8 +2279,9 @@ class ControllerCheckoutCheckout extends Controller {
                 return $p;
             };
 
+            $this->load->model('account/customer');
             //zapisanie konta usera
-            if(isset($this->session->data['auto_account']))
+            if(isset($this->session->data['auto_account']) AND !$this->model_account_customer->getTotalCustomersByEmail($data['email']))
             {
                 $uData = array(
                     'store_id' => $this->config->get('config_store_id'),

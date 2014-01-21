@@ -6,7 +6,7 @@
     <?php } ?>
   </div>
  
-  <div class="product-info">
+  <div class="product-inf">
     <?php if ($thumb || $images) { ?>
     <div class="left">
       <?php if ($thumb) { ?>
@@ -25,71 +25,95 @@
       <?php } ?>
     </div>
     <?php } ?>
-    <div class="right">
-	<div id="prod-left">
-      <div class="description">
-
-			   <h1><?php echo $heading_title; ?></h1>
-			   
-
 	
-	<div id="pytania">
-		<div>
-			Lorem ipsum dolor.<br/><br/>
-			<strong>+48 (0) 160 951 432 00</strong><br/>
-			<small>email: email@email.pl</small>
+<div class="right">
+	<div>	
+	
+		<div id="prod-left">
+			<div class="description">
+				<h1><?php echo $heading_title; ?></h1>	
+				
+				  <?php if ($attribute_groups) { ?>
+					  <div class="atrybuty">
+						  <?php foreach ($attribute_groups as $attribute_group) { ?>
+							<?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+							  <div><strong><?php echo $attribute['name']; ?>:</strong> <?php echo $attribute['text']; ?></div>
+							<?php } ?>
+						  <?php } ?>
+					  </div>
+				<?php } ?> 
+				
+				<hr>
+				
+				<div class="atrybuty">
+					<div><strong>Telefon:</strong> +48 111 222 333</div>
+					<div><strong>E-mail:</strong> email@email.pl</div>
+				</div>
+				
+			</div>
 		</div>
-	</div>
-
-		</div>
-
-
-	</div><div id="prod-right">
+	
+	<div id="prod-right">
 	
       <?php if ($price) { ?>
-      <div class="price"><?php echo $text_price; ?>
-        <?php if (!$special) { ?>
-        <?php echo $price; ?>
-        <?php } else { ?>
-        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
-        <?php } ?>
-        <br/>
-        <?php if ($tax) { ?>
-        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span>
-        <?php } ?>
-        <?php if ($points) { ?>
-        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span>
-        <?php } ?>
-        <?php if ($discounts) { ?>
-        <br/>
-        <div class="discount">
-          <?php foreach ($discounts as $discount) { ?>
-          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?>
-          <?php } ?>
-        </div>
-        <?php } ?>
-      </div>
-
-
 	  
-	    <div class="cart" style="padding:0 !important;">
+		  <div class="price"><?php echo $text_price; ?>
+			<?php if (!$special) { ?>
+			<?php echo $price; ?>
+			<?php } else { ?>
+			<span class="price-new" style="color:#cc0000"><?php echo $special; ?></span><br/>
+			<small class="price-old" style="text-decoration: line-through; font-weight:normal; color:#aaa;"><?php echo $price; ?></small> 
+			<?php } ?>
+			<br/>
+			<?php if ($tax) { ?>
+			<span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span>
+			<?php } ?>
+			<?php if ($points) { ?>
+			<span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span>
+			<?php } ?>
+			<?php if ($discounts) { ?>
+			<br/>
+			<div class="discount">
+			  <?php foreach ($discounts as $discount) { ?>
+			  <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?>
+			  <?php } ?>
+			</div>
+			<?php } ?>
+		  </div>
 
-		<div style="float:left; padding:15px 0;">
-		<div style="float:left; padding:4px; color:#000;"><?php echo $text_qty; ?></div>
-		<div id="minus">-</div>
-          <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" id="ilosc-prod"/>
-		<div id="plus">+</div>
+		<div class="dost">
+			<div>Dostawa: 48h</div>
+		</div>
+	  
+	    <div class="cart" >
+
+		<div>
+			<div>
+				<div style="float:left; padding:4px; color:#000;"><?php echo $text_qty; ?></div>
+				<div id="minus">-</div>
+				<input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" id="ilosc-prod"/>
+				<div id="plus">+</div>
+			</div>
 		</div>
 		
-          <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-          &nbsp;
-
-
-                <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" style="float:right; margin-top:0; width:175px; height:45px;" />
-
-
-
-
+		<div>
+			<div>
+				<input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+				<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
+			</div>
+		</div>
+		
+		<div class="promot">
+			<div style="width:100%; padding:15px 0; border-top:1px solid #eee; margin:10px 0 0;">
+				<div>
+					<ul>
+						<li>Lorem ipsum tanio</li>
+						<li>Bezpieczne zakupy lorem</li>
+						<li>Lorem ipsum, tania przesyłka</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
 		  <?/*
           <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span>
@@ -254,40 +278,11 @@
         <?php } ?>
       </div>
       <?php } ?>
-	  <?/*
-      <div class="cart">
-        <div><?php echo $text_qty; ?>
-          <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
-          <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-          &nbsp;
-          <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
-
-
-
-
-		  <?/*
-          <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span>
-          <span class="links"><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
-            <a onclick="addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></span>
-		
-        </div>
-        <?php if ($minimum > 1) { ?>
-        <div class="minimum"><?php echo $text_minimum; ?></div>
-        <?php } ?>
-      </div>	*/?>
-      <?php /* if ($review_status) { ?>
-      <div class="review">
-        <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
-        <div class="share"><!-- AddThis Button BEGIN -->
-          <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
-          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
-          <!-- AddThis Button END --> 
-        </div>
-      </div>
-      <?php } */ ?>
+	 
 	  </div>
     </div>
-  </div>
+	</div>
+</div>
  
   <div id="tabs" class="htabs"><a href="#tab-description"><?php echo $tab_description; ?></a>
     <?php if ($attribute_groups) { ?>
@@ -300,65 +295,113 @@
     <a href="#tab-related"><?php echo $tab_related; ?> (<?php echo count($products); ?>)</a>
     <?php } ?>
   </div>
-  <div id="tab-description" class="tab-content"><?php echo $description; ?><br/>
+  <div id="tab-description" class="tab-content">
+	<?php echo $description; ?>
+	
+	<div id="dane">
+       <table>
+	   
+	           <tbody><tr>
+            <td>
+                Orginalne kody producenta            </td>
+            <td>
+                <ul>
+                                     IB0445110002
 
-  </div>
-  <?php if ($attribute_groups) { ?>
-  <div id="tab-attribute" class="tab-content">
-    <table class="attribute">
-      <?php foreach ($attribute_groups as $attribute_group) { ?>
-      <thead>
-        <tr>
-          <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+                                </ul>
+            </td>
         </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+
+           <tr>
+               <td>
+                   Samochód               </td>
+               <td>
+                   FIAT BRAVO I (182) 1.9 JTD 105               </td>
+           </tr>
+
+           <tr>
+               <td>
+                   Rocznik               </td>
+               <td>
+                   1998-12 - 2001-10               </td>
+           </tr>
+
+           <tr>
+               <td>
+                   Pojemność               </td>
+               <td>
+                   1910 ccm
+               </td>
+           </tr>
+
+           <tr>
+               <td>
+                   Moc silnika               </td>
+               <td>
+                   KW:  77 KW:  105               </td>
+           </tr>
+
+           <tr>
+               <td>
+                   Liczba cylindrów               </td>
+               <td>
+                   4               </td>
+           </tr>
+
+
         <tr>
-          <td><?php echo $attribute['name']; ?></td>
-          <td><?php echo $attribute['text']; ?></td>
+               <td>
+                   Kod EAN               </td>
+               <td>
+                                  </td>
+           </tr>
+
+           <tr>
+               <td>
+                   Kod silnika               </td>
+               <td>
+                   182 B4.000               </td>
+           </tr>
+
+
+
+        <tr>
+            <td>
+                Dodatkowe kody producentow            </td>
+            <td>
+                <ul>
+                                        BOSCH 0445110002
+
+                                        BOSCH 0986435001
+
+                                        ALFA ROMEO 464302102
+
+                                        FIAT 464302102
+
+                                        LANCIA 464302102
+
+                                        ALFA ROMEO 464629710
+
+                                        FIAT 464629710
+
+                                        LANCIA 464629710
+
+                                        ALFA ROMEO 46472233
+
+                                        FIAT 46472233
+
+                                        LANCIA 46472233
+
+                                    </ul>
+            </td>
         </tr>
-        <?php } ?>
-      </tbody>
-      <?php } ?>
-    </table>
-  </div>
-  <?php } ?> 
-  <?/*
-  <?php if ($review_status) { ?>
-  <div id="tab-review" class="tab-content">
-    <div id="review"></div>
-    <h2 id="review-title"><?php echo $text_write; ?></h2>
-    <b><?php echo $entry_name; ?></b><br />
-    <input type="text" name="name" value="" />
-    <br />
-    <br />
-    <b><?php echo $entry_review; ?></b>
-    <textarea name="text" cols="40" rows="8" style="width: 98%;"></textarea>
-    <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
-    <br />
-    <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
-    <input type="radio" name="rating" value="1" />
-    &nbsp;
-    <input type="radio" name="rating" value="2" />
-    &nbsp;
-    <input type="radio" name="rating" value="3" />
-    &nbsp;
-    <input type="radio" name="rating" value="4" />
-    &nbsp;
-    <input type="radio" name="rating" value="5" />
-    &nbsp;<span><?php echo $entry_good; ?></span><br />
-    <br />
-    <b><?php echo $entry_captcha; ?></b><br />
-    <input type="text" name="captcha" value="" />
-    <br />
-    <img src="index.php?route=product/product/captcha" alt="" id="captcha" /><br />
-    <br />
-    <div class="buttons">
-      <div class="right"><a id="button-review" class="button"><?php echo $button_continue; ?></a></div>
+       </tbody></table>
+
     </div>
+	
   </div>
-  <?php } */ ?>
+
+
   <?php if ($products) { ?>
   <div id="tab-related" class="tab-content">
     <div class="box-product">
@@ -397,7 +440,7 @@
   </div>
   <?php } ?>
   <?php // echo $alsobought; ?></div>
-  <?php echo $content_bottom; ?></div>
+  <?php echo $content_bottom; ?>
 <?/*
 <script type="text/javascript"><!--
 $(document).ready(function() {
@@ -445,6 +488,7 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 <?php } ?>
 <?php } ?>
 <?php } ?>
+<? /*
 <script type="text/javascript"><!--
 
 $(document).ready(function(){
@@ -514,7 +558,9 @@ $('#button-review').bind('click', function() {
 		}
 	});
 });
-//--></script> <?/*
+//--></script>
+*/?> 
+<?/*
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
 //--></script> 

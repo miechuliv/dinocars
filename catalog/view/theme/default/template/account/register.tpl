@@ -175,19 +175,19 @@
     </div>
     <?php if ($text_agree) { ?>
     <div class="buttons">
-      <div class="right"><?php echo $text_agree; ?>
+      <div class="left"><?php echo $text_agree; ?>
         <?php if ($agree) { ?>
         <input type="checkbox" name="agree" value="1" checked="checked" />
         <?php } else { ?>
         <input type="checkbox" name="agree" value="1" />
         <?php } ?>
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button action" style="margin-top:10px;"/>
       </div>
     </div>
     <?php } else { ?>
     <div class="buttons">
-      <div class="right">
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+      <div class="left">
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button action" />
       </div>
     </div>
     <?php } ?>

@@ -11,8 +11,8 @@ $(document).ready(function(){
 
 
 
-    if(check.length > 1)
-    {
+    if(check != 'undefined')
+    {	
         $.ajax({
             type     : "POST",
             url      : "index.php?route=tool/cars/getAllMakes",

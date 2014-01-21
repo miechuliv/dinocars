@@ -1,20 +1,22 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
+<?php echo $header; ?><?php // echo $column_left; ?><?php // echo $column_right; ?>
 <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
 </div>
-<h1><?php echo $heading_title; ?></h1>
+<div id="content" class="kasalogged"><?php echo $content_top; ?>
+<?/*<h1><?php echo $heading_title; ?></h1>*/?>
 
 <?php $type='payment'; ?>
 
-
+<div>
+<div>
+<h1>1. Adres płatności</h1>
 <?php if ($addresses) { ?>
 <input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
 <label for="payment-address-existing"><?php echo $text_address_existing; ?></label>
 <div id="payment-existing">
-    <select name="payment_address_id" style="width: 100%; margin-bottom: 15px;" size="5">
+    <select name="payment_address_id" style="width: 100%; margin-bottom: 15px;" size="2">
         <?php foreach ($addresses as $address) { ?>
         <?php if ($address['address_id'] == $payment_address_id) { ?>
         <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
@@ -97,7 +99,7 @@
         </tr>
     </table>
 </div>
-<br />
+
 
 <script type="text/javascript"><!--
     $('#payment-address-new').live('change', function() {
@@ -168,15 +170,20 @@
     $('#payment_country_id').trigger('change');
     //--></script>
 
+</div>
+</div>
+
+<div>
+<div>
 
 <?php $type='shipping'; ?>
 
-
+<h1>2. Adres dostawy</h2>
 <?php if ($addresses) { ?>
 <input type="radio" name="shipping_address" value="existing" id="shipping-address-existing" checked="checked" />
 <label for="shipping-address-existing"><?php echo $text_address_existing; ?></label>
 <div id="shipping-existing">
-    <select name="shipping_address_id" style="width: 100%; margin-bottom: 15px;" size="5">
+    <select name="shipping_address_id" style="width: 100%; margin-bottom: 15px;" size="2">
         <?php foreach ($addresses as $address) { ?>
         <?php if ($address['address_id'] == $shipping_address_id) { ?>
         <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
@@ -241,7 +248,6 @@
         </tr>
     </table>
 </div>
-<br />
 
 <script type="text/javascript"><!--
     $('#shipping-address-new').live('change', function() {
@@ -310,13 +316,18 @@
     $('shipping_country_id').trigger('change');
     //--></script>
 
+</div>
+</div>
+
+<div>
 
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php if ($shipping_methods) { ?>
 <div id="shipping-methods">
-    <p><?php echo $text_shipping_method; ?></p>
+<h1>3. Metoda dostawy</h1>
+   <?/* <p><?php echo $text_shipping_method; ?></p>*/?>
     <table class="radio">
         <?php foreach ($shipping_methods as $shipping_method) { ?>
         <tr>
@@ -342,20 +353,22 @@
         <?php } ?>
         <?php } ?>
     </table>
-    <br />
 </div>
 <?php } ?>
 
 
-<br />
+
+</div>
 
 
+<?php if ($payment_methods) { ?>
+<div id="payment-methods">
+<div>
+<h1>4. Metoda płatności</h1>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<?php if ($payment_methods) { ?>
-<div id="payment-methods">
-    <p><?php echo $text_payment_method; ?></p>
+   <?/* <p><?php echo $text_payment_method; ?></p>*/?>
     <table class="radio">
         <?php foreach ($payment_methods as $payment_method) { ?>
         <tr class="highlight">
@@ -369,73 +382,25 @@
         </tr>
         <?php } ?>
     </table>
-    <br />
+</div>
+
 </div>
 <?php } ?>
-<b><?php echo $text_comments; ?></b>
-<textarea name="comment" rows="8" style="width: 98%;"><?php echo $comment; ?></textarea>
-<br />
-<br />
-<?php if ($text_agree) { ?>
-<div class="buttons" id="agree">
-    <div class="right"><?php echo $text_agree; ?>
-        <?php if ($agree) { ?>
-        <input type="checkbox" name="agree" value="1" checked="checked" />
-        <?php } else { ?>
-        <input type="checkbox" name="agree" value="1" />
-        <?php } ?>
-
-    </div>
+<div>
+<div>
+<h1>5. Komentarz do zamówienia</h1>
+<?/*<b><?php echo $text_comments; ?></b>*/?>
+<textarea name="comment" rows="8" style="width: 99%;"><?php echo $comment; ?></textarea>
 </div>
-<?php } else { ?>
-
-<?php } ?>
-<script type="text/javascript"><!--
-    $('input[name=\'shipping_method\']').change(function(){
-
-        reloadTotals();
-
-    });
-
-    function reloadTotals()
-    {
-        $.ajax({
-            url: 'index.php?route=checkout/checkout/reloadTotals',
-            type: 'post',
-            data: $('#shipping-methods input[type=\'radio\']:checked'),
-
-            dataType: 'json',
-            success: function(json) {
-
-                html='';
-
-                $.each( json['totals'], function( key, value ) {
-                    html+=   '<tr>';
-                    html+=    '<td colspan="4" class="price"><b>'+value['title']+':</b></td>';
-                    html+=    '<td class="total">'+value['text']+'</td>';
-                    html+=   '</tr>';
-                });
+</div>
 
 
-
-                $('.checkout-product tfoot').html(html);
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
-
-    $('.colorbox').colorbox({
-        width: 640,
-        height: 480
-    });
-    //--></script>
-
+	
 <?php if (!isset($redirect)) { ?>
 <div class="checkout-product">
-    <table>
+<div>
+<h1>6. Podsumowanie</h1>
+    <table style="width:99%;">
         <thead>
         <tr>
             <td class="name"><?php echo $column_name; ?></td>
@@ -477,15 +442,31 @@
         <tfoot>
         <?php foreach ($totals as $total) { ?>
         <tr>
-            <td colspan="4" class="price"><b><?php echo $total['title']; ?>:</b></td>
+            <td colspan="3" class="price"><b><?php echo $total['title']; ?>:</b></td>
             <td class="total"><?php echo $total['text']; ?></td>
         </tr>
         <?php } ?>
         </tfoot>
     </table>
+	<?php if ($text_agree) { ?>
+<div class="buttons" id="agree">
+    <div class="right"><?php echo $text_agree; ?>
+        <?php if ($agree) { ?>
+        <input type="checkbox" name="agree" value="1" checked="checked" />
+        <?php } else { ?>
+        <input type="checkbox" name="agree" value="1" />
+        <?php } ?>
+
+    </div>
+</div>
+<?php }  ?>
+
+    <div>
+        <input type="checkbox" name="auto_account" value="1" />Załóż automatycznie konto
+    </div>
     <div class="buttons">
-        <div class="right">
-            <input type="button" onclick="finalize()"  class="button" value="<?php echo $text_order_confirm ?>" />
+        <div class="left" style="margin:0;">
+            <input type="button" onclick="finalize()"  class="button action" value="<?php echo $text_order_confirm ?>" />
         </div>
     </div>
 </div>
@@ -495,7 +476,50 @@
     location = '<?php echo $redirect; ?>';
     //--></script>
 <?php } ?>
+</div>
 
+<script type="text/javascript"><!--
+    $('input[name=\'shipping_method\']').change(function(){
+
+        reloadTotals();
+
+    });
+
+    function reloadTotals()
+    {
+        $.ajax({
+            url: 'index.php?route=checkout/checkout/reloadTotals',
+            type: 'post',
+            data: $('#shipping-methods input[type=\'radio\']:checked'),
+
+            dataType: 'json',
+            success: function(json) {
+
+                html='';
+
+                $.each( json['totals'], function( key, value ) {
+                    html+=   '<tr>';
+                    html+=    '<td colspan="3" class="price"><b>'+value['title']+':</b></td>';
+                    html+=    '<td class="total">'+value['text']+'</td>';
+                    html+=   '</tr>';
+                });
+
+
+
+                $('.checkout-product tfoot').html(html);
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
+    $('.colorbox').colorbox({
+        width: 640,
+        height: 480
+    });
+    //--></script>
 <script>
     function finalize()
     {
@@ -610,13 +634,13 @@
 
                     // shipping method
                     if (json['error']['shipping']) {
-                        $('#shipping-methods').after('<span class="error">' + json['error']['shipping'] + '</span>');
+                        $('#shipping-methods > div > h1').after('<span class="error">' + json['error']['shipping'] + '</span>');
 
 
                     }
                     // payment method
                     if (json['error']['payment']) {
-                        $('#payment-methods').after('<span class="error">' + json['error']['payment'] + '</span>');
+                        $('#payment-methods > div > h1').after('<span class="error">' + json['error']['payment'] + '</span>');
 
 
                     }
