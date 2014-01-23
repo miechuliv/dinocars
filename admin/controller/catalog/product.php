@@ -24,6 +24,35 @@ class ControllerCatalogProduct extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$product_id = $this->model_catalog_product->addProduct($this->request->post);
 
+            if(isset($this->request->post['cars']))
+            {
+
+                $this->model_tool_cars->deleteAllCarsById($product_id);
+
+                $cars = $this->request->post['cars'];
+
+
+
+                foreach($cars as $car)
+                {
+                    $ids = explode('_',$car);
+
+                    $data=array(
+                        'product_id' => $product_id,
+                        'make_id' => (int)$ids[0],
+                        'model_id' => (int)$ids[1],
+                        'type_id' => (int)$ids[2],
+                    );
+
+
+
+                    $this->model_tool_cars->productToCarInsert($data);
+
+                    /// generate special url alias
+                    //   $this->model_tool_generator->singleGenerate($data,$this->request->post,$product_id);
+                }
+            }
+
             $this->load->model('tool/cars');
 
             $this->load->model('tool/generator');
@@ -1039,7 +1068,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['tab_reward'] = $this->language->get('tab_reward');
 		$this->data['tab_design'] = $this->language->get('tab_design');
 
-		 
+        // marki modele typy
+        $this->load->model('tool/cars');
+
+        // marki do wyboru
+        $this->data['makes'] = $this->model_tool_cars->getMake();
+
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {

@@ -27,6 +27,7 @@
 <script type="text/javascript" src="view/javascript/common.js"></script>
 
     <link type="text/css" href="view/stylesheet/keyboard/keyboard.css" rel="stylesheet" />
+    <script type="text/javascript" src="view/javascript/project_specyfic/marki.js"></script>
 
     <!-- inny css dla admina -->
     <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
@@ -45,6 +46,164 @@ $(document).ready(function(){
     // Confirm Delete
 
     i = $('#licznik').html();
+
+
+
+    $('.delete_car').live('click',function(){
+        $(this).parent().remove();
+    })
+
+    $('#add_car').click(function(){
+
+
+
+        var make_id = $('#make option:selected').val();
+        var model_id = $('#model option:selected').val();
+        var type_id = $('#type option:selected').val();
+
+        var make_name = $('#make option:selected').html();
+        var model_name = $('#model option:selected').html();
+        var type_name = $('#type option:selected').html();
+
+        if(make_name=='' || make_name=='Marka')
+        {
+            return false
+        }
+
+        if(model_name=='Model')
+        {
+            model_id = NULL;
+            model_name = '';
+        }
+
+        if(type_name=='Typ')
+        {
+            type_id = NULL;
+            type_name = '';
+        }
+
+        html='<tr>';
+        html+='<td>';
+        html+='<input type="hidden" name="cars['+i+']" value="'+make_id+'_'+model_id+'_'+type_id+'"  />  ';
+        html+='</td>';
+        html+='<td>';
+        html+='Marka: '+make_name+' Model: '+model_name+' Typ: '+type_name;
+        html+='</td>'
+        html+='<td class="delete_car" >Usuń</td>';
+        html+='</tr>';
+
+        $('#added_cars').append(html);
+
+        i++;
+
+    });
+
+    $('#make').change(function(){
+
+                var make_id = $('#make option:selected').val();
+
+                if(make_id=='' || make_id=='Marka')
+                {
+                    return false;
+                }
+
+                $.ajax({
+                    type     : "POST",
+                    url      : "index.php?route=tool/cars/getModelsAjax&token=<?php echo $this->session->data['token']; ?>",
+                    dataType: 'json',
+                    data     : {
+                        make_id : make_id
+
+                    },
+                    success : function(data) {
+
+                        var html='';
+
+                        // var obj = jQuery.parseJSON(data);
+
+
+                        html+='<option value="" >Model</option>';
+
+                        jQuery.each( data['output'] , function(index, value) {
+
+                            html+='<option value="'+value['model_id']+'" >'+value['model_name']+'</option>';
+                        });
+
+                        $('#model').html(html);
+
+                    },
+                    complete : function(r) {
+                        //ten fragment wykona się po ZAKONCZENIU połączenia
+                        //"r" to przykładowa nazwa zmiennej, która zawiera dane zwrócone z serwera
+
+                    },
+                    error:    function(error) {
+                        //ten fragment wykona się w przypadku BŁĘDU
+
+                    }
+                });
+
+            }
+
+
+
+
+
+
+    )
+
+    $('#model').change(function(){
+
+                var model_id = $('#model option:selected').val();
+
+                if(model_id=='' || model_id=='Model')
+                {
+                    return false;
+                }
+
+                $.ajax({
+                    type     : "POST",
+                    url      : "index.php?route=tool/cars/getTypesAjax&token=<?php echo $this->session->data['token']; ?>",
+                    dataType: 'json',
+                    data     : {
+                        model_id : model_id
+
+                    },
+                    success : function(data) {
+
+                        var html='';
+
+                        html+='<option value="" >Typ</option>';
+
+                        // var obj = jQuery.parseJSON(data);
+
+                        jQuery.each( data['output'] , function(index, value) {
+
+                            html+='<option value="'+value['type_id']+'" >'+value['type_name']+'</option>';
+                        });
+
+                        $('#type').html(html);
+
+                    },
+                    complete : function(r) {
+                        //ten fragment wykona się po ZAKONCZENIU połączenia
+                        //"r" to przykładowa nazwa zmiennej, która zawiera dane zwrócone z serwera
+
+                    },
+                    error:    function(error) {
+                        //ten fragment wykona się w przypadku BŁĘDU
+
+                    }
+                });
+
+            }
+
+
+
+
+
+
+    )
 
 
     $('#form').submit(function(){

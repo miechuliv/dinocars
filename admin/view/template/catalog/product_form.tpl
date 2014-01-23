@@ -293,6 +293,72 @@
               <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="2" /></td>
             </tr>
 
+            <!-- samochody do których pasuje -->
+            <tr>
+                <td><?php echo $entry_cars; ?></td>
+                <td>
+
+                    <select  name="make" id="make">
+                        <option value='' >Marka</option>
+                        <?php foreach($makes as $make){ ?>
+                        <option value="<?php echo $make['make_id']; ?>" ><?php echo $make['make_name']; ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr><tr>
+                <td></td>
+                <td>
+
+                    <select  name="model_car" id="model">
+                        <option value='' >Model</option>
+
+                    </select>
+                </td>
+            </tr><tr>
+                <td></td>
+                <td>
+
+                    <select  name="type" id="type">
+                        <option value='' >Typ</option>
+                    </select>
+                </td>
+            </tr><tr>
+                <td></td>
+                <td>
+                    <div id="add_car" style="cursor:pointer; background:blue; color:#fff; font-weight:bold; float:left; padding:5px 10px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;">Dodaj do pasujących</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pasuje do samochdów:
+                </td>
+                <td colspan="2">
+                    <table id="added_cars">
+                        <?php $i=0; ?>
+                        <?php if(!empty($cars)){ ?>
+                        <?php foreach($cars as $car){ ?>
+                        <tr>
+                            <!-- <td> -->
+                            <input type="hidden" name="cars[<?php echo $i; ?>]" value="<?php echo $car['ids']; ?>"  />
+                            <?php $i++; ?>
+                            <!-- </td> -->
+                            <td>
+                                <?php echo $car['name']; ?>
+                            </td>
+                            <td class="delete_car">
+                                <strong style="cursor:pointer; color:red;">Usuń</strong>
+                            </td>
+                        </tr>
+
+                        <?php } ?>
+                        <?php } ?>
+                        <tr style="display:none;"><td id="licznik" ><?php echo $i++; ?></td></tr>
+                    </table>
+                </td>
+
+            </tr>
+            <!-- koniec -->
+
           </table>
         </div>
         <div id="tab-links">
