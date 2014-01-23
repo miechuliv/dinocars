@@ -32,6 +32,11 @@ $_['text_car_match'] = 'Ta cześć pasuje do:';
 $_['text_make'] = 'Marka';
 $_['text_model'] = 'Model';
 $_['text_type'] = 'Typ';
+$_['text_year'] = 'Rocznik';
+$_['text_ccm'] = 'Pojemność';
+$_['text_power'] = 'Moc';
+$_['text_year_start'] = 'Rocznik od';
+$_['text_year_end'] = 'Rocznik do';
 
 $_['text_regenerate'] = "Regeneruj";
 $_['text_buy_new'] = "Kup nowy";

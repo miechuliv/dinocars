@@ -27,6 +27,18 @@ $_['text_wait']         = 'Please Wait!';
 $_['text_tags']         = 'Tags:';
 $_['text_error']        = 'Product not found!';
 
+// miechu
+$_['text_car_match'] = 'This part matches:';
+$_['text_make'] = 'Make';
+$_['text_model'] = 'Model';
+$_['text_type'] = 'Type';
+$_['text_year'] = 'Year';
+$_['text_ccm'] = 'Capacity';
+$_['text_power'] = 'Power';
+$_['text_year_start'] = 'Year from';
+$_['text_year_end'] = 'Year to';
+
+
 // Entry
 $_['entry_name']        = 'Your Name:';
 $_['entry_review']      = 'Your Review:';

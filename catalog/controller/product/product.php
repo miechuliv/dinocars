@@ -266,6 +266,17 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_tags'] = $this->language->get('text_tags');
 
+
+            $this->data['text_ccm'] = $this->language->get('text_ccm');
+            $this->data['text_power'] = $this->language->get('text_power');
+
+            $this->data['text_make'] = $this->language->get('text_make');
+            $this->data['text_model'] = $this->language->get('text_model');
+            $this->data['text_type'] = $this->language->get('text_type');
+            $this->data['text_year_start'] = $this->language->get('text_year_start');
+            $this->data['text_year_end'] = $this->language->get('text_year_end');
+
+
             
 
 
@@ -338,6 +349,14 @@ class ControllerProductProduct extends Controller {
 
 				);
 			}
+
+            // get cars matching
+            $this->load->model('tool/cars');
+
+            $raw = true;
+
+            $this->data['types'] = $this->model_tool_cars->getAllCarsByProductId($this->request->get['product_id'],$raw);
+
 
             foreach($this->data['images'] as $key => $image){
 

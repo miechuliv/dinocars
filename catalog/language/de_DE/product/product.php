@@ -41,6 +41,11 @@ $_['text_make'] = 'Marke';
 $_['text_model'] = 'Modell';
 $_['text_type'] = 'Typ';
 
+$_['text_ccm'] = 'Hubraum';
+$_['text_power'] = 'Leistung';
+$_['text_year_start'] = 'Ab Baujahr';
+$_['text_year_end'] = 'Bis Baujahr';
+
 
 $_['text_regenerate'] = "Generalüberholtes Produkt";
 $_['text_buy'] = "Sofort Kaufen";

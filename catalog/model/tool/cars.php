@@ -109,7 +109,7 @@ class ModelToolCars extends Model{
 
     public function getAllCarsByProductId($product_id,$raw = false)
     {
-        $results = $this->db->query("SELECT ptc.make_id as mkd, ptc.model_id as mdd, ptc.type_id as tpd, m.make_name as mkn, md.model_name as mdn, t.type_name as tpn FROM `product_to_car` ptc LEFT JOIN make m ON (ptc.make_id=m.make_id) LEFT JOIN model md ON (ptc.model_id=md.model_id) LEFT JOIN type t ON (ptc.type_id=t.type_id) WHERE product_id='".(int)$product_id."' ");
+        $results = $this->db->query("SELECT ptc.make_id as mkd, ptc.model_id as mdd, ptc.type_id as tpd, m.make_name as mkn, md.model_name as mdn, t.type_name as tpn, t.year_start as year_start, t.year_end as year_end, t.kw, t.ps, t.ccm FROM `product_to_car` ptc LEFT JOIN make m ON (ptc.make_id=m.make_id) LEFT JOIN model md ON (ptc.model_id=md.model_id) LEFT JOIN type t ON (ptc.type_id=t.type_id) WHERE product_id='".(int)$product_id."' ");
         $data=array();
 
 
@@ -137,6 +137,11 @@ class ModelToolCars extends Model{
                     'make_name' => $row['mkn'],
                     'model_name' => $row['mdn'],
                     'type_name' => $row['tpn'],
+                    'year_start' => $row['year_start'],
+                    'year_end' => $row['year_end'],
+                    'kw' => $row['kw'],
+                    'ps' => $row['ps'],
+                    'ccm' => $row['ccm'],
                 );
             }
         }

@@ -398,6 +398,64 @@
        </tbody></table>
 
     </div>
+
+      <div id="typy">
+          <table>
+              <tr>
+                  <td>
+                      <?php echo $text_make; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_model; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_type; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_year_start; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_year_end; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_ccm; ?>
+                  </td>
+                  <td>
+                      <?php echo $text_power; ?>
+                  </td>
+              </tr>
+              <?php foreach($types as $type){ ?>
+              <tr>
+                  <td>
+                      <?php echo $type['make_name']; ?>
+                  </td>
+                  <td>
+                      <?php echo $type['model_name']; ?>
+                  </td>
+                  <td>
+                      <?php echo $type['type_name']; ?>
+                  </td>
+                  <td>
+                      <?php echo $type['year_start']; ?>
+                  </td>
+                  <td>
+                      <?php echo ($type['year_end']=='0000-00'?'-':$type['year_end']); ?>
+                  </td>
+                  <td>
+                      <?php echo $type['ccm']; ?>
+                  </td>
+                  <td>
+                      KW:  <?php echo $type['kw']; ?>
+                  </td>
+              </tr>
+
+              <?php } ?>
+
+
+
+          </table>
+
+      </div>
 	
   </div>
 
