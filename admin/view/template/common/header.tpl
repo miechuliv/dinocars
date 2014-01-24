@@ -109,7 +109,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type     : "POST",
-                    url      : "index.php?route=tool/cars/getModelsAjax&token=<?php echo $this->session->data['token']; ?>",
+                    url      : "index.php?route=tool/cars/getModelsAjax&token=<?php isset($this->session->data['token'])?$this->session->data['token']:''; ?>",
                     dataType: 'json',
                     data     : {
                         make_id : make_id
@@ -163,7 +163,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type     : "POST",
-                    url      : "index.php?route=tool/cars/getTypesAjax&token=<?php echo $this->session->data['token']; ?>",
+                    url      : "index.php?route=tool/cars/getTypesAjax&token=<?php isset($this->session->data['token'])?$this->session->data['token']:''; ?>",
                     dataType: 'json',
                     data     : {
                         model_id : model_id

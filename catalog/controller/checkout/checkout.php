@@ -405,6 +405,8 @@ class ControllerCheckoutCheckout extends Controller {
                 }
             }
 
+
+
             // Payment Methods
             $method_data = array();
 
