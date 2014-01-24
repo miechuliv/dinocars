@@ -1051,6 +1051,14 @@
               <td><?php echo $entry_google_analytics; ?></td>
               <td><textarea name="config_google_analytics" cols="40" rows="5"><?php echo $config_google_analytics; ?></textarea></td>
             </tr>
+
+              <tr>
+                  <td>Zezwalaj na rozdzielanie modułów</td>
+                  <td><select name="config_split_modules">
+                          <option value="0"  >NIE</option>
+                          <option value="1" <?php if($config_split_modules){ echo 'selected="selected"'; } ?> >TAK</option>
+                      </select></td>
+              </tr>
           </table>
         </div>
        <?php /* <div id="tab-sms">

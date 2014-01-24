@@ -1216,6 +1216,12 @@ class ControllerSettingSetting extends Controller {
             $this->data['config_smsapi_order_update_msg'] = $this->config->get('config_smsapi_order_update_msg');
         }
 
+        if (isset($this->request->post['config_split_modules'])) {
+            $this->data['config_split_modules'] = $this->request->post['config_split_modules'];
+        } else {
+            $this->data['config_split_modules'] = $this->config->get('config_split_modules');
+        }
+
 						
 		$this->template = 'setting/setting.tpl';
 		$this->children = array(

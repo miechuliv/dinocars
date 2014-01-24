@@ -126,6 +126,7 @@ $logger = new Logger($config);
 $registry->set('logger',$logger);
 
 // Settings
+// wybiera wszystko zdefiniowane dla sklepu do myslnego i dla tego sklepu
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
 foreach ($query->rows as $setting) {
