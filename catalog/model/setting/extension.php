@@ -7,7 +7,7 @@ class ModelSettingExtension extends Model {
         /*
          * rodzielamy rozszerzenia wg sklepów
          */
-        if($this->config->get('config_split_extensions'))
+        if($this->config->get('config_split_modules'))
         {
             $store = $this->config->get('config_store_id');
         }

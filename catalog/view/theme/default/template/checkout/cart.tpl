@@ -15,6 +15,7 @@
   </div>
 <div id="content" class="kontentw">
 <div class="resizer koszyk">
+
 <?php echo $content_top; ?>
 <?/*
   <h1 style="margin:10px 0;"><?php echo $heading_title; ?>
@@ -240,7 +241,7 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button action"><?php echo $button_checkout; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="button action mobileaction"><?php echo $button_checkout; ?></a></div>
     <div class="left"><a class="button grey cofka"><?php echo $button_shopping; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>

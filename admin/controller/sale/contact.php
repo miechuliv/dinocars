@@ -123,10 +123,19 @@ class ControllerSaleContact extends Controller {
 						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
 							
 						$results = $this->model_sale_customer->getCustomers($customer_data);
+
+
 					
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
 						}
+
+                        $results = $this->model_sale_customer->getVisitorsByNewsletter();
+                        foreach ($results as $result) {
+                            $emails[] = $result['email'];
+                        }
+
+
 						break;
 					case 'customer_all':
 						$customer_data = array(

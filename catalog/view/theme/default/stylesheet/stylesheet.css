@@ -573,7 +573,7 @@ a.button, input.button {
 a.button {
 	display: inline-block;
 	text-decoration: none;
-	padding: 6px 12px 6px 12px;
+	padding: 10px 20px;
 }
 
 a.button:hover, input.button:hover {
@@ -1536,7 +1536,7 @@ ul.box-filter > li ul {
 	margin-bottom: 20px;
 }
 .checkout-product td {
-	padding: 7px 0;
+	padding: 5px;
 }
 .checkout-product thead td {
 	color: #000;
@@ -1868,7 +1868,6 @@ input[type="password"] {border:1px solid #eee;}
 .checkout-product .model {display:none;}
 .checkout-product .buttons {margin-bottom:0; background:transparent !important;}
 .checkout-product .right .button {width:280px; margin:30px 0 10px !important; font-weight:bold; padding:20px 0; font-size:15px; text-transform:uppercase;}
-.checkout-product table tbody tr .name {width:88px;}
 .checkout-product table tbody tr .quantity {text-align:center;}
 .checkout-product .buttons {padding:0 !important; width:100%; bottom: 11px; float: right; text-align: right; z-index:9;}
 .checkout-product .buttons > div {margin:10px;}
@@ -2004,10 +2003,11 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 
 .produkcik {display:table; width:100%; clear:both; border-bottom:1px solid #eee; padding:0 0 10px}
 .produkcik > div {display:table-cell; width:75%; color:#4D4D4D; line-height:15px; vertical-align:top;}
-.produkcik > div:first-child {width:25%;}
+.produkcik > div:first-child {width:25%; text-align:center;}
 .produkcik > div > div > a h2 {font-size:14px;}
 .produkcik > .image img {width:90%; height:auto; max-width:190px;}
 .produkcik > div > div {width:100%; margin:5px 0 0; float:left;}
+.produkcik > div > div.name {margin:20px 0 0;}
 .produkcik > div > div strong {color:#000;}
 .produkcik > div > div.bord {border-top:1px dashed #eee; margin-top:10px; padding-top:10px;}
 .produkcik > div > div:last-child {padding-bottom:10px;}
@@ -2035,11 +2035,15 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 
 	input[type="text"],
 	input[type="password"],
-	a.button, input.button {border-color:#ccc !important;}
+	a.button, 
+	input.button {border-color:#ccc !important;}
+	.button.action {border-color:#a40000 !important;}
 	
 	a.button,
 	#szukaj-but {padding:15px 25px !important; height:auto !important}
 	.wyszukiwarka .szukaja > div > div > .submit {float:none !important;}
+	#button-cart {padding:15px 0 !important; width:100% !important;}
+	.button.action.mobileaction {padding:15px 60px !important;}
 
 	#column-left + #column-right + #content, #column-left + #content, #column-left + div + #content {padding:10px;}
 
@@ -2053,9 +2057,12 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 	.heading h4, 
 	.heading span,
 	.product-list .cart .button,
-	.mobilefat {display:none !important;}	
+	.mobilefat,
+	.product-inf hr,
+	.description .atrybuty {display:none !important;}	
 	
 	.heading {height:40px;}
+	.heading #num {display:block !important; color:#fff; background:#cc0000; padding:1px 5px; border:2px solid #fff; position:absolute; font-weight:bold; top:0; right:0;}
 	
 	#ultraheader {position:relative !important;}
 	#ultraheader > div > div > span {display:none;}
@@ -2073,16 +2080,25 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 	.product-inf .right #prod-right {border-top:1px solid #ddd !important;}
 	.product-inf .right #prod-left > div {padding:0 15px;}
 	.product-inf .right #prod-right > div {padding:10px 20px 0;}
-	.product-inf hr {margin:10px 0;}
-	.product-inf .right #prod-right .cart > div > div {margin-bottom:0 !important;}
+	.product-inf .right #prod-right .cart > div > div {margin-bottom:0 !important; width:100%;}
 	#prod-right .promot {margin-top:10px !important;}
 	#content > #tab-description p,
 	#tab-description > div {padding:15px 15px 0 !important;}
 	#tab-description {padding:0 0 15px !important;}
 	
+	.checkout-product .buttons .left {margin:20px 0 !important; width:100%; text-align:center !important;}
+	.checkout-product .button.action {padding:20px 0 !important; width:70% !important;}
+	
 	.product-inf .right #prod-right > div ,
 	.product-inf .right #prod-right .cart > div {text-align:left !important;}
+	.product-inf .right #prod-right .price {font-size:25px; padding-top:15px;}
 	.product-inf .right #prod-right > .dost {padding:5px 20px 0 !important}
+	.product-inf .right #prod-left {padding:0;}
+	
+	.produkcik > div:first-child {text-align:left; padding-top:10px;}
+	
+	#plus, #minus {font-size:40px; float:left; line-height:31px; margin:0 5px;}
+	#ilosc-prod {padding:10px; float:left;}
 	
 	.product-inf > div {width:100% !important; float:left;}
 	
@@ -2123,7 +2139,7 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 	#header .poziom > div {float:left; width:50% !important;}	
 	#header .poziom > div:last-child > div:last-child {margin-top:5px; height:45px;}
 	#header #logo img {height:45px;}	
-	 
+
 	#mobileheader {float:left; width:100%; background:#fafafa; border-bottom:1px solid #ddd; margin:0 0 10px;}
 	#mobileheader > div {width:90%; padding:10px 0; margin:auto;}
 	#mobileheader > div > a {display:inline-block; margin-right:10px; background:url(../img/bottom.gif) no-repeat center right; padding-right:15px;}
@@ -2150,6 +2166,8 @@ hr {border:0; margin:30px 0; border-top:1px solid #eee;}
 	.quantity .ilosc,
 	.quantity #dodaj, 
 	.quantity #odejmij {margin:0 0 0 10px !important; left:auto; float:left;}
+	.quantity #dodaj, 
+	.quantity #odejmij { font-size:28px;}
 	.cart-total table {float:left;}
 	.cart-total table {width:100%;}
 	.cart-total td {text-align:left;}

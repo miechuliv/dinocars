@@ -784,7 +784,7 @@ $('#button-register').live('click', function() {
 
                 $.each( json['totals'], function( key, value ) {
                     html+=   '<tr>';
-                    html+=    '<td colspan="3" class="price"><b>'+value['title']+'</b> &nbsp;</td>';
+                    html+=    '<td colspan="3" class="price"><b>'+value['title']+'</b></td>';
                     html+=    '<td class="total">'+value['text']+'</td>';
                     html+=   '</tr>';
                 });
@@ -884,8 +884,10 @@ $('#button-register').live('click', function() {
 				<?php } ?>
 
     <div>
-        <input type="checkbox" name="auto_account" value="1" />Załóż automatycznie konto
-        </div>
+		<div style="margin:10px">							
+			<input type="checkbox" name="auto_account" value="1" checked="checked"/>Załóż automatycznie konto
+		</div>
+	</div>
 	
     <div class="buttons">
         <div class="left">

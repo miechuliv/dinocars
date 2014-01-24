@@ -1,7 +1,8 @@
 <div id="cart"><a href="./index.php?route=checkout/cart">
   <div class="heading">
+	<div id="num" style="display:none"><?php echo $q; ?></div>
     <h4><?php echo $heading_title; ?></h4>
-    <span id="cart-total"> <?php echo $text_items; ?></span><?php echo $q; ?>
+    <span id="cart-total"> <?php echo $text_items; ?></span>
 	</div></a>
 	<?/*
   <div class="content">

@@ -314,7 +314,7 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 
 <div id="container">
 
-<?php if ($categories) { ?>
+<?php  /* if ($categories) { ?>
 <div id="menu">
   <ul>
     <?php foreach ($categories as $category) { ?>
@@ -341,7 +341,7 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
     <?php } ?>
   </ul>
 </div>
-<?php } ?>
+<?php } */?>
 
 <div id="notification"></div>
     <div id="translateBox"></div>

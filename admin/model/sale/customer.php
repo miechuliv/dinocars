@@ -17,6 +17,13 @@ class ModelSaleCustomer extends Model {
 			}
 		}
 	}
+
+
+    public function getVisitorsByNewsletter() {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "visitor WHERE newsletter = '1' ORDER BY email");
+
+        return $query->rows;
+    }
 	
 	public function editCustomer($customer_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', status = '" . (int)$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");

@@ -95,8 +95,16 @@
 			</p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum sit amet velit nec venenatis.
 			</p>
-			<form id="zapisznewsletter">
-				<input type="text"><input type="submit" value="zapisz się">
+            <?php  if(isset($this->session->data['newsletter_error'])){echo '<p>Wystąpił błąd</p>'; }?>
+			<form id="zapisznewsletter" action="index.php?route=account/newslettervisitor" method="post" >
+
+
+
+                            <input type="text" name="email_newsletter" />
+                            <input type="submit" value="Zapisz się"  />
+
+
+
 			</form>
 		</div>
 	</div>

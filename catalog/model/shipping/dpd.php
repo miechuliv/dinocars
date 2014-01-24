@@ -34,6 +34,12 @@ class ModelShippingdpd extends Model {
 			}
 			
 			$quote_data = array();
+
+            if(isset($address['payment_method']) AND $address['payment_method'] == 'cod')
+            {
+                // to trzeba ustalić
+                $code = 20;
+            }
 			
 			if ((float)$cost) {
 				$quote_data['dpd'] = array(
