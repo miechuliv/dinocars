@@ -11,3 +11,11 @@ $_['text_checkout'] = 'Kasse';
 $_['text_cart']     = 'Warenkorb';
 $_['text_items']    = '%s elemente - %s';
 $_['text_language'] = 'Sprache';
+
+// miechu
+$_['text_greet_cart'] 	 = 'Jesteś w <span style="color:#be0000">koszyku</span>';
+$_['text_ask'] 	 = 'Jeśli masz jakieś pytania, skontaktuj się z nami';
+$_['text_greet_checkout'] 	 = 'Jesteś w <span style="color:#be0000">kasie</span>';
+$_['text_category'] 	 = 'Kategorie';
+$_['text_filter'] 	 = 'Filtruj';
+$_['text_login'] 	 = 'Logowanie';
