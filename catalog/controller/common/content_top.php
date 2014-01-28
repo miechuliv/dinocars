@@ -42,7 +42,6 @@ class ControllerCommonContentTop extends Controller {
 		
 		$extensions = $this->model_setting_extension->getExtensions('module');
 
-        var_dump($layout_id);
 
 		
 		foreach ($extensions as $extension) {
@@ -61,7 +60,6 @@ class ControllerCommonContentTop extends Controller {
 			}
 		}
 
-        var_dump($module_data);
 
 
 		
