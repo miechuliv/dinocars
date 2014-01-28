@@ -39,7 +39,7 @@
         <?php } ?>
         <?php } ?>
       <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
-      <div class="description"><?php echo $product['description']; ?><br/><br/><div class="dost"><?php echo $this->language->get('text_sevice_48h'); ?></div></div>
+      <div class="description"><?php echo $product['description']; ?><br/><br/><div class="dost"><?php echo $this->language->get('text_service_48h'); ?></div></div>
       <?php if ($product['price']) { ?>
       <div class="price">
         <?php if (!$product['special']) { ?>

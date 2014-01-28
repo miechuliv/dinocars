@@ -16,9 +16,14 @@ class ControllerCommonContentTop extends Controller {
 		
 		if ($route == 'product/category' && isset($this->request->get['path'])) {
 			$path = explode('_', (string)$this->request->get['path']);
+
 				
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));			
 		}
+        elseif($route == 'product/category')
+        {
+            $layout_id = 3;
+        }
 		
 		if ($route == 'product/product' && isset($this->request->get['product_id'])) {
 			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
@@ -36,21 +41,25 @@ class ControllerCommonContentTop extends Controller {
 			$layout_id = $this->config->get('config_layout_id');
 		}
 
+
+
+
 		$module_data = array();
 		
 		$this->load->model('setting/extension');
 		
 		$extensions = $this->model_setting_extension->getExtensions('module');
 
-
-		
 		foreach ($extensions as $extension) {
 			$modules = $this->config->get($extension['code'] . '_module');
 			
 			if ($modules) {
 				foreach ($modules as $module) {
+
+
 					if ($module['layout_id'] == $layout_id && $module['position'] == 'content_top' && $module['status']) {
-						$module_data[] = array(
+
+                        $module_data[] = array(
 							'code'       => $extension['code'],
 							'setting'    => $module,
 							'sort_order' => $module['sort_order']
