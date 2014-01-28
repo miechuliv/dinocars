@@ -11,7 +11,7 @@
 
    <?php  if(!empty($filter_labels)){ ?>
       <div id="filtery">
-	  <h3 style="margin:0 0 10px;">Aktywne filtry:</h3>
+	  <h3 style="margin:0 0 10px;"><?php echo $this->language->get('text_active_filters'); ?></h3>
           <?php  foreach($filter_labels as $label){ ?>
                 <div class="kill-filter">
                     <input type="hidden" name="input_name" value="<?php echo $label['input_name']; ?>"  />
@@ -39,7 +39,7 @@
         <?php } ?>
         <?php } ?>
       <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
-      <div class="description"><?php echo $product['description']; ?><br/><br/><div class="dost">Dostawa: 48h</div></div>
+      <div class="description"><?php echo $product['description']; ?><br/><br/><div class="dost"><?php echo $this->language->get('text_sevice_48h'); ?></div></div>
       <?php if ($product['price']) { ?>
       <div class="price">
         <?php if (!$product['special']) { ?>

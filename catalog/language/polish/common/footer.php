@@ -15,4 +15,10 @@ $_['text_order']        = 'Historia zamówień';
 $_['text_wishlist']     = 'Lista życzeń';
 $_['text_newsletter']   = 'Biuletyn';
 $_['text_powered']      = 'Sklep na bazie <a href="http://www.opencart.com">OpenCart</a><br /> %s &copy; %s';
+
+// miechy
+$_['text_bok'] =  'Biuro obsługi Klienta';
+$_['text_login'] =  'Logowanie';
+$_['text_language'] =  'Polski';
+$_['text_contact'] =  'Kontakt';
 ?>

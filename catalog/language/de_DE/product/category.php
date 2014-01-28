@@ -27,5 +27,8 @@ $_['text_model_asc']    = 'Artikelnr. (A - Z)';
 $_['text_model_desc']   = 'Artikelnr. (Z - A)';
 $_['text_limit']        = 'Anzeige';
 
+$_['text_all_categories']        = 'Alle kategorien';
+
+
 $_['text_contact'] = "Zur Zeit nicht auf Lager?
 Kontaktier uns und wir werden es überprüfen!";

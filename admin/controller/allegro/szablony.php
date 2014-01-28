@@ -75,6 +75,8 @@ class ControllerAllegroSzablony extends Controller {
 
 		$results = $this->model_allegro_szablony->getSzablony() ;
 
+        $this->data['szablony'] = array();
+
 		foreach ( $results as $result ) {
 
 			$action = array() ;

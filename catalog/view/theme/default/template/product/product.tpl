@@ -46,8 +46,8 @@
 				<hr>
 				
 				<div class="atrybuty">
-					<div><strong>Telefon:</strong> +48 111 222 333</div>
-					<div><strong>E-mail:</strong> email@email.pl</div>
+					<div><strong><?php echo $this->language->get('text_telephone'); ?></strong><?php echo $this->config->get('config_telephone'); ?></div>
+					<div><strong>E-mail:</strong><?php echo $this->config->get('config_email'); ?></div>
 				</div>
 				
 			</div>
@@ -82,7 +82,7 @@
 		  </div>
 
 		<div class="dost">
-			<div>Dostawa: 48h</div>
+			<div><?php echo $this->language->get('text_service_48h'); ?></div>
 		</div>
 	  
 	    <div class="cart" >
@@ -107,9 +107,9 @@
 			<div style="width:100%; padding:15px 0; border-top:1px solid #eee; margin:10px 0 0;">
 				<div>
 					<ul>
-						<li>Lorem ipsum tanio</li>
-						<li>Bezpieczne zakupy lorem</li>
-						<li>Lorem ipsum, tania przesyłka</li>
+						<li><?php echo $this->language->get('text_cheap'); ?></li>
+						<li><?php echo $this->language->get('text_save'); ?></li>
+						<li><?php echo $this->language->get('text_send'); ?></li>
 					</ul>
 				</div>
 			</div>

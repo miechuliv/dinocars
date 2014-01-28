@@ -32,7 +32,7 @@
 
 <div class="serch-right">
 <a href="javascript:void(0);" class="boxclosef" style="display:none">x</a>
-<h2>Filtruj wg auta</h2>
+<h2><?php echo $this->language->get('text_filter'); ?></h2>
 		<form id="czesci_szuk" class="szukaja" action="<?php echo $car_action; ?>" method="get">
 
           
@@ -46,7 +46,7 @@
 						<div class="marka">
 
 							<select id="make" name="make" >
-                                <option  >Marka</option>
+                                <option  ><?php echo $this->language->get('text_marka'); ?></option>
                                 <?php if(isset($makes)){ ?>
                                 <?php foreach($makes as $make){ ?>
                                 <?php if(isset($filters['cars']['make']) AND $filters['cars']['make']==$make['make_id']){ ?>
@@ -65,7 +65,7 @@
 					<div>
 						<div>
 							<select id="model" name="model">
-								<option>Model</option>
+								<option><?php echo $this->language->get('text_model'); ?></option>
                                 <?php if(isset($filters['models'])){ ?>
                                 <?php foreach($filters['models'] as $model){ ?>
                                 <?php if(isset($filters['cars']['model']) AND $filters['cars']['model']==$model['model_id']){ ?>
@@ -83,7 +83,7 @@
 					<div>
 						<div>
 							<select id="type" name="type">
-								<option>Typ</option>
+								<option><?php echo $this->language->get('text_typ'); ?></option>
                                 <?php if(isset($filters['types'])){ ?>
                                 <?php foreach($filters['types'] as $type){ ?>
                                 <?php if(isset($filters['cars']['type']) AND $filters['cars']['type']==$type['type_id']){ ?>

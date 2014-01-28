@@ -11,7 +11,7 @@
 
 <div>
 <div>
-<h1>1. Adres płatności</h1>
+<h1>1. <?php echo $this->language->get('text_checkout_payment_address'); ?></h1>
 <?php if ($addresses) { ?>
 <input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
 <label for="payment-address-existing"><?php echo $text_address_existing; ?></label>
@@ -178,7 +178,7 @@
 
 <?php $type='shipping'; ?>
 
-<h1>2. Adres dostawy</h2>
+<h1>2. <?php echo $this->language->get('text_checkout_payment_address_2'); ?></h2>
 <?php if ($addresses) { ?>
 <input type="radio" name="shipping_address" value="existing" id="shipping-address-existing" checked="checked" />
 <label for="shipping-address-existing"><?php echo $text_address_existing; ?></label>
@@ -326,7 +326,7 @@
 <?php } ?>
 <?php if ($shipping_methods) { ?>
 <div id="shipping-methods">
-<h1>3. Metoda dostawy</h1>
+<h1>3. <?php echo $this->language->get('text_shipping'); ?></h1>
    <?/* <p><?php echo $text_shipping_method; ?></p>*/?>
     <table class="radio">
         <?php foreach ($shipping_methods as $shipping_method) { ?>
@@ -364,7 +364,7 @@
 <?php if ($payment_methods) { ?>
 <div id="payment-methods">
 <div>
-<h1>4. Metoda płatności</h1>
+<h1>4. <?php echo $this->language->get('text_payment_method_short'); ?></h1>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -388,7 +388,7 @@
 <?php } ?>
 <div>
 <div>
-<h1>5. Komentarz do zamówienia</h1>
+<h1>5. <?php echo $text_comments; ?></h1>
 <?/*<b><?php echo $text_comments; ?></b>*/?>
 <textarea name="comment" rows="8" style="width: 99%;"><?php echo $comment; ?></textarea>
 </div>
@@ -399,7 +399,7 @@
 <?php if (!isset($redirect)) { ?>
 <div class="checkout-product">
 <div>
-<h1>6. Podsumowanie</h1>
+<h1>6. <?php echo $this->language->get('text_total'); ?></h1>
     <table style="width:99%;">
         <thead>
         <tr>

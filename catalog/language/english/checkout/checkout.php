@@ -7,6 +7,8 @@ $_['text_cart']                      = 'Shopping Cart';
 $_['text_checkout_option']           = 'Step 1: Checkout Options';
 $_['text_checkout_account']          = 'Step 2: Account &amp; Billing Details';
 $_['text_checkout_payment_address']  = 'Step 2: Billing Details';
+$_['text_checkout_payment_address_2']  = 'Shipping Address';
+
 $_['text_checkout_shipping_address'] = 'Step 3: Delivery Details';
 $_['text_checkout_shipping_method']  = 'Step 4: Delivery Method';
 $_['text_checkout_payment_method']   = 'Step 5: Payment Method';
@@ -31,6 +33,7 @@ $_['text_payment_method']            = 'Please select the preferred payment meth
 $_['text_comments']                  = 'Add Comments About Your Order';
 
 $_['text_order_confirm'] = 'Confirm order';
+$_['text_payment_method_short'] = 'Payment';
 
 // Column
 $_['column_name']                    = 'Product Name';

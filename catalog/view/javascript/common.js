@@ -1,30 +1,101 @@
 $(document).ready(function() {
-	/* Search */
-	$('.button-search').bind('click', function() {
-		url = $('base').attr('href') + 'index.php?route=product/search';
-				 
-		var search = $('input[name=\'search\']').attr('value');
-		
-		if (search) {
-			url += '&search=' + encodeURIComponent(search);
-		}
-		
-		location = url;
-	});
-	
-	$('#header input[name=\'search\']').bind('keydown', function(e) {
-		if (e.keyCode == 13) {
-			url = $('base').attr('href') + 'index.php?route=product/search';
-			 
-			var search = $('input[name=\'search\']').attr('value');
-			
-			if (search) {
-				url += '&search=' + encodeURIComponent(search);
-			}
-			
-			location = url;
-		}
-	});
+
+    /* Search */
+    $('.button-search').bind('click', function() {
+        //url = $('base').attr('href') + 'index.php?route=product/search';
+
+        var url = $('base').attr('href') + 'index.php?route=product/category';
+
+        var search = $('input[name=\'search\']').attr('value');
+
+        var category_search = $('select[name=\'search_category\'] option:selected').attr('value');
+
+
+
+        var current = window.location.pathname;
+
+        var params = getUrlVars(current);
+
+
+        $.each(params,function(key,val){
+
+            if(val!='route' && val!='search' && val!='search_category'  && params[val] != undefined)
+            {
+                url += '&'+val+'='+params[val];
+            }
+
+        });
+
+
+
+        if (search) {
+
+            url += '&search=' + encodeURIComponent(search);
+        }
+
+        if (category_search) {
+
+            url += '&category_search=' + encodeURIComponent(category_search);
+        }
+
+        location = url;
+    });
+
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+
+            hash = hashes[i].split('=');
+
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+
+        }
+        return vars;
+    }
+
+    $('#header input[name=\'search\']').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            //url = $('base').attr('href') + 'index.php?route=product/search';
+
+            var url = $('base').attr('href') + 'index.php?route=product/category';
+
+            var search = $('input[name=\'search\']').attr('value');
+
+            var category_search = $('select[name=\'search_category\'] option:selected').attr('value');
+
+            var current = window.location.pathname;
+
+            var params = getUrlVars(current);
+
+
+            $.each(params,function(key,val){
+
+                if(val!='route' && val!='search' && val!='search_category' && params[val] != undefined)
+                {
+                    url += '&'+val+'='+params[val];
+                }
+
+            });
+
+
+
+            if (search) {
+
+                url += '&search=' + encodeURIComponent(search);
+            }
+
+            if (category_search) {
+
+                url += '&category_search=' + encodeURIComponent(category_search);
+            }
+
+            location = url;
+        }
+    });
 	
 	/* Ajax Cart 
 	$('#cart > .heading a').live('click', function() {

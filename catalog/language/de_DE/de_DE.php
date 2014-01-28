@@ -81,3 +81,32 @@ $_['error_upload_999']      = 'Unbekannter Fehler!';
 $_['text_kaucja']        = 'Altteilpfand';
 $_['text_kaucja_zw']        = 'mit Altteilpfand';
 $_['text_kaucja_bzw']      = 'ohne Altteilpfand';
+
+$_['text_marka'] = 'Marke';
+$_['text_model'] = 'Modell';
+$_['text_typ'] = 'Typ';
+
+
+$_['text_search_cars'] = 'Znajdź potrzebne części wg auta';
+$_['text_choose'] = 'Wystarczy że wybierzesz markę, model i typ swojego pojazdu!';
+
+$_['text_why_us'] = 'Dlaczego my?';
+$_['text_cheap'] = 'Lorem ipsum tanio';
+$_['text_send'] = 'Lorem ipsum, tania przesyłka';
+$_['text_wide_choice'] = 'Szeroki wybór części lorem ipsum';
+$_['text_zakup'] = 'Bezpieczne zakupy lorem';
+$_['text_filter'] = 'Szukaj wg. auta';
+
+$_['text_save'] = 'Bezpieczne zakupy lorem';
+$_['text_active_filters']        = 'Aktywne filtry';
+$_['text_sevice_48h']        = 'Dostawa: 48h';
+$_['text_fast'] = 'Lorem ipsum szybko';
+$_['text_payment'] = 'Płatności';
+$_['text_shipping'] = 'Wysyłka';
+$_['text_newsletter'] = 'Newsletter';
+$_['text_zakup'] = 'Bezpieczne zakupy lorem';
+$_['text_newsletter_ipsum'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum sit amet velit nec venenatis.';
+$_['text_about_us'] = 'O nas';
+$_['text_about_us_ipsum'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum sit amet velit nec venenatis. Nam dolor arcu, adipiscing at dui ac, mollis ullamcorper leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris enim dolor, semper sed mi vel, adipiscing condimentum neque. Donec vestibulum, ipsum ut pretium aliquam, nisi mauris blandit elit, sit amet sollicitudin urna massa ut neque. Maecenas vitae faucibus metus.';
+
+

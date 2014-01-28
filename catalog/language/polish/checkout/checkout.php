@@ -6,8 +6,11 @@ $_['heading_title']                  = 'Kasa';
 $_['text_cart']                      = 'Koszyk';
 $_['text_checkout_option']           = 'Krok 1: Opcje kasy';
 $_['text_checkout_account']          = 'Krok 2: Konto i szczegóły płatności';
-$_['text_checkout_payment_address']  = 'Krok 2: Szczegóły płatności';
-$_['text_checkout_shipping_address'] = 'Krok 3: Szczegóły dostawy';
+$_['text_checkout_payment_address']  = 'Adres';
+$_['text_checkout_payment_address_2']  = 'Adres dostawy';
+
+
+$_['text_checkout_shipping_address'] = 'Szczegóły dostawy';
 $_['text_checkout_shipping_method']  = 'Krok 4: Sposób dostawy';
 $_['text_checkout_payment_method']   = 'Krok 5: Metoda płatności';
 $_['text_checkout_confirm']          = 'Krok 6: Potwierdź zamówienie';
@@ -31,6 +34,11 @@ $_['text_payment_method']            = 'Wybierz preferowaną metodę płatności
 $_['text_comments']                  = 'Dodaj komentarz do zamówienia';
 
 $_['text_order_confirm'] = 'Potwierdź zamówienie';
+$_['text_payment_method_short'] = 'Płatność';
+
+
+
+
 
 // Column
 $_['column_name']                    = 'Nazwa produktu';

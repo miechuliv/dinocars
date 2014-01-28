@@ -2,6 +2,12 @@
 class ControllerModuleSlideshow extends Controller {
 	protected function index($setting) {
 		static $module = 0;
+
+
+        if(isset($setting['language']) AND $setting['language'] != $this->config->get('config_language'))
+        {
+            return false;
+        }
 		
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');

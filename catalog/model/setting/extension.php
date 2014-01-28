@@ -13,6 +13,7 @@ class ModelSettingExtension extends Model {
         }
 
 
+
         if($store === false)
         {
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "'");
@@ -25,8 +26,6 @@ class ModelSettingExtension extends Model {
             AND xts.store_id = '".$store."'
              ");
         }
-
-
 
 
 		return $query->rows;

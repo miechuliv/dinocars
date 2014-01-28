@@ -11,10 +11,21 @@ class ControllerProductCategory extends Controller {
 
 		
 		if (isset($this->request->get['filter'])) {
-			$filter = $this->request->get['filter'];
-		} else {
-			$filter = '';
-		}
+            $filter = $this->request->get['filter'];
+        } else {
+            $filter = '';
+        }
+
+        if (isset($this->request->get['category_search'])) {
+            $category_search = $this->request->get['category_search'];
+            $this->request->get['path'] =  $this->request->get['category_search'];
+            $this->request->get['category_id'] =  $this->request->get['category_search'];
+        } else {
+            $category_search = '';
+        }
+
+        $this->data['category_search'] = $category_search;
+
 				
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -46,6 +57,13 @@ class ControllerProductCategory extends Controller {
         }
 
 
+        if (isset($this->request->get['search'])) {
+            $search = html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8');
+        }
+        else
+        {
+            $search = false;
+        }
 
 
 
@@ -360,7 +378,7 @@ class ControllerProductCategory extends Controller {
             $manufacturer = $this->model_catalog_manufacturer->getManufacturer($this->request->get['filters']['manufacturer_id']);
 
             $this->data['filter_labels'][] = array(
-                'name' => 'Produzent',
+                'name' => $this->language->get('manufacturer'),
                 'value' => $manufacturer['name'],
                 'input_name' => 'filters[manufacturer_id]',
             );
@@ -494,10 +512,11 @@ class ControllerProductCategory extends Controller {
 
             if($all)
             {
-                $this->document->setTitle('Alle Kategorien');
-                $this->document->setDescription('Alle Kategorien');
-                $this->document->setKeywords('Alle Kategorien');
-                $this->data['heading_title'] = 'Alle Kategorien';
+                $al =$this->language->get('text_all_categories');
+                $this->document->setTitle($al);
+                $this->document->setDescription($al);
+                $this->document->setKeywords($al);
+                $this->data['heading_title'] = $al;
             }
             else
             {
@@ -509,7 +528,7 @@ class ControllerProductCategory extends Controller {
 
 
             $this->data['filter_labels'][] = array(
-                'name' => 'Kategoria',
+                'name' => $this->language->get('category'),
                 'value' => $this->document->getTitle(),
                 'input_name' => '',
             );
@@ -560,7 +579,7 @@ class ControllerProductCategory extends Controller {
             if($all)
             {
                 $this->data['breadcrumbs'][] = array(
-                    'text'      => 'Alle Kategorien',
+                    'text'      => $this->language->get('text_all_categories'),
                     'href'      => $this->url->link('product/category'),
                     'separator' => $this->language->get('text_separator')
                 );
@@ -583,7 +602,7 @@ class ControllerProductCategory extends Controller {
 
             if($all)
             {
-                $this->data['description'] = 'Alle Kategorien';
+                $this->data['description'] = $this->language->get('text_all_categories');
             }
             else
             {
@@ -635,6 +654,9 @@ class ControllerProductCategory extends Controller {
 
                 $data = array(
 
+                    'filter_name'         => $search,
+                    'filter_model'         => trim($search),
+                    'filter_category_id' => $category_search,
                     'filter_filter'      => $filter,
                     'sort'               => $sort,
                     'order'              => $order,
@@ -643,6 +665,8 @@ class ControllerProductCategory extends Controller {
                     'type' => 'regenerated',
                     'quantity' => 1,
                 );
+
+
 
 
 
@@ -689,6 +713,8 @@ class ControllerProductCategory extends Controller {
                 $this->data['products'] = array();
 
                 $data = array(
+                    'filter_name'         => $search,
+                    'filter_model'         => trim($search),
                     'filter_category_id' => $category_id,
                     'filter_filter'      => $filter,
                     'sort'               => $sort,
@@ -997,6 +1023,9 @@ class ControllerProductCategory extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+            if ($search) {
+                $url .= '&search=' . $search;
+            }
 
             // samochody
             if (isset($this->request->get['make'])) {
@@ -1056,6 +1085,10 @@ class ControllerProductCategory extends Controller {
 			$this->response->setOutput($this->render());										
     	} else {
 			$url = '';
+
+            if ($search) {
+                $url .= '&search=' . $search;
+            }
 			
 			if (isset($this->request->get['path'])) {
 				$url .= '&path=' . $this->request->get['path'];

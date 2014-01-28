@@ -20,7 +20,13 @@ class ControllerCommonHeader extends Controller {
             $this->data['is_ie'] =  true;
         }
 
+        if (isset($this->request->get['category_search'])) {
+            $category_search = $this->request->get['category_search'];
+        } else {
+            $category_search = '';
+        }
 
+        $this->data['category_search'] = $category_search;
 
 
 
@@ -63,6 +69,14 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 		$this->data['text_account'] = $this->language->get('text_account');
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
+
+        // miechu
+        $this->data['text_greet_cart'] 	 = $this->language->get('text_greet_cart');
+        $this->data['text_ask'] 	 = $this->language->get('text_ask');
+        $this->data['text_greet_checkout'] 	 = $this->language->get('text_greet_checkout');
+        $this->data['text_category'] 	 = $this->language->get('text_category');
+        $this->data['text_filter'] 	 = $this->language->get('text_filter');
+        $this->data['text_login'] 	 = $this->language->get('text_login');
 				
 		$this->data['home'] = $this->url->link('common/home');
 		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
@@ -118,7 +132,7 @@ class ControllerCommonHeader extends Controller {
 		$categories = $this->model_catalog_category->getCategories(0);
 		
 		foreach ($categories as $category) {
-			if ($category['top'] AND !$category['virtual']) {
+			if (!$category['virtual']) {
 				// Level 2
 				$children_data = array();
 				
@@ -133,19 +147,32 @@ class ControllerCommonHeader extends Controller {
 					//$product_total = $this->model_catalog_product->getTotalProducts($data);
 									
 					$children_data[] = array(
+                        'category_id' => $category['category_id'],
 						//'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
                         'name'  => $child['name'],
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);						
 				}
-				
+
+                if($category['top'])
+                {
+                    $this->data['categories'][] = array(
+                        'category_id' => $category['category_id'],
+                        'name'     => $category['name'],
+                        'children' => $children_data,
+                        'column'   => $category['column'] ? $category['column'] : 1,
+                        'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
+                    );
+                }
 				// Level 1
-				$this->data['categories'][] = array(
-					'name'     => $category['name'],
-					'children' => $children_data,
-					'column'   => $category['column'] ? $category['column'] : 1,
-					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
-				);
+                $this->data['categories_for_search'][] = array(
+                    'category_id' => $category['category_id'],
+                    'name'     => $category['name'],
+                    'children' => $children_data,
+                    'column'   => $category['column'] ? $category['column'] : 1,
+                    'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
+                );
+
 			}
 		}
 

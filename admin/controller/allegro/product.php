@@ -46,7 +46,7 @@ class ControllerAllegroProduct extends Controller {
         
 		$this->data['Product'] = $this->model_allegro_product->getProduct( $_GET['product_id'] ) ;
 
-        $this->data['Product']['price'] = $this->data['Product']['price_pl'];
+        $this->data['Product']['price'] = $this->data['Product']['price'];
 
         // 19.09.2013
 
@@ -391,18 +391,9 @@ class ControllerAllegroProduct extends Controller {
             $_POST['24-string'] = base64_decode( $_POST['24-string'] ) ;
 			$_POST['24-string'] = html_entity_decode( $_POST['24-string'] ) ;
 			// $_POST['24-string'] = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMG}', '{PRODUCT_MODEL}' ,'{PRODUCT_PRICE}','PRODUCT_MANUFACTURER','{PRODUCT_OPTIONS}','{IMAGES}'), array( $_POST['1-string'], $_POST['24-string'], $ExtImages, $Producttt['model'] ), str_replace('""','"',html_entity_decode(base64_decode( $_POST['allegrotemplate'])) ) ) ;
-            $Type = NULL;
 
-            if($Producttt['type']=='new')
-            {
-                $Type = "Kup Nowy";
-            }
-            elseif($Producttt['type']=='regenerated')
-            {
-                $Type = "Regeneracja";
-            }
 
-			$_POST['24-string'] = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMG}', '{PRODUCT_MODEL}' ,'{PRODUCT_PRICE}','{PRODUCT_MANUFACTURER}','{PRODUCT_OPTIONS}','{IMAGES}','{MAKE_NAME}','{MODEL_NAME}','{TYPE}'), array( $_POST['1-string'], $_POST['24-string'], $IMG, $Producttt['model'] ,$Price,$Manufacturer,$ExtOptions,$ExtImagesM,$Producttt['make_name'],$Producttt['model_name'],$Type), str_replace('""','"',html_entity_decode(base64_decode( $_POST['allegrotemplate'])) ) ) ;
+			$_POST['24-string'] = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMG}', '{PRODUCT_MODEL}' ,'{PRODUCT_PRICE}','{PRODUCT_MANUFACTURER}','{PRODUCT_OPTIONS}','{IMAGES}','{MAKE_NAME}','{MODEL_NAME}'), array( $_POST['1-string'], $_POST['24-string'], $IMG, $Producttt['model'] ,$Price,$Manufacturer,$ExtOptions,$ExtImagesM,$Producttt['make_name'],$Producttt['model_name']), str_replace('""','"',html_entity_decode(base64_decode( $_POST['allegrotemplate'])) ) ) ;
 		}
 		
         foreach ( $_POST as $Key => $Value ) { 
@@ -579,7 +570,8 @@ class ControllerAllegroProduct extends Controller {
 
                     $this->data['Data'][0]['Identyfikator'] = $Wystawiona['item-id'] ;
 					$this->data['Data'][0]['Link'] = "<a href='http://allegro.pl/ShowItem2.php?item=" . $Wystawiona['item-id'] . "'>http://allegro.pl/ShowItem2.php?item=" . $Wystawiona['item-id'] . "</a>" ;
-				}
+
+					}
 				
                 //file_put_contents( DIR_CACHE . 'AllegroSavedInputs.txt', json_encode( $InsertSaved ) ) ;
 			}

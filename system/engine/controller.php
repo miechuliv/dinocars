@@ -255,6 +255,23 @@ abstract class Controller{
         }
     }
 
+    protected function serializeParams($params)
+    {
+
+        $url = '';
+
+        if(!empty($params))
+        {
+            foreach($params as $key => $param)
+            {
+                $url .= '&'.$key.'='.$param;
+            }
+        }
+
+
+        return $url;
+    }
+
 
 
 }

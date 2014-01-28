@@ -26,4 +26,9 @@ $_['text_rating_desc']  = 'Ocena (Najwyższa)';
 $_['text_model_asc']    = 'Model (A - Z)';
 $_['text_model_desc']   = 'Model (Z - A)';
 $_['text_limit']        = 'Pokaż:';
+
+$_['text_all_categories']        = 'Wszystkie kategorie';
+
+
+
 ?>

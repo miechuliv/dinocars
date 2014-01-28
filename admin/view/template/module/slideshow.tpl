@@ -24,6 +24,7 @@
               <td class="left"><?php echo $entry_position; ?></td>
               <td class="left"><?php echo $entry_status; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
+               <td class="right" >Język</td>
               <td></td>
             </tr>
           </thead>
@@ -86,7 +87,17 @@
                   <?php } ?>
                 </select></td>
               <td class="right"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+
+              <td class="right">
+                  <select name="slideshow_module[<?php echo $module_row; ?>][language]" >
+                      <?php foreach($languages as $language){ ?>
+                            <option value="<?php echo $language['code'] ?>"
+                      <?php if(isset($module['language']) AND $language['code']==$module['language']){ echo 'selected="selected"'; } ?>
+                                    ><?php echo $language['name'] ?></option>
+                      <?php } ?>
+                  </select>
+              </td>
+                <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
           <?php $module_row++; ?>
@@ -130,8 +141,16 @@ function addModule() {
     html += '      <option value="0"><?php echo $text_disabled; ?></option>';
     html += '    </select></td>';
 	html += '    <td class="right"><input type="text" name="slideshow_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
+
+    html +=           '<td class="right">'
+    html +=              '<select name="slideshow_module['+ module_row +'][language]" >'
+                              <?php foreach($languages as $language){ ?>
+    html +=                     '<option value="<?php echo $language["code"] ?>"  ><?php echo $language["name"] ?></option>'
+                               <?php } ?>
+    html +=               '</select>'
+    html +=             '</td>'
+    html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+    html += '  </tr>';
 	html += '</tbody>';
 	
 	$('#module tfoot').before(html);

@@ -269,7 +269,7 @@ $('#button-register').live('click', function() {
 
 //--></script>
 <div id="payment-address">
-<h1>1. Adres</h1>
+<h1>1. <?php echo $this->language->get('text_checkout_payment_address'); ?></h1>
 <?/*
 <div class="left">
     <h2><?php echo $text_your_details; ?></h2>
@@ -697,7 +697,7 @@ $('#button-register').live('click', function() {
 <?php } ?>
 <?php if ($shipping_methods) { ?>
 <div id="shipping-methods">
-<h1>2. Dostawa</h1>
+<h1>2. <?php echo $this->language->get('text_shipping'); ?></h1>
 
 <p><?php echo $text_shipping_method; ?></p>
 <table class="radio">
@@ -738,7 +738,7 @@ $('#button-register').live('click', function() {
 <?php } ?>
 <?php if ($payment_methods) { ?>
 <div id="payment-methods">
-<h1>3. Płatność</h1>
+<h1>3. <?php echo $this->language->get('text_payment_method_short'); ?></h1>
 
 <p><?php echo $text_payment_method; ?></p>
 <table class="radio">
@@ -808,7 +808,7 @@ $('#button-register').live('click', function() {
 
 <?php if (!isset($redirect)) { ?>
 <div class="checkout-product">
-<h1>5. Podsumowanie</h1>
+<h1>5. <?php echo $this->language->get('text_total'); ?></h1>
 
     <table>
         <thead>

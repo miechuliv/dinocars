@@ -7,6 +7,8 @@ $_['text_cart']                      = 'Warenkorb';
 $_['text_checkout_option']           = 'Schritt 1: Optionen';
 $_['text_checkout_account']          = 'Schritt 2: Konto- &amp; Rechnungsdetails';
 $_['text_checkout_payment_address']  = 'Schritt 2: Rechnungsdetails';
+$_['text_checkout_payment_address_2']  = 'Shipping Address';
+
 $_['text_checkout_shipping_address'] = 'Schritt 3: Lieferdetails';
 $_['text_checkout_shipping_method']  = 'Schritt 4: Versandart';
 $_['text_checkout_payment_method']   = 'Schritt 5: Zahlungsart';
@@ -31,6 +33,7 @@ $_['text_payment_method']            = 'Bitte die gewünschte Zahlungsart für d
 $_['text_comments']                  = 'Kommentar zur Bestellung (optional)';
 
 $_['text_order_confirm'] = 'Bestellung bestätigen';
+$_['text_payment_method_short'] = 'Płatność';
 
 // Column
 $_['column_name']                    = 'Name';

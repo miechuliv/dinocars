@@ -15,3 +15,9 @@ $_['text_order']        = 'Auftragsverlauf';
 $_['text_wishlist']     = 'Wunschliste';
 $_['text_newsletter']   = 'Newsletter';
 $_['text_powered']      = '<span style="color:#666666">Powered By <a onclick="window.open(\'http://www.opencart.com\');" title="OpenCart">OpenCart</a> &amp; <a onclick="window.open(\'http://osworx.net\');" title="OSWorX">OSWorX</a><br /> %s &copy; %s</span>';
+
+// miechy
+$_['text_bok'] =  'Biuro obsługi Klienta';
+$_['text_login'] =  'Logowanie';
+$_['text_language'] =  'Deutsch';
+$_['text_contact'] =  'Kontakt';

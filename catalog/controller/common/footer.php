@@ -2,6 +2,7 @@
 class ControllerCommonFooter extends Controller {
 	protected function index() {
 		$this->language->load('common/footer');
+
 		
 		$this->data['text_information'] = $this->language->get('text_information');
 		$this->data['text_service'] = $this->language->get('text_service');
@@ -17,6 +18,38 @@ class ControllerCommonFooter extends Controller {
 		$this->data['text_order'] = $this->language->get('text_order');
 		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+
+        $this->data['text_bok'] =  $this->language->get('text_bok');
+$this->data['text_login'] =  $this->language->get('text_login');
+$this->data['text_language'] =  $this->language->get('text_language');
+$this->data['text_contact'] =  $this->language->get('text_contact');
+
+        // sklepy
+        $this->load->model('setting/store');
+
+       // $stores = $this->model_setting_store->getStores();
+
+        $this->data['stores'] = array();
+
+
+
+        $this->data['stores'][] = array(
+            'name' => 'Deutsch',
+            'url' => 'http://demo.stronazen.pl/d2_de/'.'index.php?'.$this->serializeParams($this->request->get),
+            'active' => $this->config->get('config_language')=='de'?true:false,
+        );
+
+        $this->data['stores'][] = array(
+            'name' => 'English',
+            'url' => 'http://demo.stronazen.pl/d3_en/'.'index.php?'.$this->serializeParams($this->request->get),
+            'active' => $this->config->get('config_language')=='en'?true:false,
+        );
+        // główny sklep
+        $this->data['stores'][] = array(
+            'name' => 'Polski',
+            'url' => 'http://demo.stronazen.pl/dinocars/'.'index.php?'.$this->serializeParams($this->request->get),
+            'active' => $this->config->get('config_language')=='pl'?true:false,
+        );
 
         $ip =false;
 

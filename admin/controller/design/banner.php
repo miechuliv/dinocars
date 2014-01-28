@@ -18,6 +18,8 @@ class ControllerDesignBanner extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('design/banner');
+
+
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_design_banner->addBanner($this->request->post);

@@ -51,9 +51,9 @@ function dynafoot() {
 	var szerokoscstopki = $('#footer').height();
 
 	if($(window).scrollTop() + $(window).height() > $(document).height() - szerokoscstopki) {
-		$('#ultraheader').addClass('klej');
+		setTimeout(function() { $('#ultraheader').addClass('klej'); },200);
 	} else {
-		$('#ultraheader').removeClass('klej');
+		setTimeout(function() { $('#ultraheader').removeClass('klej'); },200);
 	}
 	if($(window).scrollTop() > 75) {
 		$('#mobileheader').addClass('stick');
@@ -261,14 +261,14 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
  
 </div>
 <div id="telmobile">
-	<h1>+48 111 222 333</h1>
+	<h1><?php echo $this->config->get('config_telephone'); ?></h1>
 </div>
 <div>
 	<?php if(in_array('checkout/cart',Utilities::getControllerList() )) { ?>
 		<div style="display:table; width:100%;">
 			<div style="display:table-cell; vertical-align:middle; width:75%;" id="mor">
-				<h1 style="margin:0">Jesteś w <span style="color:#be0000">koszyku</span>.</h1> 
-				<h2>Jeśli masz jakieś pytania, skontaktuj się z nami: <span style="color:#be0000">+48 111 222 333</span></h2>
+				<h1 style="margin:0"><?php echo $text_greet_cart; ?>.</h1>
+				<h2><?php echo $text_ask; ?>: <span style="color:#be0000"><?php echo $this->config->get('config_telephone'); ?></span></h2>
 			</div>
 			<div style="display:table-cell; vertical-align:middle; width:25%; text-align:right;">	  
 				<img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/>	
@@ -277,8 +277,8 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 	<?php } else if(in_array('checkout/checkout',Utilities::getControllerList() )) { ?>
 		<div style="display:table; width:100%;">
 			<div style="display:table-cell; vertical-align:middle; width:75%;" id="mor">
-				<h1 style="margin:0">Jesteś w <span style="color:#be0000">kasie</span>.</h1> 
-				<h2>Jeśli masz jakieś pytania, skontaktuj się z nami: <span style="color:#be0000">+48 111 222 333</span></h2>
+				<h1 style="margin:0"><?php echo $text_greet_checkout; ?>.</h1>
+				<h2><?php echo $text_ask; ?>: <span style="color:#be0000"><?php echo $this->config->get('config_telephone'); ?></span></h2>
 			</div>
 			<div style="display:table-cell; vertical-align:middle; width:25%; text-align:right;">	  
 				<img src="./catalog/view/theme/default/img/trust.png" alt="trusted"/>	
@@ -287,8 +287,14 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 	<?php } else { ?>
 		<div style="float:left;" class="mobilesearch">
 			<div id="search">
-				<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?> wg nr, lub nazwy części" value="<?php echo $search; ?>" />
+				<input type="text" class="borderb" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
 				<div class="button-search"><?php echo $text_search; ?></div>
+                <select name="search_category" >
+                    <option value="0">Wszystkie kategorie</option>
+                    <?php foreach($categories_for_search as $category){ ?>
+                        <option <?php if($category['category_id'] == $category_search){ echo 'selected="selected"'; } ?> value="<?php echo $category['category_id']; ?>" ><?php echo $category['name']; ?></option>
+                    <?php } ?>
+                </select>
 			</div>
 		</div>
 		<div style="float:right;">	  
@@ -303,12 +309,12 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
 <div id="mobileheader">
 	<div>
 		<?php if(!in_array('checkout/cart',Utilities::getControllerList()) && !in_array('checkout/checkout',Utilities::getControllerList()) && !in_array('product/product',Utilities::getControllerList())) { ?>
-			<a href="javascript:void(0);" id="showmobilemenu"><span>Kategorie</span></a>
-			<a href="javascript:void(0);" id="showmobilefilter"><span>Filtruj</span></a>
+			<a href="javascript:void(0);" id="showmobilemenu"><span><?php echo $text_category; ?></span></a>
+			<a href="javascript:void(0);" id="showmobilefilter"><span><?php echo $text_filter; ?></span></a>
 		<?php } else { ?>
-			<a href="./index.php?route=account/login" class="clear"><span>Logowanie</span></a>
+			<a href="./index.php?route=account/login" class="clear"><span><?php echo $text_login; ?></span></a>
 		<?php } ?>
-			<span class="phone"><span>+48 888 888 999</span></span>
+			<span class="phone"><span><?php echo $this->config->get('config_telephone'); ?></span></span>
 	</div>
 </div>
 

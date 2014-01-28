@@ -146,20 +146,7 @@ class ControllerAllegroTemplate extends Controller {
 
         $Type = NULL;
 
-        if($Product['type']=='new')
-        {
-            $Type = "Kup Nowy";
-        }
-        elseif($Product['type']=='regenerated')
-        {
-            $Type = "Regenerowany";
-        }
-        elseif($Product['type']=='for_regeneration')
-        {
-            $Type = "Do renegeneracji";
-        }
-
-		$Template = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMAGES}', '{PRODUCT_MODEL}', '{PRODUCT_PRICE}', '{PRODUCT_CATEGORIES}', '{PRODUCT_OPTIONS}', '{PRODUCT_DELIVERY}', '{PRODUCT_MANUFACTURER}', '{IMG}','{MAKE_NAME}','{MODEL_NAME}','{TYPE}'), array( $Title, $ProductDescription, $ExtImages, $Product['model'], $Price, $ExtCategories, $ExtOptions, $Delivery, $Manufacturer, $IMG, $Product['make_name'],$Product['model_name'],$Type  ), html_entity_decode($ShowTemplate['value']) ) ;
+		$Template = str_replace( array( '{PRODUCT_NAME}', '{PRODUCT_DESCRIPTION}', '{IMAGES}', '{PRODUCT_MODEL}', '{PRODUCT_PRICE}', '{PRODUCT_CATEGORIES}', '{PRODUCT_OPTIONS}', '{PRODUCT_DELIVERY}', '{PRODUCT_MANUFACTURER}', '{IMG}','{MAKE_NAME}','{MODEL_NAME}'), array( $Title, $ProductDescription, $ExtImages, $Product['model'], $Price, $ExtCategories, $ExtOptions, $Delivery, $Manufacturer, $IMG, $Product['make_name'],$Product['model_name']  ), html_entity_decode($ShowTemplate['value']) ) ;
         // 18.09.2013
 	    echo $Template ;
 	}

@@ -128,7 +128,7 @@
               <td><?php echo $entry_meta_description; ?></td>
               <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea></td>
             </tr>
-          <?php /*  <tr>
+           <tr>
               <td><?php echo $entry_template; ?></td>
               <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
                   <?php foreach ($templates as $template) { ?>
@@ -155,7 +155,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-            </tr> */ ?>
+            </tr>
           </table>
         </div>
         <div id="tab-local">

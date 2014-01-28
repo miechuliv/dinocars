@@ -8,28 +8,28 @@
 		
 			<input type="hidden" value="product/category" name="route" />
             <input type="hidden" name="m_autoload" value="true" />
-			<h1>Znajdź potrzebne części wg auta</h1>
-			<h2>Wystarczy że wybierzesz markę, model i typ swojego pojazdu!</h2>
+			<h1><?php echo $text_search_cars; ?></h1>
+			<h2><?php echo $text_choose; ?></h2>
 			
 				<div style="display:table; clear:both; width:100%;">
 					<div>
 						<div class="marka">
 							<select id="make" name="make">
-								<option>Marka</option>
+								<option><?php echo $text_marka; ?></option>
 							</select>
 						</div>
 					</div>
 					<div>
 						<div>
 							<select id="model" name="model">
-								<option>Model</option>
+								<option><?php echo $text_model; ?></option>
 							</select>
 						</div>
 					</div>
 					<div>
 						<div>
 							<select id="type" name="type">
-								<option>Typ</option>
+								<option><?php echo $text_typ; ?></option>
 							</select>
 						</div>
 					</div>
@@ -64,26 +64,26 @@
 <div class="promot">
 	<div>
 		<div>
-			<h2>Dlaczego my?</h2>
+			<h2><?php echo $text_why_us; ?></h2>
 			<ul>
-				<li>Lorem ipsum tanio</li>
-				<li>Bezpieczne zakupy lorem</li>
-				<li>Lorem ipsum, tania przesyłka</li>
-				<li>Szeroki wybór części lorem ipsum</li>
-				<li>Bezpieczne zakupy lorem</li>
-				<li>Lorem ipsum szybko</li>
+				<li><?php echo $text_cheap; ?></li>
+				<li><?php echo $text_save; ?></li>
+				<li><?php echo $text_send; ?></li>
+				<li><?php echo $text_wide_choice; ?></li>
+				<li><?php echo $text_zakupy; ?></li>
+				<li><?php echo $text_fast; ?></li>
 			</ul>
 		</div>
 	</div>
 	<div>
 		<div>
-			<h2>Płatność:</h2>
+			<h2><?php echo $text_payment; ?>:</h2>
 			<p>
 				<img src="./image/data/payment icons/mastercard_curved_32px.png" alt=""/>
 				<img src="./image/data/payment icons/visa_straight_32px.png" alt=""/>
 				<img src="./image/data/payment icons/paypal_curved_32px.png" alt=""/>
 			</p>
-			<h2>Wysyłka:</h2>
+			<h2><?php echo $text_shipping; ?>:</h2>
 			<p>
 				<img src="http://allegro.ted.net.pl/img/ups.png" alt=""/>
 			</p>
@@ -91,9 +91,9 @@
 	</div>
 	<div>
 		<div>
-			<h2>Newsletter</h2>
+			<h2><?php echo $text_newsletter; ?></h2>
 			</p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum sit amet velit nec venenatis.
+            <?php echo $text_newsletter_ipsum; ?>
 			</p>
             <?php  if(isset($this->session->data['newsletter_error'])){echo '<p>Wystąpił błąd</p>'; }?>
 			<form id="zapisznewsletter" action="index.php?route=account/newslettervisitor" method="post" >
@@ -111,8 +111,8 @@
 </div>
 
 <div class="promot">
-	<h2>O nas</h2>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum sit amet velit nec venenatis. Nam dolor arcu, adipiscing at dui ac, mollis ullamcorper leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris enim dolor, semper sed mi vel, adipiscing condimentum neque. Donec vestibulum, ipsum ut pretium aliquam, nisi mauris blandit elit, sit amet sollicitudin urna massa ut neque. Maecenas vitae faucibus metus.</p>
+	<h2><?php echo $text_about_us; ?></h2>
+	<p><?php echo $text_about_us_ipsum; ?></p>
 </div>
 	
 </div>

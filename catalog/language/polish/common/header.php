@@ -8,4 +8,19 @@ $_['text_welcome']  	 = 'Szanowny gościu możesz <a href="%s">zalogować się</
 $_['text_logged']   	 = 'Jesteś zalogowany jako <a href="%s">%s</a> <b>(</b> <a href="%s">Wyloguj</a> <b>)</b>';
 $_['text_account']  	 = 'Konto';
 $_['text_checkout'] 	 = 'Kasa';
+
+// miechu
+$_['text_greet_cart'] 	 = 'Jesteś w <span style="color:#be0000">koszyku</span>';
+$_['text_ask'] 	 = 'Jeśli masz jakieś pytania, skontaktuj się z nami';
+$_['text_greet_checkout'] 	 = 'Jesteś w <span style="color:#be0000">kasie</span>';
+$_['text_category'] 	 = 'Kategorie';
+$_['text_filter'] 	 = 'Filtruj';
+$_['text_login'] 	 = 'Logowanie';
+
+
+
+
+
+
+
 ?>

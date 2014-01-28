@@ -82,6 +82,8 @@ class ModelCatalogProduct extends Model {
 
 	public function getProducts($data = array(),$filtry = array()) {
 
+
+
 		if ($this->customer->isLogged()) {
 			$customer_group_id = $this->customer->getCustomerGroupId();
 		} else {

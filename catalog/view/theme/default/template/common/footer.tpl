@@ -11,8 +11,17 @@
 
 <div id="ultraheader">
 	<div class="poziom">
-		<div><span>Biuro obsługi Klienta </span><strong>+48 888 888 999</strong> | <span>e-mail: </span><strong>email@email.pl</strong></div>
-		<div><a href="./index.php?route=account/login">Logowanie</a> | Język</div>
+		<div><span><?php echo $text_bok; ?> </span><strong><?php echo $this->config->get('config_telephone'); ?></strong> | <a href="<?php echo $this->config->get('config_email'); ?>"><strong><?php echo $this->config->get('config_email'); ?></strong></a></div>
+		<div><a href="./index.php?route=account/login"> <?php echo $text_login; ?> </a> | <a href="javascript:void(0);" id="jezykclick"><?php echo $text_language; ?>
+        <ul id="mielone">
+            <?php foreach($stores as $store){ ?>
+                <li class="<?php echo $store['name']; ?>">
+                    <?php if($store['active']){ echo 'aktywny';  } ?>
+                    <a href="<?php echo $store['url']; ?>" ><?php echo $store['name']; ?></a>
+                </li>
+            <?php } ?>
+        </ul>
+        </div>
 	</div>
 </div>
 
@@ -57,11 +66,11 @@
     </ul>
   </div>
   <div class="column" style="color:#e78888;">
-	<h3>Kontakt</h3>
+	<h3><?php echo $text_contact; ?>Kontakt</h3>
 	Ul. Długa 301/340<br/>
 	80-330 Gdańsk<br/><br/>
-	+48 888 888 999<br/>
-	email@email.pl
+	<?php echo $this->config->get('config_telephone'); ?><br/>
+	<a href="mailto:<?php echo $this->config->get('config_email'); ?>"><?php echo $this->config->get('config_email'); ?></a>
 
 	</div>
 <div class="column">
@@ -107,7 +116,10 @@
         });
     });
 
-
+	$('#jezykclick').click(function() {
+		$(this).hide();
+		$('#mielone').css('display','inline-block');
+	});
 
     //--></script>
 
