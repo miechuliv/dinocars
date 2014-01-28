@@ -16,6 +16,8 @@ class ControllerCommonHeader extends Controller {
 
         $this->data['is_ie'] = false;
 
+
+
         if( $this->browser->getBrowser() == Browser::BROWSER_IE  ) {
             $this->data['is_ie'] =  true;
         }

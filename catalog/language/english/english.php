@@ -75,10 +75,11 @@ $_['text_send'] = 'Lorem ipsum, tania przesyłka';
 $_['text_wide_choice'] = 'Szeroki wybór części lorem ipsum';
 $_['text_zakup'] = 'Bezpieczne zakupy lorem';
 $_['text_filter'] = 'Szukaj wg. auta';
+$_['text_telephone'] = 'Telefon';
 
 $_['text_save'] = 'Bezpieczne zakupy lorem';
 $_['text_active_filters']        = 'Aktywne filtry';
-$_['text_sevice_48h']        = 'Dostawa: 48h';
+$_['text_service_48h']        = 'Dostawa: 48h';
 $_['text_fast'] = 'Lorem ipsum szybko';
 $_['text_payment'] = 'Płatności';
 $_['text_shipping'] = 'Wysyłka';

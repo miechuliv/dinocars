@@ -40,7 +40,10 @@ class ControllerCommonContentTop extends Controller {
 		
 		$this->load->model('setting/extension');
 		
-		$extensions = $this->model_setting_extension->getExtensions('module');		
+		$extensions = $this->model_setting_extension->getExtensions('module');
+
+        var_dump($layout_id);
+
 		
 		foreach ($extensions as $extension) {
 			$modules = $this->config->get($extension['code'] . '_module');
@@ -57,6 +60,10 @@ class ControllerCommonContentTop extends Controller {
 				}
 			}
 		}
+
+        var_dump($module_data);
+
+
 		
 		$sort_order = array(); 
 	  

@@ -89,6 +89,7 @@ $_['text_typ'] = 'Typ';
 
 $_['text_search_cars'] = 'Znajdź potrzebne części wg auta';
 $_['text_choose'] = 'Wystarczy że wybierzesz markę, model i typ swojego pojazdu!';
+$_['text_telephone'] = 'Telefon';
 
 $_['text_why_us'] = 'Dlaczego my?';
 $_['text_cheap'] = 'Lorem ipsum tanio';
@@ -99,7 +100,7 @@ $_['text_filter'] = 'Szukaj wg. auta';
 
 $_['text_save'] = 'Bezpieczne zakupy lorem';
 $_['text_active_filters']        = 'Aktywne filtry';
-$_['text_sevice_48h']        = 'Dostawa: 48h';
+$_['text_service_48h']        = 'Dostawa: 48h';
 $_['text_fast'] = 'Lorem ipsum szybko';
 $_['text_payment'] = 'Płatności';
 $_['text_shipping'] = 'Wysyłka';

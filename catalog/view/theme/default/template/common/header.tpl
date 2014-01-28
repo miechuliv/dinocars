@@ -47,6 +47,8 @@ DD_belatedPNG.fix('#logo img');
 
 <script type="text/javascript"><!--
 
+
+
 function dynafoot() {
 	var szerokoscstopki = $('#footer').height();
 
